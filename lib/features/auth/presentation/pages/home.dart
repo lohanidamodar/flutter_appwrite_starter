@@ -19,8 +19,7 @@ class AuthHomePage extends StatelessWidget {
             return WelcomePage();
           case Status.Authenticated:
             if (user.isLoading) return Splash();
-            //TODO return user.user?.introSeen ?? false ? HomePage() : IntroPage();
-            return HomePage();
+            return user.prefs?.introSeen ?? false ? HomePage() : IntroPage();
           case Status.Uninitialized:
           default:
             return Splash();

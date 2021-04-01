@@ -44,6 +44,14 @@ class ApiService {
   Future getUser() async {
     return account.get();
   }
+
+  Future getPrefs() async {
+    return account.getPrefs();
+  }
+
+  Future updatePrefs(Map<String, dynamic> prefs) {
+    return account.updatePrefs(prefs: prefs);
+  }
   /* 
   Future<Mood> addMood({
     Map<String, dynamic> data,

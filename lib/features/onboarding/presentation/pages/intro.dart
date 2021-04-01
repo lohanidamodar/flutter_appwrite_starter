@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
+import 'package:flutter_appwrite_starter/core/presentation/providers/providers.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class IntroPage extends StatelessWidget {
   @override
@@ -28,5 +31,6 @@ class IntroPage extends StatelessWidget {
 
   _finishIntroScreen(BuildContext context) async {
     //set intro seen to true in user's intro
+    context.read(userRepoProvider).introSeen();
   }
 }

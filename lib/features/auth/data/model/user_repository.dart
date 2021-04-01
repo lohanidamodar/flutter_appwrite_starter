@@ -6,12 +6,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
 import 'package:flutter_appwrite_starter/features/profile/data/model/device.dart';
 import 'package:flutter_appwrite_starter/features/profile/data/model/user.dart';
+import 'package:flutter_appwrite_starter/features/profile/data/model/user_prefs.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
 class UserRepository with ChangeNotifier {
   User _user;
+  UserPrefs _prefs;
   Status _status = Status.Uninitialized;
   String _error;
   Device currentDevice;
@@ -27,12 +29,16 @@ class UserRepository with ChangeNotifier {
   Status get status => _status;
   User get user => _user;
   bool get isLoading => _loading;
+  UserPrefs get prefs => _prefs;
 
   Future<void> _getUser() async {
     try {
       final res = await ApiService.instance.getUser();
       _user = User.fromMap(res.data);
       _status = Status.Authenticated;
+      final pres = await ApiService.instance.getPrefs();
+      if (pres != null) _prefs = UserPrefs.fromMap(pres.data);
+      _saveUserPrefs();
     } on AppwriteException catch (e) {
       _status = Status.Unauthenticated;
       _error = e.message;
@@ -61,7 +67,8 @@ class UserRepository with ChangeNotifier {
     try {
       _status = Status.Authenticating;
       notifyListeners();
-      await ApiService.instance.signup(name: name, email: email, password: password);
+      await ApiService.instance
+          .signup(name: name, email: email, password: password);
       _error = '';
       await signIn(email, password);
       return true;
@@ -78,94 +85,33 @@ class UserRepository with ChangeNotifier {
     final res = await ApiService.instance.logout();
     if (res == true) {
       _user = null;
+      _prefs = null;
       _status = Status.Unauthenticated;
       notifyListeners();
     }
   }
 
-  Future<void> _saveUserRecord() async {
+  introSeen() async {
+    final prefs = _prefs?.copyWith(
+      introSeen: true,
+    );
+    if (prefs != null) await ApiService.instance.updatePrefs(prefs.toMap());
+    _prefs = prefs;
+    notifyListeners();
+  }
+
+  Future<void> _saveUserPrefs() async {
     if (_user == null) return;
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     int buildNumber = int.parse(packageInfo.buildNumber);
-    User user = User(
-      email: _user.email,
-      name: _user.name,
-      id: _user.id,
+    final prefs = _prefs ?? UserPrefs();
+    prefs.copyWith(
+      buildNumber: buildNumber,
+      introSeen: _prefs.introSeen ?? false,
+      registrationDate: _prefs.registrationDate ?? DateTime.now(),
     );
-
-    //get existing user
-    bool existing = false;
-    if (existing == null) {
-      _user = user;
-    } else {
-      //update users login and build number
-      /* await userDBS.updateData(_user.uid, {
-        UserFields.lastLoggedIn: FieldValue.serverTimestamp(),
-        UserFields.buildNumber: buildNumber,
-      }); */
-    }
-    _saveDevice(user);
-  }
-
-  Future<void> _saveDevice(User user) async {
-    DeviceInfoPlugin devicePlugin = DeviceInfoPlugin();
-    String deviceId;
-    DeviceDetails deviceDescription;
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo deviceInfo = await devicePlugin.androidInfo;
-      deviceId = deviceInfo.androidId;
-      deviceDescription = DeviceDetails(
-        device: deviceInfo.device,
-        model: deviceInfo.model,
-        osVersion: deviceInfo.version.sdkInt.toString(),
-        platform: 'android',
-      );
-    }
-    if (Platform.isIOS) {
-      IosDeviceInfo deviceInfo = await devicePlugin.iosInfo;
-      deviceId = deviceInfo.identifierForVendor;
-      deviceDescription = DeviceDetails(
-        osVersion: deviceInfo.systemVersion,
-        device: deviceInfo.name,
-        model: deviceInfo.utsname.machine,
-        platform: 'ios',
-      );
-    }
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    int buildNumber = int.parse(packageInfo.buildNumber);
-    final nowMS = DateTime.now().toUtc().millisecondsSinceEpoch;
-    //if (user.buildNumber != buildNumber) {
-    //TODO
-    /* userDBS.updateData(user.id, {
-        UserFields.buildNumber: buildNumber,
-        UserFields.lastUpdated: nowMS,
-      }); */
-    //}
-
-    //TODO get current device
-    // Device exsiting = await userDeviceDBS.getSingle(deviceId);
-    Device existing = null;
-    if (existing != null) {
-      //TODO
-      /* await userDeviceDBS.updateData(deviceId, {
-        DeviceFields.lastUpdatedAt: nowMS,
-        DeviceFields.expired: false,
-        DeviceFields.uninstalled: false,
-      }); */
-      currentDevice = existing;
-    } else {
-      Device device = Device(
-        createdAt: DateTime.now().toUtc(),
-        deviceInfo: deviceDescription,
-        expired: false,
-        id: deviceId,
-        lastUpdatedAt: nowMS,
-        uninstalled: false,
-      );
-      //TODO add device data
-      /* await userDeviceDBS.createItem(device, id: deviceId); */
-      currentDevice = device;
-    }
+    await ApiService.instance.updatePrefs(prefs.toMap());
+    _prefs = prefs;
     notifyListeners();
   }
 }
