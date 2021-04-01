@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/core/presentation/providers/providers.dart';
-import 'package:flutter_appwrite_starter/core/presentation/res/routes.dart';
+import 'package:flutter_appwrite_starter/core/res/routes.dart';
 import 'package:flutter_appwrite_starter/features/profile/presentation/widgets/avatar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

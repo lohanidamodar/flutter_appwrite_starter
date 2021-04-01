@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/core/presentation/res/sizes.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'colors.dart';
+import 'sizes.dart';
 
 class AppThemes {
   static BuildContext context;

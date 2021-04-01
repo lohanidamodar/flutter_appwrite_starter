@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/core/presentation/res/routes.dart';
+import 'package:flutter_appwrite_starter/core/res/routes.dart';
 
 class HomePage extends StatefulWidget {
   @override

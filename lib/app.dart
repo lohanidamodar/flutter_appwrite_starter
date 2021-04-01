@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/presentation/providers/providers.dart';
-import 'core/presentation/res/routes.dart';
-import 'core/presentation/res/themes.dart';
+import 'core/res/routes.dart';
+import 'core/res/themes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'features/auth/presentation/pages/home.dart';
