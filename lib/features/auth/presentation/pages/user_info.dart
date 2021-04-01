@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UserInfoPage extends StatelessWidget {
-  final UserModel user;
+  final User user;
 
   const UserInfoPage({Key key, this.user}) : super(key: key);
   @override

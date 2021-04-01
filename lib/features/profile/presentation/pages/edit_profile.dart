@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/core/data/res/data_constants.dart';
+import 'package:flutter_appwrite_starter/core/res/data_constants.dart';
 import 'package:flutter_appwrite_starter/features/profile/data/model/user.dart';
 import 'package:flutter_appwrite_starter/features/profile/data/model/user_field.dart';
 import 'package:flutter_appwrite_starter/features/profile/presentation/widgets/avatar.dart';
@@ -9,7 +9,7 @@ import 'package:path/path.dart' as Path;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditProfile extends StatefulWidget {
-  final UserModel user;
+  final User user;
 
   const EditProfile({Key key, this.user}) : super(key: key);
 
@@ -47,7 +47,8 @@ class _EditProfileState extends State<EditProfile> {
       body: ListView(
         padding: const EdgeInsets.all(8.0),
         children: <Widget>[
-          Center(
+          //TODO
+          /* Center(
             child: Avatar(
               showButton: true,
               onButtonPressed: _pickImageButtonPressed,
@@ -58,7 +59,7 @@ class _EditProfileState extends State<EditProfile> {
                       ? NetworkImage(widget.user.photoUrl)
                       : null,
             ),
-          ),
+          ), */
           const SizedBox(height: 10.0),
           Center(child: Text(widget.user.email)),
           const SizedBox(height: 10.0),

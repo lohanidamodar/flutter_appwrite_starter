@@ -18,7 +18,8 @@ class UserProfile extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           children: <Widget>[
             if (user != null) ...[
-              Center(
+              //TODO
+              /* Center(
                 child: Avatar(
                   onButtonPressed: () {},
                   radius: 50,
@@ -26,7 +27,7 @@ class UserProfile extends StatelessWidget {
                       ? NetworkImage(user.photoUrl)
                       : null,
                 ),
-              ),
+              ), */
               const SizedBox(height: 10.0),
               if (user.name != null) ...[
                 Center(

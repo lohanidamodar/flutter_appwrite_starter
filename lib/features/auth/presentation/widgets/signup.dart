@@ -11,9 +11,11 @@ class SignupForm extends StatefulWidget {
 
 class _SignupFormState extends State<SignupForm> {
   TextStyle style = TextStyle(fontSize: 20.0);
+  TextEditingController _name;
   TextEditingController _email;
   TextEditingController _password;
   TextEditingController _confirmPassword;
+  FocusNode _emailField;
   FocusNode _passwordField;
   FocusNode _confirmPasswordField;
   final _formKey = GlobalKey<FormState>();
@@ -38,6 +40,24 @@ class _SignupFormState extends State<SignupForm> {
           child: ListView(
             padding: const EdgeInsets.all(16.0),
             children: <Widget>[
+              Container(
+                padding: const EdgeInsets.all(0),
+                child: TextFormField(
+                  key: Key("name-field"),
+                  controller: _name,
+                  validator: (value) => (value.isEmpty)
+                      ? AppLocalizations.of(context).nameValidationError
+                      : null,
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context).nameFieldLabel,
+                  ),
+                  style: style,
+                  textInputAction: TextInputAction.next,
+                  onEditingComplete: () {
+                    FocusScope.of(context).requestFocus(_passwordField);
+                  },
+                ),
+              ),
               Container(
                 padding: const EdgeInsets.all(0),
                 child: TextFormField(
@@ -122,8 +142,8 @@ class _SignupFormState extends State<SignupForm> {
       //signup user
       if (!await context
           .read(userRepoProvider)
-          .signup(_email.text, _password.text))
-        Scaffold.of(context).showSnackBar(SnackBar(
+          .signup(_name.text, _email.text, _password.text))
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(context.read(userRepoProvider).error),
         ));
     }

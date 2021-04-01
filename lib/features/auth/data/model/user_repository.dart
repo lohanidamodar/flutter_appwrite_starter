@@ -1,44 +1,55 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:appwrite/appwrite.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_appwrite_starter/core/data/res/data_constants.dart';
+import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
 import 'package:flutter_appwrite_starter/features/profile/data/model/device.dart';
-import 'package:flutter_appwrite_starter/features/profile/data/model/device_field.dart';
 import 'package:flutter_appwrite_starter/features/profile/data/model/user.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
 class UserRepository with ChangeNotifier {
-  
-  UserModel _user;
+  User _user;
   Status _status = Status.Uninitialized;
   String _error;
-  StreamSubscription _userListener;
-  UserModel _fsUser;
   Device currentDevice;
   bool _loading;
 
-  UserRepository.instance(){
+  UserRepository.instance() {
     _error = '';
     _loading = true;
-    //get current user and set auth state
+    _getUser();
   }
 
   String get error => _error;
   Status get status => _status;
-  UserModel get user => _fsUser;
+  User get user => _user;
   bool get isLoading => _loading;
+
+  Future<void> _getUser() async {
+    try {
+      final res = await ApiService.instance.getUser();
+      _user = User.fromMap(res.data);
+      _status = Status.Authenticated;
+    } on AppwriteException catch (e) {
+      _status = Status.Unauthenticated;
+      _error = e.message;
+    } finally {
+      _loading = false;
+      notifyListeners();
+    }
+  }
 
   Future<bool> signIn(String email, String password) async {
     try {
       _status = Status.Authenticating;
       notifyListeners();
-      //sign in
-      _error = '';
+      await ApiService.instance.login(email: email, password: password);
+      _getUser();
       return true;
-    } catch (e) {
+    } on AppwriteException catch (e) {
       _error = e.message;
       _status = Status.Unauthenticated;
       notifyListeners();
@@ -46,14 +57,15 @@ class UserRepository with ChangeNotifier {
     }
   }
 
-  Future<bool> signup(String email, String password) async {
+  Future<bool> signup(String name, String email, String password) async {
     try {
       _status = Status.Authenticating;
       notifyListeners();
-      //signup
+      await ApiService.instance.signup(name: name, email: email, password: password);
       _error = '';
+      await signIn(email, password);
       return true;
-    } catch (e) {
+    } on AppwriteException catch (e) {
       _error = e.message;
       _status = Status.Unauthenticated;
       notifyListeners();
@@ -61,36 +73,30 @@ class UserRepository with ChangeNotifier {
     }
   }
 
-
   Future signOut() async {
     //sign out
-    _status = Status.Unauthenticated;
-    _fsUser = null;
-    _userListener.cancel();
-    notifyListeners();
-    return Future.delayed(Duration.zero);
+    final res = await ApiService.instance.logout();
+    if (res == true) {
+      _user = null;
+      _status = Status.Unauthenticated;
+      notifyListeners();
+    }
   }
-
 
   Future<void> _saveUserRecord() async {
     if (_user == null) return;
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     int buildNumber = int.parse(packageInfo.buildNumber);
-    UserModel user = UserModel(
+    User user = User(
       email: _user.email,
       name: _user.name,
-      photoUrl: _user.photoUrl,
       id: _user.id,
-      registrationDate: DateTime.now().toUtc(),
-      lastLoggedIn: DateTime.now().toUtc(),
-      buildNumber: buildNumber,
-      introSeen: false,
     );
-    
+
     //get existing user
     bool existing = false;
     if (existing == null) {
-      _fsUser = user;
+      _user = user;
     } else {
       //update users login and build number
       /* await userDBS.updateData(_user.uid, {
@@ -101,7 +107,7 @@ class UserRepository with ChangeNotifier {
     _saveDevice(user);
   }
 
-  Future<void> _saveDevice(UserModel user) async {
+  Future<void> _saveDevice(User user) async {
     DeviceInfoPlugin devicePlugin = DeviceInfoPlugin();
     String deviceId;
     DeviceDetails deviceDescription;
@@ -128,15 +134,14 @@ class UserRepository with ChangeNotifier {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     int buildNumber = int.parse(packageInfo.buildNumber);
     final nowMS = DateTime.now().toUtc().millisecondsSinceEpoch;
-    if (user.buildNumber != buildNumber) {
-      //TODO
-      /* userDBS.updateData(user.id, {
+    //if (user.buildNumber != buildNumber) {
+    //TODO
+    /* userDBS.updateData(user.id, {
         UserFields.buildNumber: buildNumber,
         UserFields.lastUpdated: nowMS,
       }); */
-    }
+    //}
 
-    
     //TODO get current device
     // Device exsiting = await userDeviceDBS.getSingle(deviceId);
     Device existing = null;
@@ -149,7 +154,6 @@ class UserRepository with ChangeNotifier {
       }); */
       currentDevice = existing;
     } else {
-
       Device device = Device(
         createdAt: DateTime.now().toUtc(),
         deviceInfo: deviceDescription,
@@ -163,11 +167,5 @@ class UserRepository with ChangeNotifier {
       currentDevice = device;
     }
     notifyListeners();
-  }
-
-  @override
-  void dispose() {
-    _userListener.cancel();
-    super.dispose();
   }
 }
