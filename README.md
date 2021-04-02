@@ -1,16 +1,37 @@
-# flutter_appwrite_starter
+# Flutter Appwrite Starter project
 
-A new Flutter project.
+**Made with :heartbeat: from Nepal**
+
+A project you can clone to build your next project with Flutter + [Appwrite](https://appwrite.io). 
+
+If you don't already know what Appwrite is, it's an open source Firebase alternative for Web, Mobile and Flutter applications. Learn more on [Appwrite.io home page](https://appwrite.io).
+
+## Features
+1. Authentication
+    - Email based sign up/in
+2. Riverpod State management
+3. Localization ready
+4. Google Fonts
+5. Image picker
+6. Package info
+7. User's profile and preferences management
+8. Android release signing config
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+How to start your project based on this.
 
-A few resources to get you started if this is your first Flutter project:
+1. Clone this repository locally. The folder structure is somewhat based on clean code architecture
+2. Delete `.git` folder to clear git history
+3. Using `change_app_package_name` package change the package name to whatever you want your package name to be `flutter pub run change_app_package_name:main com.new.package.name`
+4. For changing iOS package name use the text editors Find and Replace in whole project folder where you need to find `com.popupbits.flutter_appwrite_starter` and with the package name you want
+5. Using the same Find and replace in whole project folder search for `flutter_appwrite_starter` (package name for dart/flutter project) and replace it with your own suitable name. (check the flutter package naming standards for acceptable format)
+6. Using the same Find and replace in whole project folder search for `Appwrite Starter` (display name, launcher name) and replace it with your own suitable name for your app
+7. in `lib/core/res/constants.dart` update endpoint and project id with your own endpoint and project id details;
+9. For android signing, modify `android/key.properties` with your signing details and replace `keys/keystore.jks` with your own keystore or provide different location in `android/key.properties` for your keystore
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Adding new Locale
+TODO Docs
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Contribution
+Contribution (suggestions, issues, feature request, pull requests) are highly welcome. Also looking for help in making it testable by adding unit, widget and integration tests.
