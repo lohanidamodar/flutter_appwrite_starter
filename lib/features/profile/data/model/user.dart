@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_appwrite_starter/features/profile/data/model/user_prefs.dart';
 
 class User {
   final String id;
   final String name;
   final String email;
-  final Map<String, dynamic> prefs;
+  final UserPrefs prefs;
   User({
     this.id,
     this.name,
@@ -18,7 +19,7 @@ class User {
     String id,
     String name,
     String email,
-    Map<String, dynamic> prefs,
+    UserPrefs prefs,
   }) {
     return User(
       id: id ?? this.id,
@@ -44,7 +45,7 @@ class User {
       id: map['\$id'],
       name: map['name'],
       email: map['email'],
-      prefs: Map<String, dynamic>.from(map['prefs']),
+      prefs: UserPrefs.fromMap(Map<String, dynamic>.from(map['prefs']) ?? {}),
     );
   }
 
@@ -65,7 +66,7 @@ class User {
       o.id == id &&
       o.name == name &&
       o.email == email &&
-      mapEquals(o.prefs, prefs);
+      o.prefs == prefs;
   }
 
   @override

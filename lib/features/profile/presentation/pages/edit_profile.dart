@@ -35,7 +35,7 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
     _processing = false;
     state = AppState.free;
-    _nameController = TextEditingController(text: widget.user.name);
+    _nameController = TextEditingController(text: widget.user?.name);
   }
 
   @override
@@ -48,18 +48,18 @@ class _EditProfileState extends State<EditProfile> {
         padding: const EdgeInsets.all(8.0),
         children: <Widget>[
           //TODO
-          /* Center(
+          Center(
             child: Avatar(
               showButton: true,
               onButtonPressed: _pickImageButtonPressed,
               radius: 50,
               image: state == AppState.cropped && _image != null
                   ? FileImage(_image)
-                  : widget.user.photoUrl != null
-                      ? NetworkImage(widget.user.photoUrl)
+                  : widget.user.prefs.photoUrl != null
+                      ? NetworkImage(widget.user.prefs.photoUrl)
                       : null,
             ),
-          ), */
+          ),
           const SizedBox(height: 10.0),
           Center(child: Text(widget.user.email)),
           const SizedBox(height: 10.0),

@@ -26,6 +26,8 @@ class _SignupFormState extends State<SignupForm> {
     _email = TextEditingController(text: "");
     _password = TextEditingController(text: "");
     _confirmPassword = TextEditingController(text: "");
+    _name = TextEditingController(text: "");
+    _emailField = FocusNode();
     _passwordField = FocusNode();
     _confirmPasswordField = FocusNode();
   }
@@ -54,7 +56,7 @@ class _SignupFormState extends State<SignupForm> {
                   style: style,
                   textInputAction: TextInputAction.next,
                   onEditingComplete: () {
-                    FocusScope.of(context).requestFocus(_passwordField);
+                    FocusScope.of(context).requestFocus(_emailField);
                   },
                 ),
               ),
@@ -62,6 +64,7 @@ class _SignupFormState extends State<SignupForm> {
                 padding: const EdgeInsets.all(0),
                 child: TextFormField(
                   key: Key("email-field"),
+                  focusNode: _emailField,
                   controller: _email,
                   validator: (value) => (value.isEmpty)
                       ? AppLocalizations.of(context).emailValidationError

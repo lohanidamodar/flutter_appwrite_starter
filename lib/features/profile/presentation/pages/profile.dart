@@ -19,15 +19,15 @@ class UserProfile extends StatelessWidget {
           children: <Widget>[
             if (user != null) ...[
               //TODO
-              /* Center(
+              Center(
                 child: Avatar(
                   onButtonPressed: () {},
                   radius: 50,
-                  image: user.photoUrl != null
-                      ? NetworkImage(user.photoUrl)
+                  image: user.prefs.photoUrl != null
+                      ? NetworkImage(user.prefs.photoUrl)
                       : null,
                 ),
-              ), */
+              ),
               const SizedBox(height: 10.0),
               if (user.name != null) ...[
                 Center(
