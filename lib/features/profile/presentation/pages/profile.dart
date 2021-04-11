@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
 import 'package:flutter_appwrite_starter/core/presentation/providers/providers.dart';
 import 'package:flutter_appwrite_starter/core/res/routes.dart';
 import 'package:flutter_appwrite_starter/features/profile/presentation/widgets/avatar.dart';
@@ -19,15 +20,22 @@ class UserProfile extends StatelessWidget {
           children: <Widget>[
             if (user != null) ...[
               //TODO
-              Center(
-                child: Avatar(
-                  onButtonPressed: () {},
-                  radius: 50,
-                  image: user.prefs.photoUrl != null
-                      ? NetworkImage(user.prefs.photoUrl)
-                      : null,
-                ),
-              ),
+              FutureBuilder(
+                  future: ApiService.instance.getAvatar(user.name),
+                  builder: (context, snapshot) {
+                    return Center(
+                      child: Avatar(
+                        onButtonPressed: () {},
+                        radius: 50,
+                        image: user.prefs.photoUrl != null
+                            ? NetworkImage(user.prefs.photoUrl)
+                            : snapshot.hasData
+                                ? MemoryImage(snapshot.data.data)
+                                : null,
+                      ),
+                    );
+                  }),
+
               const SizedBox(height: 10.0),
               if (user.name != null) ...[
                 Center(

@@ -5,14 +5,17 @@ class ApiService {
   final Client client = Client();
   Account account;
   Database db;
+  Avatars avatars;
   static ApiService _instance;
 
   ApiService._internal() {
     client
         .setEndpoint(AppConstants.endpoint)
         .setProject(AppConstants.projectId);
+    client.addHeader('Origin', 'http://localhost');
     account = Account(client);
     db = Database(client);
+    avatars = Avatars(client);
   }
 
   static ApiService get instance {
@@ -54,6 +57,12 @@ class ApiService {
 
   Future updateAccountName(String name) {
     return account.updateName(name: name);
+  }
+
+  Future getAvatar(String name) {
+    return avatars.getInitials(
+      name: name,
+    );
   }
   /* 
   Future<Mood> addMood({
