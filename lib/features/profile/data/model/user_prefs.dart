@@ -6,13 +6,15 @@ class UserPrefs {
   final String photoUrl;
   final int buildNumber;
   final bool introSeen;
-  
+  final String photoId;
+
   UserPrefs({
     this.lastLoggedIn,
     this.registrationDate,
     this.photoUrl,
     this.buildNumber,
     this.introSeen,
+    this.photoId,
   });
 
   UserPrefs copyWith({
@@ -21,6 +23,7 @@ class UserPrefs {
     String photoUrl,
     int buildNumber,
     bool introSeen,
+    String photoId,
   }) {
     return UserPrefs(
       lastLoggedIn: lastLoggedIn ?? this.lastLoggedIn,
@@ -28,6 +31,7 @@ class UserPrefs {
       photoUrl: photoUrl ?? this.photoUrl,
       buildNumber: buildNumber ?? this.buildNumber,
       introSeen: introSeen ?? this.introSeen,
+      photoId: photoId ?? this.photoId,
     );
   }
 
@@ -38,14 +42,18 @@ class UserPrefs {
       'photoUrl': photoUrl,
       'buildNumber': buildNumber,
       'introSeen': introSeen,
+      'photoId': photoId,
     };
   }
 
   factory UserPrefs.fromMap(Map<String, dynamic> map) {
     return UserPrefs(
-      lastLoggedIn: map['lastLoggedIn'] != null ? DateTime.fromMillisecondsSinceEpoch(map['lastLoggedIn']) : null,
-      registrationDate: map['registrationDate'] != null ?
-          DateTime.fromMillisecondsSinceEpoch(map['registrationDate']) : null,
+      lastLoggedIn: map['lastLoggedIn'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['lastLoggedIn'])
+          : null,
+      registrationDate: map['registrationDate'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['registrationDate'])
+          : null,
       photoUrl: map['photoUrl'],
       buildNumber: map['buildNumber'],
       introSeen: map['introSeen'],

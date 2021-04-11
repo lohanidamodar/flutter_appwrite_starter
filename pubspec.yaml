@@ -28,11 +28,11 @@ dev_dependencies:
   change_app_package_name: ^0.1.2
 
 dependency_overrides:
-  path_provider: ^2.0.0
-  package_info_plus: ^1.0.0
-  http_parser: ^4.0.0
-  device_info_plus: ^1.0.0
-
+  appwrite:
+    # path: '/home/dlohani/Documents/projects/appwrite/sdks/sdk-for-flutter'
+    git: 
+      url: git@github.com:appwrite/sdk-for-flutter.git
+      ref: feat-null-safety-new
 flutter:
   generate: true
   uses-material-design: true

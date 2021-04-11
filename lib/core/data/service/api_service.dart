@@ -1,6 +1,5 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter_appwrite_starter/core/res/constants.dart';
-import 'package:flutter_appwrite_starter/features/profile/data/model/user.dart';
 
 class ApiService {
   final Client client = Client();
@@ -51,6 +50,10 @@ class ApiService {
 
   Future updatePrefs(Map<String, dynamic> prefs) {
     return account.updatePrefs(prefs: prefs);
+  }
+
+  Future updateAccountName(String name) {
+    return account.updateName(name: name);
   }
   /* 
   Future<Mood> addMood({

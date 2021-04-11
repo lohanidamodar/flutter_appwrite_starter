@@ -4,9 +4,11 @@ packages:
   appwrite:
     dependency: "direct main"
     description:
-      name: appwrite
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: feat-null-safety-new
+      resolved-ref: c59f1b5111d3194f01268e1f7f5b02eb70b2f7b1
+      url: "git@github.com:appwrite/sdk-for-flutter.git"
+    source: git
     version: "0.4.0"
   async:
     dependency: transitive
@@ -70,7 +72,7 @@ packages:
       name: cookie_jar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "3.0.1"
   crop:
     dependency: "direct main"
     description:
@@ -91,7 +93,7 @@ packages:
       name: csslib
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.2"
+    version: "0.17.0"
   device_info_plus:
     dependency: "direct main"
     description:
@@ -140,14 +142,14 @@ packages:
       name: dio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.10"
+    version: "4.0.0"
   dio_cookie_manager:
     dependency: transitive
     description:
       name: dio_cookie_manager
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "2.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -225,7 +227,7 @@ packages:
       name: flutter_web_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.4"
+    version: "0.3.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -251,7 +253,7 @@ packages:
       name: html
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.0+4"
+    version: "0.15.0"
   http:
     dependency: transitive
     description:
@@ -260,7 +262,7 @@ packages:
     source: hosted
     version: "0.13.1"
   http_parser:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: http_parser
       url: "https://pub.dartlang.org"
@@ -386,7 +388,7 @@ packages:
     source: hosted
     version: "0.1.4"
   path_provider:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: path_provider
       url: "https://pub.dartlang.org"
@@ -536,7 +538,7 @@ packages:
       name: universal_html
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.4"
+    version: "2.0.8"
   universal_io:
     dependency: transitive
     description:
@@ -572,13 +574,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.5.1"
-  zone_local:
-    dependency: transitive
-    description:
-      name: zone_local
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2"
 sdks:
   dart: ">=2.12.0 <3.0.0"
-  flutter: ">=1.24.0-10.1.pre"
+  flutter: ">=2.0.0"

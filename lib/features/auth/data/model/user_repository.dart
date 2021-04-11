@@ -100,6 +100,19 @@ class UserRepository with ChangeNotifier {
     notifyListeners();
   }
 
+  updateProfile({String name, String photoUrl, String photoId}) async {
+    try {
+      final res = await ApiService.instance.updateAccountName(name);
+      _error = '';
+      _user = User.fromMap(res.data);
+      _prefs = _prefs.copyWith(photoUrl: photoUrl, photoId: photoId);
+      notifyListeners();
+    } on AppwriteException catch (e) {
+      _error = e.message;
+      notifyListeners();
+    }
+  }
+
   Future<void> _saveUserPrefs() async {
     if (_user == null) return;
     PackageInfo packageInfo = await PackageInfo.fromPlatform();

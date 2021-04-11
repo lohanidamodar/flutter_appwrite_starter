@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_appwrite_starter/core/presentation/providers/providers.dart';
 import 'package:flutter_appwrite_starter/core/res/data_constants.dart';
 import 'package:flutter_appwrite_starter/features/profile/data/model/user.dart';
 import 'package:flutter_appwrite_starter/features/profile/data/model/user_field.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_appwrite_starter/features/profile/presentation/widgets/a
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EditProfile extends StatefulWidget {
   final User user;
@@ -65,12 +67,12 @@ class _EditProfileState extends State<EditProfile> {
           const SizedBox(height: 10.0),
           TextField(
             controller: _nameController,
-            decoration:
-                InputDecoration(labelText: AppLocalizations.of(context).nameFieldLabel),
+            decoration: InputDecoration(
+                labelText: AppLocalizations.of(context).nameFieldLabel),
           ),
           const SizedBox(height: 10.0),
           Center(
-            child: RaisedButton(
+            child: ElevatedButton(
               child: _processing
                   ? CircularProgressIndicator()
                   : Text(AppLocalizations.of(context).saveButtonLabel),
@@ -83,9 +85,9 @@ class _EditProfileState extends State<EditProfile> {
                       setState(() {
                         _processing = true;
                       });
-                      if (_image != null && state == AppState.cropped) {
+                      /* if (_image != null && state == AppState.cropped) {
                         await uploadImage();
-                      }
+                      } */
                       Map<String, dynamic> data = {};
                       if (_nameController.text.isNotEmpty)
                         data[UserFields.name] = _nameController.text;
@@ -93,6 +95,9 @@ class _EditProfileState extends State<EditProfile> {
                         data[UserFields.photoUrl] = _uploadedFileURL;
                       if (data.isNotEmpty) {
                         //update data
+                        await context
+                            .read(userRepoProvider)
+                            .updateProfile(name: _nameController.text);
                       }
                       if (mounted) {
                         setState(() {
@@ -121,21 +126,25 @@ class _EditProfileState extends State<EditProfile> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                ...ListTile.divideTiles(color: Theme.of(context).dividerColor,tiles: [
-
+                ...ListTile.divideTiles(
+                  color: Theme.of(context).dividerColor,
+                  tiles: [
                     ListTile(
                       onTap: () {
                         getImage(ImageSource.camera);
                       },
-                      title: Text(AppLocalizations.of(context).pickFromCameraButtonLabel),
+                      title: Text(AppLocalizations.of(context)
+                          .pickFromCameraButtonLabel),
                     ),
                     ListTile(
                       onTap: () {
                         getImage(ImageSource.gallery);
                       },
-                      title: Text(AppLocalizations.of(context).pickFromGalleryButtonLabel),
+                      title: Text(AppLocalizations.of(context)
+                          .pickFromGalleryButtonLabel),
                     ),
-                ],),
+                  ],
+                ),
                 FlatButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -152,9 +161,8 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future getImage(ImageSource source) async {
-    var image = await ImagePicker().getImage(
-        source: source);
-    if(image == null) return;
+    var image = await ImagePicker().getImage(source: source);
+    if (image == null) return;
     setState(() {
       _image = File(image.path);
       setState(() {
@@ -181,9 +189,9 @@ class _EditProfileState extends State<EditProfile> {
   Future uploadImage() async {
     String path =
         '${AppDBConstants.usersStorageBucket}/${widget.user.id}/${Path.basename(_image.path)}';
-    
+
     //upload file
-    
+
     /* setState(() {
       _uploadedFileURL = url;
     }); */
