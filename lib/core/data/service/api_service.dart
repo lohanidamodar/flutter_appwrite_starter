@@ -6,6 +6,7 @@ class ApiService {
   Account account;
   Database db;
   Avatars avatars;
+  Storage storage;
   static ApiService _instance;
 
   ApiService._internal() {
@@ -16,6 +17,7 @@ class ApiService {
     account = Account(client);
     db = Database(client);
     avatars = Avatars(client);
+    storage = Storage(client);
   }
 
   static ApiService get instance {
@@ -64,37 +66,16 @@ class ApiService {
       name: name,
     );
   }
-  /* 
-  Future<Mood> addMood({
-    Map<String, dynamic> data,
-    List<String> read,
-    List<String> write,
-  }) async {
-    try {
-      final res = await db.createDocument(
-        collectionId: AppConstants.entriesCollection,
-        data: data,
-        read: read,
-        write: write,
-      );
-      return Mood.fromMap(res.data);
-    } on AppwriteException catch (e) {
-      print(e.message);
-      return null;
-    }
+
+  Future getImageAvatar(String fileId) {
+    return storage.getFilePreview(fileId: fileId, width: 100);
   }
 
-  Future<List<Mood>> getMoods() async {
-    try {
-      final res =
-          await db.listDocuments(collectionId: AppConstants.entriesCollection);
-      return List<Map<String, dynamic>>.from(res.data['documents'])
-          .map((e) => Mood.fromMap(e))
-          .toList();
-    } on AppwriteException catch (e) {
-      print(e.message);
-      return [];
-    }
-  } */
-
+  Future uploadFile(
+    MultipartFile file, {
+    List<String> read = const ["*"],
+    List<String> write = const ['*'],
+  }) {
+    return storage.createFile(file: file, read: read, write: write);
+  }
 }

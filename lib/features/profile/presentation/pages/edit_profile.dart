@@ -1,7 +1,12 @@
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:appwrite/appwrite.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
 import 'package:flutter_appwrite_starter/core/presentation/providers/providers.dart';
 import 'package:flutter_appwrite_starter/core/res/data_constants.dart';
+import 'package:flutter_appwrite_starter/core/res/routes.dart';
 import 'package:flutter_appwrite_starter/features/profile/data/model/user.dart';
 import 'package:flutter_appwrite_starter/features/profile/data/model/user_field.dart';
 import 'package:flutter_appwrite_starter/features/profile/presentation/widgets/avatar.dart';
@@ -29,8 +34,9 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController _nameController;
   bool _processing;
   AppState state;
-  File _image;
-  String _uploadedFileURL;
+  PickedFile _image;
+  Uint8List _imageBytes;
+  String _uploadedFileId;
 
   @override
   void initState() {
@@ -49,18 +55,31 @@ class _EditProfileState extends State<EditProfile> {
       body: ListView(
         padding: const EdgeInsets.all(8.0),
         children: <Widget>[
-          //TODO
-          Center(
-            child: Avatar(
-              showButton: true,
-              onButtonPressed: _pickImageButtonPressed,
-              radius: 50,
-              image: state == AppState.cropped && _image != null
-                  ? FileImage(_image)
-                  : widget.user.prefs.photoUrl != null
-                      ? NetworkImage(widget.user.prefs.photoUrl)
-                      : null,
-            ),
+          Consumer(
+            builder: (_, watch, __) {
+              final userRepo = watch(userRepoProvider);
+              return FutureBuilder(
+                  future: userRepo.prefs.photoId != null
+                      ? ApiService.instance
+                          .getImageAvatar(userRepo.prefs.photoId)
+                      : ApiService.instance.getAvatar(widget.user.name),
+                  builder: (context, snapshot) {
+                    return Center(
+                      child: Avatar(
+                        showButton: true,
+                        onButtonPressed: _pickImageButtonPressed,
+                        radius: 50,
+                        image: state == AppState.cropped && _imageBytes != null
+                            ? MemoryImage(_imageBytes)
+                            : userRepo.prefs.photoUrl != null
+                                ? NetworkImage(userRepo.prefs.photoUrl)
+                                : snapshot.hasData
+                                    ? MemoryImage(snapshot.data.data)
+                                    : null,
+                      ),
+                    );
+                  });
+            },
           ),
           const SizedBox(height: 10.0),
           Center(child: Text(widget.user.email)),
@@ -81,23 +100,24 @@ class _EditProfileState extends State<EditProfile> {
                   : () async {
                       //save name
                       if (_nameController.text.isEmpty &&
-                          (_image == null || state != AppState.cropped)) return;
+                          (_imageBytes == null || state != AppState.cropped))
+                        return;
                       setState(() {
                         _processing = true;
                       });
-                      /* if (_image != null && state == AppState.cropped) {
+                      if (_imageBytes != null && state == AppState.cropped) {
                         await uploadImage();
-                      } */
+                      }
                       Map<String, dynamic> data = {};
                       if (_nameController.text.isNotEmpty)
                         data[UserFields.name] = _nameController.text;
-                      if (_uploadedFileURL != null)
-                        data[UserFields.photoUrl] = _uploadedFileURL;
+                      if (_uploadedFileId != null)
+                        data[UserFields.photoUrl] = _uploadedFileId;
                       if (data.isNotEmpty) {
                         //update data
-                        await context
-                            .read(userRepoProvider)
-                            .updateProfile(name: _nameController.text);
+                        await context.read(userRepoProvider).updateProfile(
+                            name: _nameController.text,
+                            photoId: _uploadedFileId);
                       }
                       if (mounted) {
                         setState(() {
@@ -163,17 +183,27 @@ class _EditProfileState extends State<EditProfile> {
   Future getImage(ImageSource source) async {
     var image = await ImagePicker().getImage(source: source);
     if (image == null) return;
+    _image = image;
     setState(() {
-      _image = File(image.path);
-      setState(() {
-        state = AppState.cropped;
-      });
-      Navigator.pop(context);
+      state = AppState.picked;
     });
+    Navigator.pop(context);
+    _cropImage();
   }
-/* 
+
   Future<Null> _cropImage() async {
-    File croppedFile = await ImageCropper.cropImage(
+    final ib = await _image.readAsBytes();
+    final image = await Navigator.pushNamed(
+      context,
+      AppRoutes.cropPage,
+      arguments: ib,
+    );
+    if (image == null) return;
+    _imageBytes = image;
+    setState(() {
+      state = AppState.cropped;
+    });
+    /* File croppedFile = await ImageCropper.cropImage(
       sourcePath: _image.path,
       maxWidth: 800,
       aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
@@ -183,12 +213,15 @@ class _EditProfileState extends State<EditProfile> {
       setState(() {
         state = AppState.cropped;
       });
-    }
-  } */
+    } */
+  }
 
   Future uploadImage() async {
-    String path =
-        '${AppDBConstants.usersStorageBucket}/${widget.user.id}/${Path.basename(_image.path)}';
+    final file =
+        MultipartFile.fromBytes(_imageBytes, filename: "${widget.user.id}.png");
+    final res = await ApiService.instance
+        .uploadFile(file, write: ['user:${widget.user.id}']);
+    _uploadedFileId = res.data['\$id'];
 
     //upload file
 

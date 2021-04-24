@@ -106,7 +106,7 @@ class UserRepository with ChangeNotifier {
       _error = '';
       _user = User.fromMap(res.data);
       _prefs = _prefs.copyWith(photoUrl: photoUrl, photoId: photoId);
-      notifyListeners();
+      await _saveUserPrefs();
     } on AppwriteException catch (e) {
       _error = e.message;
       notifyListeners();
@@ -117,11 +117,12 @@ class UserRepository with ChangeNotifier {
     if (_user == null) return;
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     int buildNumber = int.parse(packageInfo.buildNumber);
-    final prefs = _prefs ?? UserPrefs();
-    prefs.copyWith(
+    var prefs = _prefs ?? UserPrefs();
+    prefs = prefs.copyWith(
       buildNumber: buildNumber,
       introSeen: _prefs.introSeen ?? false,
       registrationDate: _prefs.registrationDate ?? DateTime.now(),
+      lastLoggedIn: DateTime.now(),
     );
     await ApiService.instance.updatePrefs(prefs.toMap());
     _prefs = prefs;

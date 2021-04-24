@@ -14,21 +14,23 @@ class UserProfile extends StatelessWidget {
         title: Text(AppLocalizations.of(context).profilePageTitle),
       ),
       body: Consumer(builder: (context, watch, _) {
-        final user = watch(userRepoProvider).user;
+        final userRepo = watch(userRepoProvider);
+        final user = userRepo.user;
         return ListView(
           padding: const EdgeInsets.all(8.0),
           children: <Widget>[
             if (user != null) ...[
-              //TODO
               FutureBuilder(
-                  future: ApiService.instance.getAvatar(user.name),
+                  future: userRepo.prefs.photoId != null
+                      ? ApiService.instance.getImageAvatar(userRepo.prefs.photoId)
+                      : ApiService.instance.getAvatar(user.name),
                   builder: (context, snapshot) {
                     return Center(
                       child: Avatar(
                         onButtonPressed: () {},
                         radius: 50,
-                        image: user.prefs.photoUrl != null
-                            ? NetworkImage(user.prefs.photoUrl)
+                        image: userRepo.prefs.photoUrl != null
+                            ? NetworkImage(userRepo.prefs.photoUrl)
                             : snapshot.hasData
                                 ? MemoryImage(snapshot.data.data)
                                 : null,

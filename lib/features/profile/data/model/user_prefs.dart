@@ -57,6 +57,7 @@ class UserPrefs {
       photoUrl: map['photoUrl'],
       buildNumber: map['buildNumber'],
       introSeen: map['introSeen'],
+      photoId: map['photoId'],
     );
   }
 
