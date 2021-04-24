@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_appwrite_starter/features/auth/presentation/pages/crop_page.dart';
 import 'package:flutter_appwrite_starter/features/auth/presentation/pages/home.dart';
+import 'package:flutter_appwrite_starter/features/auth/presentation/pages/login.dart';
+import 'package:flutter_appwrite_starter/features/auth/presentation/pages/signup.dart';
 import 'package:flutter_appwrite_starter/features/auth/presentation/pages/splash.dart';
 import 'package:flutter_appwrite_starter/features/auth/presentation/pages/user_info.dart';
 import 'package:flutter_appwrite_starter/features/profile/presentation/pages/edit_profile.dart';
@@ -36,6 +38,10 @@ class AppRoutes {
               );
             case profile:
               return UserProfile();
+            case login:
+              return LoginPage();
+            case signup:
+              return SignupPage();
             case splash:
             default:
               return Splash();

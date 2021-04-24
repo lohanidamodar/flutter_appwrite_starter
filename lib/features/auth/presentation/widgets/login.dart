@@ -93,10 +93,13 @@ class _LoginFormState extends State<LoginForm> {
     if (_formKey.currentState.validate()) {
       if (!await context
           .read(userRepoProvider)
-          .signIn(_email.text, _password.text))
-        Scaffold.of(context).showSnackBar(SnackBar(
+          .signIn(_email.text, _password.text)) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(context.read(userRepoProvider).error),
         ));
+      } else {
+        Navigator.pop(context);
+      }
     }
   }
 

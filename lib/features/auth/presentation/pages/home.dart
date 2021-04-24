@@ -4,7 +4,7 @@ import 'package:flutter_appwrite_starter/features/home/presentation/pages/home.d
 import 'package:flutter_appwrite_starter/features/onboarding/presentation/pages/intro.dart';
 import '../../data/model/user_repository.dart';
 import './splash.dart';
-import './login.dart';
+import 'welcome.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthHomePage extends StatelessWidget {
