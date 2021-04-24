@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:appwrite/appwrite.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
 import 'package:flutter_appwrite_starter/features/profile/data/model/device.dart';
@@ -36,8 +34,7 @@ class UserRepository with ChangeNotifier {
       final res = await ApiService.instance.getUser();
       _user = User.fromMap(res.data);
       _status = Status.Authenticated;
-      final pres = await ApiService.instance.getPrefs();
-      if (pres != null) _prefs = UserPrefs.fromMap(pres.data);
+      _prefs = _user.prefs;
       _saveUserPrefs();
     } on AppwriteException catch (e) {
       _status = Status.Unauthenticated;
@@ -126,6 +123,7 @@ class UserRepository with ChangeNotifier {
     );
     await ApiService.instance.updatePrefs(prefs.toMap());
     _prefs = prefs;
+    _user = _user.copyWith(prefs: _prefs);
     notifyListeners();
   }
 }

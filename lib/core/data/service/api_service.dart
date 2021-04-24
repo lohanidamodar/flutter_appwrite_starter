@@ -49,10 +49,6 @@ class ApiService {
     return account.get();
   }
 
-  Future getPrefs() async {
-    return account.getPrefs();
-  }
-
   Future updatePrefs(Map<String, dynamic> prefs) {
     return account.updatePrefs(prefs: prefs);
   }
