@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter Appwrite Starter'),
+        title: Text('FlAppwrite Starter'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.person),
@@ -25,12 +25,13 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              "Home Page",
-              style: Theme.of(context).textTheme.title,
+              "Welcome to FlAppwrite Starter template",
+              style: Theme.of(context).textTheme.headline6,
             ),
           ],
         ),
