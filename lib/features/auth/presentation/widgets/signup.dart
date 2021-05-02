@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/core/presentation/providers/providers.dart';
+import 'package:flutter_appwrite_starter/core/res/assets.dart';
+import 'package:flutter_appwrite_starter/core/res/colors.dart';
+import 'package:flutter_appwrite_starter/core/res/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../data/model/user_repository.dart';
 
 class SignupForm extends StatefulWidget {
@@ -42,6 +46,16 @@ class _SignupFormState extends State<SignupForm> {
           child: ListView(
             padding: const EdgeInsets.all(16.0),
             children: <Widget>[
+              SvgPicture.asset(
+                AppAssets.logo,
+                height: 80.0,
+              ),
+              const SizedBox(height: 20.0),
+              Text(
+                "Sign Up",
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              const SizedBox(height: 20.0),
               Container(
                 padding: const EdgeInsets.all(0),
                 child: TextFormField(
@@ -91,7 +105,8 @@ class _SignupFormState extends State<SignupForm> {
                       ? AppLocalizations.of(context).passwordValidationError
                       : null,
                   decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context).passwordValidationError,
+                    labelText:
+                        AppLocalizations.of(context).passwordValidationError,
                   ),
                   style: style,
                   textInputAction: TextInputAction.next,
@@ -108,31 +123,54 @@ class _SignupFormState extends State<SignupForm> {
                   controller: _confirmPassword,
                   obscureText: true,
                   validator: (value) => (value.isEmpty)
-                      ? AppLocalizations.of(context).confirmPasswordValidationEmptyError
+                      ? AppLocalizations.of(context)
+                          .confirmPasswordValidationEmptyError
                       : value.isNotEmpty &&
                               _password.text != _confirmPassword.text
-                          ? AppLocalizations.of(context).confirmPasswordValidationMatchError
+                          ? AppLocalizations.of(context)
+                              .confirmPasswordValidationMatchError
                           : null,
                   decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context).confirmPasswordFieldLabel,
+                    labelText:
+                        AppLocalizations.of(context).confirmPasswordFieldLabel,
                   ),
                   style: style,
                   focusNode: _confirmPasswordField,
                   onEditingComplete: () => _signup(),
                 ),
               ),
-              SizedBox(height: 10.0),
+              SizedBox(height: 20.0),
               if (user.status == Status.Authenticating)
                 Center(child: CircularProgressIndicator()),
               if (user.status != Status.Authenticating)
-                Center(
-                  child: RaisedButton(
-                    elevation: 0,
-                    highlightElevation: 0,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                    ),
                     onPressed: _signup,
                     child: Text(AppLocalizations.of(context).signupButtonText),
                   ),
                 ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        icon: Icon(Icons.arrow_back),
+                        style: OutlinedButton.styleFrom(
+                          primary: AppColors.primaryColor,
+                          side: BorderSide(color: AppColors.primaryColor),
+                        ),
+                        label: Text("Back to Login"),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         );

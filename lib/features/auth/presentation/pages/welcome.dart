@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_appwrite_starter/core/res/colors.dart';
 import 'package:flutter_appwrite_starter/core/res/routes.dart';
+import 'package:flutter_appwrite_starter/features/auth/presentation/widgets/login.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -16,63 +18,23 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey.shade800,
-            ),
-            width: double.infinity,
+          const SizedBox(height: kToolbarHeight),
+          Text(
+            AppLocalizations.of(context).welcomePageTitle,
+            style: Theme.of(context).textTheme.headline2.copyWith(
+                color: AppColors.primaryColor,
+                fontWeight: FontWeight.w900,
+                fontFamily: "Frank"),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const SizedBox(height: kToolbarHeight),
-              Text(
-                AppLocalizations.of(context).welcomePageTitle,
-                style: Theme.of(context).textTheme.headline2.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
-                    fontFamily: "Frank"),
-              ),
-              Text(
-                AppLocalizations.of(context).welcomePageSubtitle,
-                style: TextStyle(color: Colors.white, fontSize: 20.0),
-              ),
-              const SizedBox(height: 40.0),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                        ),
-                        child:
-                            Text(AppLocalizations.of(context).loginButtonText),
-                        onPressed: () =>
-                            Navigator.pushNamed(context, AppRoutes.login),
-                      ),
-                    ),
-                    const SizedBox(width: 10.0),
-                    Expanded(
-                      child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          primary: Colors.white,
-                          side: BorderSide(color: Colors.white),
-                        ),
-                        child:
-                            Text(AppLocalizations.of(context).signupButtonText),
-                        onPressed: () =>
-                            Navigator.pushNamed(context, AppRoutes.signup),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          Text(
+            AppLocalizations.of(context).welcomePageSubtitle,
+            style: TextStyle(color: AppColors.primaryColor, fontSize: 20.0),
           ),
+          const SizedBox(height: 20.0),
+          Expanded(child: LoginForm()),
         ],
       ),
     );

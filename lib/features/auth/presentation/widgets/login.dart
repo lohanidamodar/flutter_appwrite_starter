@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/core/presentation/providers/providers.dart';
+import 'package:flutter_appwrite_starter/core/res/assets.dart';
+import 'package:flutter_appwrite_starter/core/res/colors.dart';
+import 'package:flutter_appwrite_starter/core/res/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../data/model/user_repository.dart';
 
 class LoginForm extends StatefulWidget {
@@ -34,6 +38,15 @@ class _LoginFormState extends State<LoginForm> {
           child: ListView(
             padding: const EdgeInsets.all(16.0),
             children: <Widget>[
+              SvgPicture.asset(
+                AppAssets.logo,
+                height: 80.0,
+              ),
+              Text(
+                "Login",
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              const SizedBox(height: 20.0),
               Container(
                 padding: const EdgeInsets.all(0),
                 child: TextFormField(
@@ -70,18 +83,40 @@ class _LoginFormState extends State<LoginForm> {
                   onEditingComplete: _login,
                 ),
               ),
-              SizedBox(height: 10.0),
+              SizedBox(height: 20.0),
               if (user.status == Status.Authenticating)
                 Center(child: CircularProgressIndicator()),
               if (user.status != Status.Authenticating)
-                Center(
-                  child: RaisedButton(
-                    elevation: 0,
-                    highlightElevation: 0,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                    ),
                     onPressed: _login,
                     child: Text(AppLocalizations.of(context).loginButtonText),
                   ),
                 ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        icon: Icon(Icons.arrow_forward),
+                        style: OutlinedButton.styleFrom(
+                          primary: AppColors.primaryColor,
+                          side: BorderSide(color: AppColors.primaryColor),
+                        ),
+                        label:
+                            Text(AppLocalizations.of(context).signupButtonText),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, AppRoutes.signup),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         );
@@ -98,7 +133,7 @@ class _LoginFormState extends State<LoginForm> {
           content: Text(context.read(userRepoProvider).error),
         ));
       } else {
-        Navigator.pop(context);
+        Navigator.maybePop(context);
       }
     }
   }
