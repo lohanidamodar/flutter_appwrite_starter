@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter_appwrite_starter/core/res/constants.dart';
 
@@ -13,7 +15,12 @@ class ApiService {
     client
         .setEndpoint(AppConstants.endpoint)
         .setProject(AppConstants.projectId);
-    client.addHeader('Origin', 'http://localhost');
+
+    //simple fix for running in Flutter Desktop platforms,
+    //before desktop platforms are available in Appwrite console
+    if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
+      client.addHeader('Origin', 'http://localhost');
+    }
     account = Account(client);
     db = Database(client);
     avatars = Avatars(client);
