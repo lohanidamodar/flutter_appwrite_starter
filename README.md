@@ -2,9 +2,9 @@
 
 **Made with :heartbeat: from Nepal**
 
-A project you can clone to build your next project with Flutter + [Appwrite](https://appwrite.io). 
+A project you can clone to build your next project with [Flutter](https://flutter.dev) + [Appwrite](https://appwrite.io). 
 
-If you don't already know what Appwrite is, it's an open source Firebase alternative for Web, Mobile and Flutter applications. Learn more on [Appwrite.io home page](https://appwrite.io).
+If you don't already know what Appwrite is, it's an open source self-hosted Back-End as a Service for Web, Mobile and Flutter applications. Learn more on [Appwrite.io home page](https://appwrite.io).
 
 ## Features
 1. Authentication
@@ -12,10 +12,9 @@ If you don't already know what Appwrite is, it's an open source Firebase alterna
 2. Riverpod State management
 3. Localization ready
 4. Google Fonts
-5. Image picker
+5. Image picker/Cropper
 6. Package info
 7. User's profile and preferences management
-8. Android release signing config
 
 ## Getting Started
 
@@ -28,7 +27,6 @@ How to start your project based on this.
 5. Using the same Find and replace in whole project folder search for `flutter_appwrite_starter` (package name for dart/flutter project) and replace it with your own suitable name. (check the flutter package naming standards for acceptable format)
 6. Using the same Find and replace in whole project folder search for `Appwrite Starter` (display name, launcher name) and replace it with your own suitable name for your app
 7. in `lib/core/res/constants.dart` update endpoint and project id with your own endpoint and project id details;
-9. For android signing, modify `android/key.properties` with your signing details and replace `keys/keystore.jks` with your own keystore or provide different location in `android/key.properties` for your keystore
 
 ## Adding new Locale
 TODO Docs
