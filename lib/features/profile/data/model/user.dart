@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_appwrite_starter/features/profile/data/model/user_prefs.dart';
 
 class User {

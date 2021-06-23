@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
 import 'package:flutter_appwrite_starter/core/presentation/providers/providers.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

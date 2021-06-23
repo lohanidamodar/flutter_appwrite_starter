@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/core/presentation/providers/providers.dart';
 import 'package:flutter_appwrite_starter/core/res/assets.dart';
 import 'package:flutter_appwrite_starter/core/res/colors.dart';
-import 'package:flutter_appwrite_starter/core/res/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
