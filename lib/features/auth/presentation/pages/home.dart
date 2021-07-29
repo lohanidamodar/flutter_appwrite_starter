@@ -1,30 +1,31 @@
+import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/core/presentation/providers/providers.dart';
 import 'package:flutter_appwrite_starter/features/home/presentation/pages/home.dart';
 import 'package:flutter_appwrite_starter/features/onboarding/presentation/pages/intro.dart';
-import '../../data/model/user_repository.dart';
+import 'package:flutter_appwrite_starter/features/profile/data/model/user_prefs.dart';
 import './splash.dart';
 import 'welcome.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer(
-      builder: (context, watch, _) {
-        final user = watch(userRepoProvider);
-        switch (user.status) {
-          case Status.Unauthenticated:
-          case Status.Authenticating:
-            return WelcomePage();
-          case Status.Authenticated:
-            if (user.isLoading) return Splash();
-            return user.prefs?.introSeen ?? false ? HomePage() : IntroPage();
-          case Status.Uninitialized:
-          default:
-            return Splash();
-        }
-      },
-    );
+    AuthNotifier authNotifier = context.authNotifier;
+    switch (authNotifier.status) {
+      case AuthStatus.unauthenticated:
+      case AuthStatus.authenticating:
+        return WelcomePage();
+      case AuthStatus.authenticated:
+        if (authNotifier.isLoading) return Splash();
+        return authNotifier.user
+                    .prefsConverted<UserPrefs>(
+                        (data) => UserPrefs.fromMap(data))
+                    ?.introSeen ??
+                false
+            ? HomePage()
+            : IntroPage();
+      case AuthStatus.uninitialized:
+      default:
+        return Splash();
+    }
   }
 }

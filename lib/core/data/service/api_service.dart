@@ -35,16 +35,33 @@ class ApiService {
   }
 
   Future signup({String name, String email, String password}) async {
-    return account.create(name: name ?? "", email: email, password: password);
+    try {
+      final res = await account.create(
+        name: name ?? "",
+        email: email,
+        password: password,
+      );
+      print(res);
+    } on AppwriteException catch (e) {
+      print(e.message);
+    }
   }
 
   Future login({String email, String password}) async {
-    return account.createSession(email: email, password: password);
+    try {
+      final res = await account.createSession(
+        email: email,
+        password: password,
+      );
+      print(res);
+    } on AppwriteException catch (e) {
+      print(e.message);
+    }
   }
 
   Future<bool> logout() async {
     try {
-      await account.deleteSessions();
+      await account.deleteSession(sessionId: 'current');
       return true;
     } on AppwriteException catch (e) {
       print(e.message);

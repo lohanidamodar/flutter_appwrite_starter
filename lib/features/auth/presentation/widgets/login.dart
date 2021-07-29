@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/core/presentation/providers/providers.dart';
 import 'package:flutter_appwrite_starter/core/res/assets.dart';
 import 'package:flutter_appwrite_starter/core/res/colors.dart';
 import 'package:flutter_appwrite_starter/core/res/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../data/model/user_repository.dart';
+import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -30,107 +28,100 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(
-      builder: (context, watch, _) {
-        final user = watch(userRepoProvider);
-        return Form(
-          key: _formKey,
-          child: ListView(
-            padding: const EdgeInsets.all(16.0),
-            children: <Widget>[
-              SvgPicture.asset(
-                AppAssets.logo,
-                height: 80.0,
-              ),
-              Text(
-                "Login",
-                style: Theme.of(context).textTheme.headline4,
-              ),
-              const SizedBox(height: 20.0),
-              Container(
-                padding: const EdgeInsets.all(0),
-                child: TextFormField(
-                  key: Key("email-field"),
-                  controller: _email,
-                  validator: (value) => (value.isEmpty)
-                      ? AppLocalizations.of(context).emailValidationError
-                      : null,
-                  decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context).emailFieldlabel,
-                  ),
-                  style: style,
-                  textInputAction: TextInputAction.next,
-                  onEditingComplete: () {
-                    FocusScope.of(context).requestFocus(_passwordField);
-                  },
-                ),
-              ),
-              const SizedBox(height: 10.0),
-              Container(
-                padding: const EdgeInsets.all(0),
-                child: TextFormField(
-                  focusNode: _passwordField,
-                  key: Key("password-field"),
-                  controller: _password,
-                  obscureText: true,
-                  validator: (value) => (value.isEmpty)
-                      ? AppLocalizations.of(context).passwordValidationError
-                      : null,
-                  decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context).passwordFieldLabel,
-                  ),
-                  style: style,
-                  onEditingComplete: _login,
-                ),
-              ),
-              SizedBox(height: 20.0),
-              if (user.status == Status.Authenticating)
-                Center(child: CircularProgressIndicator()),
-              if (user.status != Status.Authenticating)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                    ),
-                    onPressed: _login,
-                    child: Text(AppLocalizations.of(context).loginButtonText),
-                  ),
-                ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        icon: Icon(Icons.arrow_forward),
-                        style: OutlinedButton.styleFrom(
-                          primary: AppColors.primaryColor,
-                          side: BorderSide(color: AppColors.primaryColor),
-                        ),
-                        label:
-                            Text(AppLocalizations.of(context).signupButtonText),
-                        onPressed: () =>
-                            Navigator.pushNamed(context, AppRoutes.signup),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+    return Form(
+      key: _formKey,
+      child: ListView(
+        padding: const EdgeInsets.all(16.0),
+        children: <Widget>[
+          SvgPicture.asset(
+            AppAssets.logo,
+            height: 80.0,
           ),
-        );
-      },
+          Text(
+            "Login",
+            style: Theme.of(context).textTheme.headline4,
+          ),
+          const SizedBox(height: 20.0),
+          Container(
+            padding: const EdgeInsets.all(0),
+            child: TextFormField(
+              key: Key("email-field"),
+              controller: _email,
+              validator: (value) => (value.isEmpty)
+                  ? AppLocalizations.of(context).emailValidationError
+                  : null,
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context).emailFieldlabel,
+              ),
+              style: style,
+              textInputAction: TextInputAction.next,
+              onEditingComplete: () {
+                FocusScope.of(context).requestFocus(_passwordField);
+              },
+            ),
+          ),
+          const SizedBox(height: 10.0),
+          Container(
+            padding: const EdgeInsets.all(0),
+            child: TextFormField(
+              focusNode: _passwordField,
+              key: Key("password-field"),
+              controller: _password,
+              obscureText: true,
+              validator: (value) => (value.isEmpty)
+                  ? AppLocalizations.of(context).passwordValidationError
+                  : null,
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context).passwordFieldLabel,
+              ),
+              style: style,
+              onEditingComplete: _login,
+            ),
+          ),
+          SizedBox(height: 20.0),
+          if (context.authNotifier.status == AuthStatus.authenticating)
+            Center(child: CircularProgressIndicator()),
+          if (context.authNotifier.status != AuthStatus.authenticating)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                ),
+                onPressed: _login,
+                child: Text(AppLocalizations.of(context).loginButtonText),
+              ),
+            ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: OutlinedButton.icon(
+                    icon: Icon(Icons.arrow_forward),
+                    style: OutlinedButton.styleFrom(
+                      primary: AppColors.primaryColor,
+                      side: BorderSide(color: AppColors.primaryColor),
+                    ),
+                    label: Text(AppLocalizations.of(context).signupButtonText),
+                    onPressed: () =>
+                        Navigator.pushNamed(context, AppRoutes.signup),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   _login() async {
     if (_formKey.currentState.validate()) {
-      if (!await context
-          .read(userRepoProvider)
-          .signIn(_email.text, _password.text)) {
+      if (!await context.authNotifier
+          .createSession(email: _email.text, password: _password.text)) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(context.read(userRepoProvider).error),
+          content: Text(context.authNotifier.error),
         ));
       } else {
         Navigator.maybePop(context);
