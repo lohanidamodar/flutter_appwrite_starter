@@ -10,7 +10,7 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.authNotifier.user;
-    final prefs = user.prefsConverted((data) => UserPrefs.fromMap(data));
+    final prefs = user?.prefsConverted((data) => UserPrefs.fromMap(data));
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).profilePageTitle),
@@ -20,15 +20,15 @@ class UserProfile extends StatelessWidget {
         children: <Widget>[
           if (user != null) ...[
             FutureBuilder(
-                future: prefs.photoId != null
-                    ? ApiService.instance.getImageAvatar(prefs.photoId)
+                future: prefs?.photoId != null
+                    ? ApiService.instance.getImageAvatar(prefs?.photoId)
                     : ApiService.instance.getAvatar(user.name),
                 builder: (context, snapshot) {
                   return Center(
                     child: Avatar(
                       onButtonPressed: () {},
                       radius: 50,
-                      image: prefs.photoUrl != null
+                      image: prefs?.photoUrl != null
                           ? NetworkImage(prefs.photoUrl)
                           : snapshot.hasData
                               ? MemoryImage(snapshot.data.data)
@@ -39,7 +39,7 @@ class UserProfile extends StatelessWidget {
             const SizedBox(height: 10.0),
             if (user.name != null) ...[
               Center(
-                child: Text(user.name),
+                child: Text(user?.name),
               ),
               const SizedBox(height: 5.0),
             ],

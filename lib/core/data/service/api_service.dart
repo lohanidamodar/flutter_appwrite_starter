@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter_appwrite_starter/core/res/constants.dart';
 
@@ -15,12 +13,6 @@ class ApiService {
     client
         .setEndpoint(AppConstants.endpoint)
         .setProject(AppConstants.projectId);
-
-    //simple fix for running in Flutter Desktop platforms,
-    //before desktop platforms are available in Appwrite console
-    if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
-      client.addHeader('Origin', 'http://localhost');
-    }
     account = Account(client);
     db = Database(client);
     avatars = Avatars(client);
@@ -32,53 +24,6 @@ class ApiService {
       _instance = ApiService._internal();
     }
     return _instance;
-  }
-
-  Future signup({String name, String email, String password}) async {
-    try {
-      final res = await account.create(
-        name: name ?? "",
-        email: email,
-        password: password,
-      );
-      print(res);
-    } on AppwriteException catch (e) {
-      print(e.message);
-    }
-  }
-
-  Future login({String email, String password}) async {
-    try {
-      final res = await account.createSession(
-        email: email,
-        password: password,
-      );
-      print(res);
-    } on AppwriteException catch (e) {
-      print(e.message);
-    }
-  }
-
-  Future<bool> logout() async {
-    try {
-      await account.deleteSession(sessionId: 'current');
-      return true;
-    } on AppwriteException catch (e) {
-      print(e.message);
-      return false;
-    }
-  }
-
-  Future getUser() async {
-    return account.get();
-  }
-
-  Future updatePrefs(Map<String, dynamic> prefs) {
-    return account.updatePrefs(prefs: prefs);
-  }
-
-  Future updateAccountName(String name) {
-    return account.updateName(name: name);
   }
 
   Future getAvatar(String name) {
