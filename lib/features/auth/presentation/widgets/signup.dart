@@ -179,6 +179,7 @@ class _SignupFormState extends State<SignupForm> {
       } else {
         await context.authNotifier
             .createSession(email: _email.text, password: _password.text);
+        Navigator.pop(context);
       }
     }
   }

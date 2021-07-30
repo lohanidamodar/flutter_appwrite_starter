@@ -195,7 +195,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: e4e4462696f8bfe1ef9cf53184905e5956aa02b5
+      resolved-ref: "61cf9c206430fe7528ee9c261fa662cc6ddbbe86"
       url: "https://github.com/lohanidamodar/flappwrite_account_kit"
     source: git
     version: "0.0.1"
