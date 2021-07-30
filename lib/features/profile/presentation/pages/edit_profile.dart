@@ -1,19 +1,15 @@
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
-import 'package:flutter_appwrite_starter/core/presentation/providers/providers.dart';
-import 'package:flutter_appwrite_starter/core/res/data_constants.dart';
 import 'package:flutter_appwrite_starter/core/res/routes.dart';
-import 'package:flutter_appwrite_starter/features/profile/data/model/user.dart';
-import 'package:flutter_appwrite_starter/features/profile/data/model/user_field.dart';
+import 'package:flutter_appwrite_starter/features/profile/data/model/user_prefs.dart';
 import 'package:flutter_appwrite_starter/features/profile/presentation/widgets/avatar.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart' as Path;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
 
 class EditProfile extends StatefulWidget {
   final User user;
@@ -48,6 +44,9 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    final authNotifier = context.authNotifier;
+    final prefs =
+        authNotifier.user.prefsConverted((data) => UserPrefs.fromMap(data));
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).editProfile),
@@ -57,11 +56,9 @@ class _EditProfileState extends State<EditProfile> {
         children: <Widget>[
           Consumer(
             builder: (_, watch, __) {
-              final userRepo = watch(userRepoProvider);
               return FutureBuilder(
-                  future: userRepo.prefs.photoId != null
-                      ? ApiService.instance
-                          .getImageAvatar(userRepo.prefs.photoId)
+                  future: prefs.photoId != null
+                      ? ApiService.instance.getImageAvatar(prefs.photoId)
                       : ApiService.instance.getAvatar(widget.user.name),
                   builder: (context, snapshot) {
                     return Center(
@@ -71,8 +68,8 @@ class _EditProfileState extends State<EditProfile> {
                         radius: 50,
                         image: state == AppState.cropped && _imageBytes != null
                             ? MemoryImage(_imageBytes)
-                            : userRepo.prefs.photoUrl != null
-                                ? NetworkImage(userRepo.prefs.photoUrl)
+                            : prefs.photoUrl != null
+                                ? NetworkImage(prefs.photoUrl)
                                 : snapshot.hasData
                                     ? MemoryImage(snapshot.data.data)
                                     : null,
@@ -110,14 +107,13 @@ class _EditProfileState extends State<EditProfile> {
                       }
                       Map<String, dynamic> data = {};
                       if (_nameController.text.isNotEmpty)
-                        data[UserFields.name] = _nameController.text;
-                      if (_uploadedFileId != null)
-                        data[UserFields.photoUrl] = _uploadedFileId;
-                      if (data.isNotEmpty) {
-                        //update data
-                        await context.read(userRepoProvider).updateProfile(
-                            name: _nameController.text,
-                            photoId: _uploadedFileId);
+                        await authNotifier.updateName(
+                            name: _nameController.text);
+                      if (_uploadedFileId != null) {
+                        await authNotifier.updatePrefs(
+                            prefs: prefs
+                                .copyWith(photoId: _uploadedFileId)
+                                .toMap());
                       }
                       if (mounted) {
                         setState(() {
