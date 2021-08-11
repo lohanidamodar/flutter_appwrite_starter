@@ -32,9 +32,7 @@ class AppRoutes {
             case userInfo:
               return UserInfoPage();
             case editProfile:
-              return EditProfile(
-                user: settings.arguments as User?,
-              );
+              return EditProfile();
             case cropPage:
               return CropPage(
                 image: settings.arguments as Uint8List?,

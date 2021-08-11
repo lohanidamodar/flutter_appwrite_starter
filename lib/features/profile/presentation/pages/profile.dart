@@ -39,10 +39,10 @@ class UserProfile extends StatelessWidget {
                   );
                 }),
             const SizedBox(height: 10.0),
-              Center(
-                child: Text(user.name),
-              ),
-              const SizedBox(height: 5.0),
+            Center(
+              child: Text(user.name),
+            ),
+            const SizedBox(height: 5.0),
             Center(child: Text(user.email)),
           ],
           ...ListTile.divideTiles(
@@ -51,8 +51,8 @@ class UserProfile extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.edit),
                 title: Text(AppLocalizations.of(context)!.editProfile),
-                onTap: () => Navigator.pushNamed(context, AppRoutes.editProfile,
-                    arguments: user),
+                onTap: () =>
+                    Navigator.pushNamed(context, AppRoutes.editProfile),
               ),
               ListTile(
                 leading: Icon(Icons.exit_to_app),

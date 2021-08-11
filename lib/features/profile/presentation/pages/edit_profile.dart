@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'package:appwrite/appwrite.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
 import 'package:flutter_appwrite_starter/core/res/routes.dart';
@@ -12,10 +11,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
 
 class EditProfile extends StatefulWidget {
-  final User? user;
-
-  const EditProfile({Key? key, this.user}) : super(key: key);
-
   @override
   _EditProfileState createState() => _EditProfileState();
 }
@@ -39,12 +34,19 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
     _processing = false;
     state = AppState.free;
-    _nameController = TextEditingController(text: widget.user?.name);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _nameController =
+        TextEditingController(text: context.authNotifier.user?.name);
   }
 
   @override
   Widget build(BuildContext context) {
     final authNotifier = context.authNotifier;
+    final User user = authNotifier.user!;
     final prefs =
         authNotifier.user!.prefsConverted((data) => UserPrefs.fromMap(data));
     return Scaffold(
@@ -59,7 +61,7 @@ class _EditProfileState extends State<EditProfile> {
               return FutureBuilder(
                   future: prefs.photoId != null
                       ? ApiService.instance.getImageAvatar(prefs.photoId!)
-                      : ApiService.instance.getAvatar(widget.user!.name),
+                      : ApiService.instance.getAvatar(user.name),
                   builder: (context, AsyncSnapshot<Uint8List> snapshot) {
                     return Center(
                       child: Avatar(
@@ -79,7 +81,7 @@ class _EditProfileState extends State<EditProfile> {
             },
           ),
           const SizedBox(height: 10.0),
-          Center(child: Text(widget.user!.email)),
+          Center(child: Text(user.email)),
           const SizedBox(height: 10.0),
           TextField(
             controller: _nameController,
@@ -212,10 +214,10 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future uploadImage() async {
-    final file =
-        MultipartFile.fromBytes(_imageBytes!, filename: "${widget.user!.id}.png");
+    final file = MultipartFile.fromBytes(_imageBytes!,
+        filename: "${context.authNotifier.user!.id}.png");
     final res = await ApiService.instance
-        .uploadFile(file, write: ['user:${widget.user!.id}']);
+        .uploadFile(file, write: ['user:${context.authNotifier.user!.id}']);
     _uploadedFileId = res.data['\$id'];
 
     //upload file
