@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/features/profile/data/model/user_prefs.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
 
@@ -8,7 +7,7 @@ class IntroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Swiper(
+      body: PageView.builder(
         itemCount: 1,
         itemBuilder: (context, index) {
           return Column(
