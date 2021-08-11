@@ -20,7 +20,7 @@ class IntroPage extends StatelessWidget {
                   _finishIntroScreen(context);
                 },
                 child:
-                    Text(AppLocalizations.of(context).introFinishButtonLabel),
+                    Text(AppLocalizations.of(context)!.introFinishButtonLabel),
               )
             ],
           );
@@ -31,7 +31,7 @@ class IntroPage extends StatelessWidget {
 
   _finishIntroScreen(BuildContext context) async {
     //set intro seen to true in user's intro
-    final prefs = context.authNotifier.user
+    final prefs = context.authNotifier.user!
         .prefsConverted((data) => UserPrefs.fromMap(data));
     await context.authNotifier
         .updatePrefs(prefs: prefs.copyWith(introSeen: true).toMap());

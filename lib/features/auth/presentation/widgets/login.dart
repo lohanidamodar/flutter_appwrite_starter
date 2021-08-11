@@ -13,9 +13,9 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   TextStyle style = TextStyle(fontSize: 20.0);
-  TextEditingController _email;
-  TextEditingController _password;
-  FocusNode _passwordField;
+  TextEditingController? _email;
+  TextEditingController? _password;
+  FocusNode? _passwordField;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -47,11 +47,11 @@ class _LoginFormState extends State<LoginForm> {
             child: TextFormField(
               key: Key("email-field"),
               controller: _email,
-              validator: (value) => (value.isEmpty)
-                  ? AppLocalizations.of(context).emailValidationError
+              validator: (value) => (value!.isEmpty)
+                  ? AppLocalizations.of(context)!.emailValidationError
                   : null,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context).emailFieldlabel,
+                labelText: AppLocalizations.of(context)!.emailFieldlabel,
               ),
               style: style,
               textInputAction: TextInputAction.next,
@@ -68,11 +68,11 @@ class _LoginFormState extends State<LoginForm> {
               key: Key("password-field"),
               controller: _password,
               obscureText: true,
-              validator: (value) => (value.isEmpty)
-                  ? AppLocalizations.of(context).passwordValidationError
+              validator: (value) => (value!.isEmpty)
+                  ? AppLocalizations.of(context)!.passwordValidationError
                   : null,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context).passwordFieldLabel,
+                labelText: AppLocalizations.of(context)!.passwordFieldLabel,
               ),
               style: style,
               onEditingComplete: _login,
@@ -89,7 +89,7 @@ class _LoginFormState extends State<LoginForm> {
                   elevation: 0,
                 ),
                 onPressed: _login,
-                child: Text(AppLocalizations.of(context).loginButtonText),
+                child: Text(AppLocalizations.of(context)!.loginButtonText),
               ),
             ),
           Padding(
@@ -103,7 +103,7 @@ class _LoginFormState extends State<LoginForm> {
                       primary: AppColors.primaryColor,
                       side: BorderSide(color: AppColors.primaryColor),
                     ),
-                    label: Text(AppLocalizations.of(context).signupButtonText),
+                    label: Text(AppLocalizations.of(context)!.signupButtonText),
                     onPressed: () =>
                         Navigator.pushNamed(context, AppRoutes.signup),
                   ),
@@ -117,11 +117,11 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   _login() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       if (!await context.authNotifier
-          .createSession(email: _email.text, password: _password.text)) {
+          .createSession(email: _email!.text, password: _password!.text)) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(context.authNotifier.error),
+          content: Text(context.authNotifier.error!),
         ));
       } else {
         Navigator.maybePop(context);
@@ -131,8 +131,8 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   void dispose() {
-    _email.dispose();
-    _password.dispose();
+    _email!.dispose();
+    _password!.dispose();
     super.dispose();
   }
 }

@@ -5,7 +5,7 @@ import 'colors.dart';
 import 'sizes.dart';
 
 class AppThemes {
-  static BuildContext context;
+  static late BuildContext context;
   static final ThemeData defaultTheme = ThemeData(
     primaryColor: AppColors.primaryColor,
     accentColor: AppColors.accentColor,

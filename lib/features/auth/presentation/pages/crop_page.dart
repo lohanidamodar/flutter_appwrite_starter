@@ -4,10 +4,10 @@ import 'package:crop_your_image/crop_your_image.dart';
 import 'package:flutter/material.dart';
 
 class CropPage extends StatelessWidget {
-  final Uint8List image;
+  final Uint8List? image;
   final CropController _controller = CropController();
 
-  CropPage({Key key, this.image}) : super(key: key);
+  CropPage({Key? key, this.image}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class CropPage extends StatelessWidget {
             onCropped: (image) {
               Navigator.pop(context, image);
             },
-            image: image),
+            image: image!),
       ),
     );
   }

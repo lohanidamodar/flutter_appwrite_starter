@@ -1,13 +1,15 @@
+import 'dart:typed_data';
+
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter_appwrite_starter/core/res/constants.dart';
 
 class ApiService {
   final Client client = Client();
-  Account account;
-  Database db;
-  Avatars avatars;
-  Storage storage;
-  static ApiService _instance;
+  Account? account;
+  Database? db;
+  late Avatars avatars;
+  late Storage storage;
+  static ApiService? _instance;
 
   ApiService._internal() {
     client
@@ -23,17 +25,19 @@ class ApiService {
     if (_instance == null) {
       _instance = ApiService._internal();
     }
-    return _instance;
+    return _instance!;
   }
 
-  Future getAvatar(String name) {
-    return avatars.getInitials(
+  Future<Uint8List> getAvatar(String name) async {
+    final res = await avatars.getInitials(
       name: name,
     );
+    return res.data;
   }
 
-  Future getImageAvatar(String fileId) {
-    return storage.getFilePreview(fileId: fileId, width: 100);
+  Future<Uint8List> getImageAvatar(String fileId) async {
+    final res = await storage.getFilePreview(fileId: fileId, width: 100);
+    return res.data;
   }
 
   Future uploadFile(

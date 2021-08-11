@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
 import 'package:flutter_appwrite_starter/core/res/routes.dart';
@@ -13,7 +15,7 @@ class UserProfile extends StatelessWidget {
     final prefs = user?.prefsConverted((data) => UserPrefs.fromMap(data));
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).profilePageTitle),
+        title: Text(AppLocalizations.of(context)!.profilePageTitle),
       ),
       body: ListView(
         padding: const EdgeInsets.all(8.0),
@@ -21,42 +23,40 @@ class UserProfile extends StatelessWidget {
           if (user != null) ...[
             FutureBuilder(
                 future: prefs?.photoId != null
-                    ? ApiService.instance.getImageAvatar(prefs?.photoId)
+                    ? ApiService.instance.getImageAvatar(prefs!.photoId!)
                     : ApiService.instance.getAvatar(user.name),
-                builder: (context, snapshot) {
+                builder: (context, AsyncSnapshot<Uint8List> snapshot) {
                   return Center(
                     child: Avatar(
                       onButtonPressed: () {},
                       radius: 50,
-                      image: prefs?.photoUrl != null
-                          ? NetworkImage(prefs.photoUrl)
+                      image: (prefs?.photoUrl != null
+                          ? NetworkImage(prefs!.photoUrl!)
                           : snapshot.hasData
-                              ? MemoryImage(snapshot.data.data)
-                              : null,
+                              ? MemoryImage(snapshot.data!)
+                              : null) as ImageProvider<dynamic>?,
                     ),
                   );
                 }),
             const SizedBox(height: 10.0),
-            if (user.name != null) ...[
               Center(
-                child: Text(user?.name),
+                child: Text(user.name),
               ),
               const SizedBox(height: 5.0),
-            ],
-            Center(child: Text(user?.email)),
+            Center(child: Text(user.email)),
           ],
           ...ListTile.divideTiles(
             color: Theme.of(context).dividerColor,
             tiles: [
               ListTile(
                 leading: Icon(Icons.edit),
-                title: Text(AppLocalizations.of(context).editProfile),
+                title: Text(AppLocalizations.of(context)!.editProfile),
                 onTap: () => Navigator.pushNamed(context, AppRoutes.editProfile,
                     arguments: user),
               ),
               ListTile(
                 leading: Icon(Icons.exit_to_app),
-                title: Text(AppLocalizations.of(context).logoutButtonText),
+                title: Text(AppLocalizations.of(context)!.logoutButtonText),
                 onTap: () async {
                   await context.authNotifier.deleteSession();
                   Navigator.pop(context);

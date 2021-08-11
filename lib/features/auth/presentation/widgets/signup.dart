@@ -12,13 +12,13 @@ class SignupForm extends StatefulWidget {
 
 class _SignupFormState extends State<SignupForm> {
   TextStyle style = TextStyle(fontSize: 20.0);
-  TextEditingController _name;
-  TextEditingController _email;
-  TextEditingController _password;
-  TextEditingController _confirmPassword;
-  FocusNode _emailField;
-  FocusNode _passwordField;
-  FocusNode _confirmPasswordField;
+  TextEditingController? _name;
+  TextEditingController? _email;
+  TextEditingController? _password;
+  TextEditingController? _confirmPassword;
+  FocusNode? _emailField;
+  FocusNode? _passwordField;
+  FocusNode? _confirmPasswordField;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -55,11 +55,11 @@ class _SignupFormState extends State<SignupForm> {
             child: TextFormField(
               key: Key("name-field"),
               controller: _name,
-              validator: (value) => (value.isEmpty)
-                  ? AppLocalizations.of(context).nameValidationError
+              validator: (value) => (value!.isEmpty)
+                  ? AppLocalizations.of(context)!.nameValidationError
                   : null,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context).nameFieldLabel,
+                labelText: AppLocalizations.of(context)!.nameFieldLabel,
               ),
               style: style,
               textInputAction: TextInputAction.next,
@@ -74,11 +74,11 @@ class _SignupFormState extends State<SignupForm> {
               key: Key("email-field"),
               focusNode: _emailField,
               controller: _email,
-              validator: (value) => (value.isEmpty)
-                  ? AppLocalizations.of(context).emailValidationError
+              validator: (value) => (value!.isEmpty)
+                  ? AppLocalizations.of(context)!.emailValidationError
                   : null,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context).emailFieldlabel,
+                labelText: AppLocalizations.of(context)!.emailFieldlabel,
               ),
               style: style,
               textInputAction: TextInputAction.next,
@@ -95,11 +95,11 @@ class _SignupFormState extends State<SignupForm> {
               key: Key("password-field"),
               controller: _password,
               obscureText: true,
-              validator: (value) => (value.isEmpty)
-                  ? AppLocalizations.of(context).passwordValidationError
+              validator: (value) => (value!.isEmpty)
+                  ? AppLocalizations.of(context)!.passwordValidationError
                   : null,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context).passwordValidationError,
+                labelText: AppLocalizations.of(context)!.passwordValidationError,
               ),
               style: style,
               textInputAction: TextInputAction.next,
@@ -115,16 +115,16 @@ class _SignupFormState extends State<SignupForm> {
               key: Key("confirm-password-field"),
               controller: _confirmPassword,
               obscureText: true,
-              validator: (value) => (value.isEmpty)
-                  ? AppLocalizations.of(context)
+              validator: (value) => (value!.isEmpty)
+                  ? AppLocalizations.of(context)!
                       .confirmPasswordValidationEmptyError
-                  : value.isNotEmpty && _password.text != _confirmPassword.text
-                      ? AppLocalizations.of(context)
+                  : value.isNotEmpty && _password!.text != _confirmPassword!.text
+                      ? AppLocalizations.of(context)!
                           .confirmPasswordValidationMatchError
                       : null,
               decoration: InputDecoration(
                 labelText:
-                    AppLocalizations.of(context).confirmPasswordFieldLabel,
+                    AppLocalizations.of(context)!.confirmPasswordFieldLabel,
               ),
               style: style,
               focusNode: _confirmPasswordField,
@@ -142,7 +142,7 @@ class _SignupFormState extends State<SignupForm> {
                   elevation: 0,
                 ),
                 onPressed: _signup,
-                child: Text(AppLocalizations.of(context).signupButtonText),
+                child: Text(AppLocalizations.of(context)!.signupButtonText),
               ),
             ),
           Padding(
@@ -169,16 +169,16 @@ class _SignupFormState extends State<SignupForm> {
   }
 
   _signup() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       //signup user
       if (!await context.authNotifier.create(
-          name: _name.text, email: _email.text, password: _password.text)) {
+          name: _name!.text, email: _email!.text, password: _password!.text)) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(context.authNotifier.error),
+          content: Text(context.authNotifier.error!),
         ));
       } else {
         await context.authNotifier
-            .createSession(email: _email.text, password: _password.text);
+            .createSession(email: _email!.text, password: _password!.text);
         Navigator.pop(context);
       }
     }
@@ -186,8 +186,8 @@ class _SignupFormState extends State<SignupForm> {
 
   @override
   void dispose() {
-    _email.dispose();
-    _password.dispose();
+    _email!.dispose();
+    _password!.dispose();
     super.dispose();
   }
 }
