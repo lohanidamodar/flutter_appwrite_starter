@@ -20,6 +20,6 @@ class App extends StatelessWidget {
         onGenerateRoute: AppRoutes.onGenerateRoute,
         home: AuthHomePage(),
       );
-    });
+    } as Widget Function(BuildContext, T Function<T>(ProviderBase<Object?, T>), Widget?));
   }
 }

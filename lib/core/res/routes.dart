@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_appwrite_starter/features/auth/presentation/pages/crop_page.dart';
@@ -29,12 +32,10 @@ class AppRoutes {
             case userInfo:
               return UserInfoPage();
             case editProfile:
-              return EditProfile(
-                user: settings.arguments,
-              );
+              return EditProfile();
             case cropPage:
               return CropPage(
-                image: settings.arguments,
+                image: settings.arguments as Uint8List?,
               );
             case profile:
               return UserProfile();

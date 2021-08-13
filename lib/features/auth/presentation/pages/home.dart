@@ -16,9 +16,10 @@ class AuthHomePage extends StatelessWidget {
         return WelcomePage();
       case AuthStatus.authenticated:
         if (authNotifier.isLoading) return Splash();
-        return authNotifier.user?.prefsConverted<UserPrefs>(
+        return authNotifier.user
+                    ?.prefsConverted<UserPrefs>(
                         (data) => UserPrefs.fromMap(data))
-                    ?.introSeen ??
+                    .introSeen ??
                 false
             ? HomePage()
             : IntroPage();

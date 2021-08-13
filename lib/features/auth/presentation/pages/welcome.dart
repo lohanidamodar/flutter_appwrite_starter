@@ -23,14 +23,14 @@ class _WelcomePageState extends State<WelcomePage> {
         children: <Widget>[
           const SizedBox(height: kToolbarHeight),
           Text(
-            AppLocalizations.of(context).welcomePageTitle,
-            style: Theme.of(context).textTheme.headline2.copyWith(
+            AppLocalizations.of(context)!.welcomePageTitle,
+            style: Theme.of(context).textTheme.headline2!.copyWith(
                 color: AppColors.primaryColor,
                 fontWeight: FontWeight.w900,
                 fontFamily: "Frank"),
           ),
           Text(
-            AppLocalizations.of(context).welcomePageSubtitle,
+            AppLocalizations.of(context)!.welcomePageSubtitle,
             style: TextStyle(color: AppColors.primaryColor, fontSize: 20.0),
           ),
           const SizedBox(height: 20.0),

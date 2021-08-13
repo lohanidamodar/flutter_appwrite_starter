@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 class UserPrefs {
-  final DateTime lastLoggedIn;
-  final DateTime registrationDate;
-  final String photoUrl;
-  final int buildNumber;
-  final bool introSeen;
-  final String photoId;
+  final DateTime? lastLoggedIn;
+  final DateTime? registrationDate;
+  final String? photoUrl;
+  final int? buildNumber;
+  final bool? introSeen;
+  final String? photoId;
 
   UserPrefs({
     this.lastLoggedIn,
@@ -18,12 +18,12 @@ class UserPrefs {
   });
 
   UserPrefs copyWith({
-    DateTime lastLoggedIn,
-    DateTime registrationDate,
-    String photoUrl,
-    int buildNumber,
-    bool introSeen,
-    String photoId,
+    DateTime? lastLoggedIn,
+    DateTime? registrationDate,
+    String? photoUrl,
+    int? buildNumber,
+    bool? introSeen,
+    String? photoId,
   }) {
     return UserPrefs(
       lastLoggedIn: lastLoggedIn ?? this.lastLoggedIn,
