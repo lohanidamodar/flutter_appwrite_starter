@@ -214,7 +214,7 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future uploadImage() async {
-    final file = MultipartFile.fromBytes(_imageBytes!,
+    final file = MultipartFile.fromBytes('file', _imageBytes!,
         filename: "${context.authNotifier.user!.id}.png");
     final res = await ApiService.instance
         .uploadFile(file, write: ['user:${context.authNotifier.user!.id}']);
