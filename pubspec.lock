@@ -7,7 +7,7 @@ packages:
       name: appwrite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   archive:
     dependency: transitive
     description:
@@ -174,7 +174,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "182b54e52d791c999480922bef37f9a673dafa0a"
+      resolved-ref: addc70712880fd3e1957888c7a6d3038a5168914
       url: "https://github.com/lohanidamodar/flappwrite_account_kit"
     source: git
     version: "0.0.1"
