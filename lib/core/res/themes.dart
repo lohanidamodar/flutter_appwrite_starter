@@ -8,10 +8,9 @@ class AppThemes {
   static late BuildContext context;
   static final ThemeData defaultTheme = ThemeData(
     primaryColor: AppColors.primaryColor,
-    accentColor: AppColors.accentColor,
+    secondaryHeaderColor: AppColors.accentColor,
     primarySwatch: Colors.red,
-    buttonColor: AppColors.primaryColor,
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       elevation: 0,
     ),
     buttonTheme: ButtonThemeData(

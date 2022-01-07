@@ -13,24 +13,22 @@ class CropPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Crop'),
+        title: const Text('Crop'),
         actions: [
           IconButton(
-              icon: Icon(Icons.check),
+              icon: const Icon(Icons.check),
               onPressed: () {
                 _controller.crop();
               })
         ],
       ),
-      body: Container(
-        child: Crop(
-            controller: _controller,
-            aspectRatio: 1,
-            onCropped: (image) {
-              Navigator.pop(context, image);
-            },
-            image: image!),
-      ),
+      body: Crop(
+          controller: _controller,
+          aspectRatio: 1,
+          onCropped: (image) {
+            Navigator.pop(context, image);
+          },
+          image: image!),
     );
   }
 }

@@ -22,9 +22,7 @@ class ApiService {
   }
 
   static ApiService get instance {
-    if (_instance == null) {
-      _instance = ApiService._internal();
-    }
+    _instance ??= ApiService._internal();
     return _instance!;
   }
 
@@ -32,12 +30,12 @@ class ApiService {
     final res = await avatars.getInitials(
       name: name,
     );
-    return res.data;
+    return res;
   }
 
   Future<Uint8List> getImageAvatar(String fileId) async {
     final res = await storage.getFilePreview(fileId: fileId, width: 100);
-    return res.data;
+    return res;
   }
 
   Future uploadFile(
@@ -45,6 +43,7 @@ class ApiService {
     List<String> read = const ["*"],
     List<String> write = const ['*'],
   }) {
-    return storage.createFile(file: file, read: read, write: write);
+    return storage.createFile(
+        fileId: 'unique()', file: file, read: read, write: write);
   }
 }

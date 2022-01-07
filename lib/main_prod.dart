@@ -10,7 +10,7 @@ void main() async {
   runApp(
     FlAppwriteAccountKit(
       client: ApiService.instance.client,
-      child: ProviderScope(
+      child: const ProviderScope(
         child: App(),
       ),
     ),

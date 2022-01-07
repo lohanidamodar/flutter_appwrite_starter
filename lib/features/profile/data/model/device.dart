@@ -12,8 +12,7 @@ class Device {
 
   Device({this.id, this.token,this.createdAt,this.expired,this.uninstalled,this.lastUpdatedAt,this.deviceInfo});
 
-  Device.fromDS(String id, Map<String,dynamic> data):
-    id=id,
+  Device.fromDS(this.id, Map<String,dynamic> data):
     createdAt=data[DeviceFields.createdAt]?.toDate(),
     expired=data[DeviceFields.expired],
     uninstalled=data[DeviceFields.uninstalled] ?? false,
@@ -49,11 +48,11 @@ class DeviceDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data[DeviceDetailsFields.device] = this.device;
-    data[DeviceDetailsFields.model] = this.model;
-    data[DeviceDetailsFields.osVersion] = this.osVersion;
-    data[DeviceDetailsFields.platform] = this.platform;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data[DeviceDetailsFields.device] = device;
+    data[DeviceDetailsFields.model] = model;
+    data[DeviceDetailsFields.osVersion] = osVersion;
+    data[DeviceDetailsFields.platform] = platform;
     return data;
   }
 }
