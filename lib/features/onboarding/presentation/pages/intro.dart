@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/features/profile/data/model/user_prefs.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
 
 class IntroPage extends StatelessWidget {
+  const IntroPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +14,7 @@ class IntroPage extends StatelessWidget {
           return Column(
             children: <Widget>[
               //implement intro screen
-              Spacer(),
+              const Spacer(),
               ElevatedButton(
                 onPressed: () {
                   _finishIntroScreen(context);
@@ -30,9 +31,9 @@ class IntroPage extends StatelessWidget {
 
   _finishIntroScreen(BuildContext context) async {
     //set intro seen to true in user's intro
-    final prefs = context.authNotifier.user!
-        .prefsConverted((data) => UserPrefs.fromMap(data));
+    final prefs = context.authNotifier.user!.prefs.data;
+    prefs['introSeen'] = true;
     await context.authNotifier
-        .updatePrefs(prefs: prefs.copyWith(introSeen: true).toMap());
+        .updatePrefs(prefs: prefs);
   }
 }

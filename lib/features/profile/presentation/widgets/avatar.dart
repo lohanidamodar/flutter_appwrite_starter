@@ -27,7 +27,7 @@ class Avatar extends StatelessWidget {
         CircleAvatar(
           radius: radius,
           backgroundColor:
-              borderColor != null ? borderColor : AppColors.primaryColorLight,
+              borderColor ?? AppColors.primaryColorLight,
           child: CircleAvatar(
             radius: radius - borderWidth,
             backgroundImage: image as ImageProvider<Object>?,
@@ -40,8 +40,8 @@ class Avatar extends StatelessWidget {
           child: MaterialButton(
             elevation: 1,
             color: Colors.white,
-            shape: CircleBorder(),
-            child: Icon(Icons.camera_alt),
+            shape: const CircleBorder(),
+            child: const Icon(Icons.camera_alt),
             padding: const EdgeInsets.all(4.0),
             onPressed: onButtonPressed as void Function()?,
           ),

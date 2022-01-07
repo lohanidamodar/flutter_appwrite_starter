@@ -1,8 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_appwrite_starter/features/auth/presentation/pages/crop_page.dart';
 import 'package:flutter_appwrite_starter/features/auth/presentation/pages/home.dart';
 import 'package:flutter_appwrite_starter/features/auth/presentation/pages/login.dart';
@@ -28,24 +26,24 @@ class AppRoutes {
         builder: (_) {
           switch (settings.name) {
             case home:
-              return AuthHomePage();
+              return const AuthHomePage();
             case userInfo:
-              return UserInfoPage();
+              return const UserInfoPage();
             case editProfile:
-              return EditProfile();
+              return const EditProfile();
             case cropPage:
               return CropPage(
                 image: settings.arguments as Uint8List?,
               );
             case profile:
-              return UserProfile();
+              return const UserProfile();
             case login:
-              return LoginPage();
+              return const LoginPage();
             case signup:
-              return SignupPage();
+              return const SignupPage();
             case splash:
             default:
-              return Splash();
+              return const Splash();
           }
         });
   }

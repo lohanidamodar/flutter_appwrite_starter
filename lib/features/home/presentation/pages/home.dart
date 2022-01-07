@@ -4,6 +4,8 @@ import 'package:flutter_appwrite_starter/core/res/routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -18,10 +20,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('FlAppwrite Starter'),
+        title: const Text('FlAppwrite Starter'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.person),
+            icon: const Icon(Icons.person),
             onPressed: () => Navigator.pushNamed(context, AppRoutes.profile),
           )
         ],
