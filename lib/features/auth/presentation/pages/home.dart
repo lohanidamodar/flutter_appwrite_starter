@@ -1,4 +1,4 @@
-import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
+import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/features/home/presentation/pages/home.dart';
 import 'package:flutter_appwrite_starter/features/onboarding/presentation/pages/intro.dart';

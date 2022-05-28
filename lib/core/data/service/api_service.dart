@@ -33,17 +33,24 @@ class ApiService {
     return res;
   }
 
-  Future<Uint8List> getImageAvatar(String fileId) async {
-    final res = await storage.getFilePreview(fileId: fileId, width: 100);
+  Future<Uint8List> getImageAvatar(String bucketId, String fileId) async {
+    final res = await storage.getFilePreview(
+        bucketId: bucketId, fileId: fileId, width: 100);
     return res;
   }
 
   Future uploadFile(
-    MultipartFile file, {
+    String bucketId,
+    InputFile file, {
     List<String> read = const ["*"],
     List<String> write = const ['*'],
   }) {
     return storage.createFile(
-        fileId: 'unique()', file: file, read: read, write: write);
+      bucketId: bucketId,
+      fileId: 'unique()',
+      file: file,
+      read: read,
+      write: write,
+    );
   }
 }
