@@ -10,10 +10,10 @@ class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
 
   @override
-  _LoginFormState createState() => _LoginFormState();
+  LoginFormState createState() => LoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class LoginFormState extends State<LoginForm> {
   TextStyle style = const TextStyle(fontSize: 20.0);
   TextEditingController? _email;
   TextEditingController? _password;

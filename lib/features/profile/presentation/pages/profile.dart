@@ -13,6 +13,7 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navigator = Navigator.of(context);
     final user = context.authNotifier.user;
     final prefs = user?.prefs.data ?? {};
     return Scaffold(
@@ -25,7 +26,10 @@ class UserProfile extends StatelessWidget {
           if (user != null) ...[
             FutureBuilder(
                 future: prefs['photoId'] != null
-                    ? ApiService.instance.getImageAvatar(AppConstants.profileBucketId, prefs['photoId']!)
+                    ? ApiService.instance.getImageAvatar(
+                        AppConstants.profileBucketId,
+                        prefs['photoId']!,
+                      )
                     : ApiService.instance.getAvatar(user.name),
                 builder: (context, AsyncSnapshot<Uint8List> snapshot) {
                   return Center(
@@ -61,7 +65,7 @@ class UserProfile extends StatelessWidget {
                 title: Text(AppLocalizations.of(context)!.logoutButtonText),
                 onTap: () async {
                   await context.authNotifier.deleteSession();
-                  Navigator.pop(context);
+                  navigator.pop();
                 },
               ),
             ],

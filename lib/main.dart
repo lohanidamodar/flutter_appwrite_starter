@@ -20,7 +20,6 @@ void main() async {
         child: FlAppwriteAccountKit(
           client: ApiService.instance.client,
           child: ProviderScope(
-            child: const App(),
             overrides: [
               configProvider.overrideWithProvider(Provider(
                 (ref) => AppConfig(
@@ -29,6 +28,7 @@ void main() async {
                 ),
               ))
             ],
+            child: const App(),
           ),
         ),
       ),

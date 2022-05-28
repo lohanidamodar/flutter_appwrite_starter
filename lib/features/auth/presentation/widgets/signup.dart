@@ -9,10 +9,12 @@ class SignupForm extends StatefulWidget {
   const SignupForm({Key? key}) : super(key: key);
 
   @override
-  _SignupFormState createState() => _SignupFormState();
+  SignupFormState createState() => SignupFormState();
 }
 
-class _SignupFormState extends State<SignupForm> {
+class SignupFormState extends State<SignupForm> {
+  ScaffoldMessengerState? _messenger;
+  NavigatorState? _navigator;
   TextStyle style = const TextStyle(fontSize: 20.0);
   TextEditingController? _name;
   TextEditingController? _email;
@@ -37,6 +39,8 @@ class _SignupFormState extends State<SignupForm> {
 
   @override
   Widget build(BuildContext context) {
+    _messenger = ScaffoldMessenger.of(context);
+    _navigator = Navigator.of(context);
     return Form(
       key: _formKey,
       child: ListView(
@@ -181,13 +185,13 @@ class _SignupFormState extends State<SignupForm> {
           email: _email!.text,
           password: _password!.text);
       if (user == null) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        _messenger?.showSnackBar(SnackBar(
           content: Text(context.authNotifier.error!),
         ));
       } else {
         await context.authNotifier
             .createSession(email: _email!.text, password: _password!.text);
-        Navigator.pop(context);
+        _navigator?.pop();
       }
     }
   }
