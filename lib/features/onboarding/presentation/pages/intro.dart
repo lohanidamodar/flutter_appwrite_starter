@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
+import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({Key? key}) : super(key: key);
@@ -33,7 +33,6 @@ class IntroPage extends StatelessWidget {
     //set intro seen to true in user's intro
     final prefs = context.authNotifier.user!.prefs.data;
     prefs['introSeen'] = true;
-    await context.authNotifier
-        .updatePrefs(prefs: prefs);
+    await context.authNotifier.updatePrefs(prefs: prefs);
   }
 }

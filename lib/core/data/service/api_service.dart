@@ -6,7 +6,7 @@ import 'package:flutter_appwrite_starter/core/res/constants.dart';
 class ApiService {
   final Client client = Client();
   Account? account;
-  Database? db;
+  Databases? db;
   late Avatars avatars;
   late Storage storage;
   static ApiService? _instance;
@@ -16,7 +16,7 @@ class ApiService {
         .setEndpoint(AppConstants.endpoint)
         .setProject(AppConstants.projectId);
     account = Account(client);
-    db = Database(client);
+    db = Databases(client);
     avatars = Avatars(client);
     storage = Storage(client);
   }
@@ -33,17 +33,21 @@ class ApiService {
     return res;
   }
 
-  Future<Uint8List> getImageAvatar(String fileId) async {
-    final res = await storage.getFilePreview(fileId: fileId, width: 100);
+  Future<Uint8List> getImageAvatar(String bucketId, String fileId) async {
+    final res = await storage.getFilePreview(bucketId: bucketId, fileId: fileId, width: 100);
     return res;
   }
 
   Future uploadFile(
-    MultipartFile file, {
-    List<String> read = const ["*"],
-    List<String> write = const ['*'],
+    String bucketId,
+    InputFile file, {
+    List<String> permissions = const []
   }) {
     return storage.createFile(
-        fileId: 'unique()', file: file, read: read, write: write);
+      bucketId: bucketId,
+        fileId: 'unique()', file: file, permissions: [
+          Permission.read(Role.any()),
+          Permission.write(Role.any()),
+        ]);
   }
 }

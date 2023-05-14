@@ -2,12 +2,13 @@ import 'dart:typed_data';
 import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
+import 'package:flutter_appwrite_starter/core/res/constants.dart';
 import 'package:flutter_appwrite_starter/core/res/routes.dart';
 import 'package:flutter_appwrite_starter/features/profile/presentation/widgets/avatar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
+import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -60,7 +61,8 @@ class _EditProfileState extends State<EditProfile> {
             builder: (_, watch, __) {
               return FutureBuilder(
                   future: prefs['photoId'] != null
-                      ? ApiService.instance.getImageAvatar(prefs['photoId']!)
+                      ? ApiService.instance.getImageAvatar(
+                          AppConstants.profileBucketId, prefs['photoId']!)
                       : ApiService.instance.getAvatar(user.name),
                   builder: (context, AsyncSnapshot<Uint8List> snapshot) {
                     return Center(
@@ -214,10 +216,18 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future uploadImage() async {
-    final file = MultipartFile.fromBytes('file', _imageBytes!,
-        filename: "${context.authNotifier.user!.$id}.png");
-    final res = await ApiService.instance
-        .uploadFile(file, write: ['user:${context.authNotifier.user!.$id}']);
+    final file = InputFile.fromBytes(
+        bytes: _imageBytes!,
+        filename: "${context.authNotifier.user!.$id}.png",
+        contentType: 'image/png');
+    final res = await ApiService.instance.uploadFile(
+      AppConstants.profileBucketId,
+      file,
+      permissions: [
+        Permission.write(Role.user(context.authNotifier.user!.$id)),
+        Permission.read(Role.any())
+      ],
+    );
     _uploadedFileId = res.data['\$id'];
   }
 }

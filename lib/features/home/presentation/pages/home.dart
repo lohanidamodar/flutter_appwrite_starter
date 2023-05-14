@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 20.0),
             Text(
               "Welcome to FlAppwrite Starter template, your base to build awesome applications.",
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
           ],

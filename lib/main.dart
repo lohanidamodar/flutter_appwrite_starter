@@ -1,4 +1,4 @@
-import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
+import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/app.dart';
 import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
@@ -17,7 +17,7 @@ void main() async {
         location: BannerLocation.topEnd,
         message: "dev",
         textDirection: TextDirection.ltr,
-        child: FlAppwriteAccountKit(
+        child: AppwriteAuthKit(
           client: ApiService.instance.client,
           child: ProviderScope(
             child: const App(),

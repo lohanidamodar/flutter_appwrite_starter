@@ -4,7 +4,7 @@ import 'package:flutter_appwrite_starter/core/res/colors.dart';
 import 'package:flutter_appwrite_starter/core/res/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
+import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -41,7 +41,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           Text(
             "Login",
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
           const SizedBox(height: 20.0),
           Container(
@@ -102,7 +102,7 @@ class _LoginFormState extends State<LoginForm> {
                   child: OutlinedButton.icon(
                     icon: const Icon(Icons.arrow_forward),
                     style: OutlinedButton.styleFrom(
-                      primary: AppColors.primaryColor,
+                      foregroundColor: AppColors.primaryColor,
                       side: const BorderSide(color: AppColors.primaryColor),
                     ),
                     label: Text(AppLocalizations.of(context)!.signupButtonText),
@@ -121,7 +121,7 @@ class _LoginFormState extends State<LoginForm> {
   _login() async {
     if (_formKey.currentState!.validate()) {
       if (!await context.authNotifier
-          .createSession(email: _email!.text, password: _password!.text)) {
+          .createEmailSession(email: _email!.text, password: _password!.text)) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(context.authNotifier.error!),
         ));

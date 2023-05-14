@@ -2,10 +2,11 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
+import 'package:flutter_appwrite_starter/core/res/constants.dart';
 import 'package:flutter_appwrite_starter/core/res/routes.dart';
 import 'package:flutter_appwrite_starter/features/profile/presentation/widgets/avatar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
+import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 
 class UserProfile extends StatelessWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -24,7 +25,8 @@ class UserProfile extends StatelessWidget {
           if (user != null) ...[
             FutureBuilder(
                 future: prefs['photoId'] != null
-                    ? ApiService.instance.getImageAvatar(prefs['photoId']!)
+                    ? ApiService.instance.getImageAvatar(
+                        AppConstants.profileBucketId, prefs['photoId']!)
                     : ApiService.instance.getAvatar(user.name),
                 builder: (context, AsyncSnapshot<Uint8List> snapshot) {
                   return Center(
