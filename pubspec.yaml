@@ -23,6 +23,7 @@ dependencies:
   package_info_plus: ^3.0.3
   path_provider: ^2.0.15
   appwrite: ^9.0.0
+  file: ^6.1.4
 
 dev_dependencies:
   flutter_test:
