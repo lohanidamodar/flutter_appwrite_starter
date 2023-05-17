@@ -68,7 +68,7 @@ abstract class AppRoutes {
                   path: 'crop',
                   name: AppRoutes.cropPage,
                   builder: (_, state) => CropPage(
-                      image: state.queryParameters['image'] as Uint8List?),
+                      image: state.extra as Uint8List?),
                 )
               ],
             ),

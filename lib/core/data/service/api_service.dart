@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:appwrite/appwrite.dart';
+import 'package:appwrite/models.dart' as models;
 import 'package:flutter_appwrite_starter/core/res/constants.dart';
 
 class ApiService {
@@ -38,7 +39,7 @@ class ApiService {
     return res;
   }
 
-  Future uploadFile(
+  Future<models.File> uploadFile(
     String bucketId,
     InputFile file, {
     List<String> permissions = const []

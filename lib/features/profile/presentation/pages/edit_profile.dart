@@ -108,6 +108,7 @@ class _EditProfileState extends State<EditProfile> {
                       setState(() {
                         _processing = true;
                       });
+
                       if (_imageBytes != null && state == AppState.cropped) {
                         await uploadImage();
                       }
@@ -195,7 +196,7 @@ class _EditProfileState extends State<EditProfile> {
     final ib = await _image.readAsBytes();
     final image = await context.pushNamed<Uint8List?>(
       AppRoutes.cropPage,
-      queryParameters: {'image': ib},
+      extra: ib,
     );
     if (image == null) return;
     _imageBytes = image;
@@ -228,6 +229,6 @@ class _EditProfileState extends State<EditProfile> {
         Permission.read(Role.any())
       ],
     );
-    _uploadedFileId = res.data['\$id'];
+    _uploadedFileId = res.$id;
   }
 }
