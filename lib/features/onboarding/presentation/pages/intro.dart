@@ -15,6 +15,14 @@ class IntroPage extends StatelessWidget {
             children: <Widget>[
               //implement intro screen
               const Spacer(),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  "Yo see this only the first time you log in.",
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+              ),
+              const Spacer(),
               ElevatedButton(
                 onPressed: () {
                   _finishIntroScreen(context);
