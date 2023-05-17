@@ -4,6 +4,7 @@ import 'package:flutter_appwrite_starter/core/res/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
+import 'package:go_router/go_router.dart';
 
 class SignupForm extends StatefulWidget {
   const SignupForm({Key? key}) : super(key: key);
@@ -161,7 +162,7 @@ class _SignupFormState extends State<SignupForm> {
                       side: const BorderSide(color: AppColors.primaryColor),
                     ),
                     label: const Text("Back to Login"),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => context.pop(),
                   ),
                 ),
               ],
@@ -187,7 +188,7 @@ class _SignupFormState extends State<SignupForm> {
       } else {
         await context.authNotifier
             .createEmailSession(email: _email!.text, password: _password!.text);
-        Navigator.pop(context);
+        context.pop();
       }
     }
   }

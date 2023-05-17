@@ -5,6 +5,7 @@ import 'package:flutter_appwrite_starter/core/res/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -106,8 +107,7 @@ class _LoginFormState extends State<LoginForm> {
                       side: const BorderSide(color: AppColors.primaryColor),
                     ),
                     label: Text(AppLocalizations.of(context)!.signupButtonText),
-                    onPressed: () =>
-                        Navigator.pushNamed(context, AppRoutes.signup),
+                    onPressed: () => context.goNamed(AppRoutes.signup),
                   ),
                 ),
               ],
@@ -126,7 +126,9 @@ class _LoginFormState extends State<LoginForm> {
           content: Text(context.authNotifier.error!),
         ));
       } else {
-        Navigator.maybePop(context);
+        if (context.canPop()) {
+          context.pop();
+        }
       }
     }
   }

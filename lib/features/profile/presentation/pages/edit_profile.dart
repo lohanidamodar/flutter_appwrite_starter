@@ -5,6 +5,7 @@ import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
 import 'package:flutter_appwrite_starter/core/res/constants.dart';
 import 'package:flutter_appwrite_starter/core/res/routes.dart';
 import 'package:flutter_appwrite_starter/features/profile/presentation/widgets/avatar.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -122,7 +123,7 @@ class _EditProfileState extends State<EditProfile> {
                         setState(() {
                           _processing = false;
                         });
-                        Navigator.pop(context);
+                        context.pop();
                       }
                     },
             ),
@@ -166,7 +167,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    context.pop();
                   },
                   child: Text(
                     AppLocalizations.of(context)!.cancelButtonLabel,
@@ -186,19 +187,18 @@ class _EditProfileState extends State<EditProfile> {
     setState(() {
       state = AppState.picked;
     });
-    Navigator.pop(context);
+    context.pop();
     _cropImage();
   }
 
   Future<void> _cropImage() async {
     final ib = await _image.readAsBytes();
-    final image = await Navigator.pushNamed(
-      context,
+    final image = await context.pushNamed<Uint8List?>(
       AppRoutes.cropPage,
-      arguments: ib,
+      queryParameters: {'image': ib},
     );
     if (image == null) return;
-    _imageBytes = image as Uint8List?;
+    _imageBytes = image;
     setState(() {
       state = AppState.cropped;
     });
