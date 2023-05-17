@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_appwrite_starter/core/presentation/router/router.dart';
 import 'package:flutter_appwrite_starter/core/res/assets.dart';
-import 'package:flutter_appwrite_starter/core/res/routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
