@@ -3,15 +3,17 @@ import 'package:flutter_appwrite_starter/core/res/assets.dart';
 import 'package:flutter_appwrite_starter/core/res/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
+import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 
 class SignupForm extends StatefulWidget {
+  const SignupForm({Key? key}) : super(key: key);
+
   @override
   _SignupFormState createState() => _SignupFormState();
 }
 
 class _SignupFormState extends State<SignupForm> {
-  TextStyle style = TextStyle(fontSize: 20.0);
+  TextStyle style = const TextStyle(fontSize: 20.0);
   TextEditingController? _name;
   TextEditingController? _email;
   TextEditingController? _password;
@@ -47,13 +49,13 @@ class _SignupFormState extends State<SignupForm> {
           const SizedBox(height: 20.0),
           Text(
             "Sign Up",
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
           const SizedBox(height: 20.0),
           Container(
             padding: const EdgeInsets.all(0),
             child: TextFormField(
-              key: Key("name-field"),
+              key: const Key("name-field"),
               controller: _name,
               validator: (value) => (value!.isEmpty)
                   ? AppLocalizations.of(context)!.nameValidationError
@@ -71,7 +73,7 @@ class _SignupFormState extends State<SignupForm> {
           Container(
             padding: const EdgeInsets.all(0),
             child: TextFormField(
-              key: Key("email-field"),
+              key: const Key("email-field"),
               focusNode: _emailField,
               controller: _email,
               validator: (value) => (value!.isEmpty)
@@ -92,14 +94,15 @@ class _SignupFormState extends State<SignupForm> {
             padding: const EdgeInsets.all(0),
             child: TextFormField(
               focusNode: _passwordField,
-              key: Key("password-field"),
+              key: const Key("password-field"),
               controller: _password,
               obscureText: true,
               validator: (value) => (value!.isEmpty)
                   ? AppLocalizations.of(context)!.passwordValidationError
                   : null,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.passwordValidationError,
+                labelText:
+                    AppLocalizations.of(context)!.passwordValidationError,
               ),
               style: style,
               textInputAction: TextInputAction.next,
@@ -112,13 +115,14 @@ class _SignupFormState extends State<SignupForm> {
           Container(
             padding: const EdgeInsets.all(0),
             child: TextFormField(
-              key: Key("confirm-password-field"),
+              key: const Key("confirm-password-field"),
               controller: _confirmPassword,
               obscureText: true,
               validator: (value) => (value!.isEmpty)
                   ? AppLocalizations.of(context)!
                       .confirmPasswordValidationEmptyError
-                  : value.isNotEmpty && _password!.text != _confirmPassword!.text
+                  : value.isNotEmpty &&
+                          _password!.text != _confirmPassword!.text
                       ? AppLocalizations.of(context)!
                           .confirmPasswordValidationMatchError
                       : null,
@@ -131,9 +135,9 @@ class _SignupFormState extends State<SignupForm> {
               onEditingComplete: () => _signup(),
             ),
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           if (context.authNotifier.status == AuthStatus.authenticating)
-            Center(child: CircularProgressIndicator()),
+            const Center(child: CircularProgressIndicator()),
           if (context.authNotifier.status != AuthStatus.authenticating)
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -151,12 +155,12 @@ class _SignupFormState extends State<SignupForm> {
               children: <Widget>[
                 Expanded(
                   child: OutlinedButton.icon(
-                    icon: Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.arrow_back),
                     style: OutlinedButton.styleFrom(
-                      primary: AppColors.primaryColor,
-                      side: BorderSide(color: AppColors.primaryColor),
+                      foregroundColor: AppColors.primaryColor,
+                      side: const BorderSide(color: AppColors.primaryColor),
                     ),
-                    label: Text("Back to Login"),
+                    label: const Text("Back to Login"),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ),
@@ -171,14 +175,18 @@ class _SignupFormState extends State<SignupForm> {
   _signup() async {
     if (_formKey.currentState!.validate()) {
       //signup user
-      if (!await context.authNotifier.create(
-          name: _name!.text, email: _email!.text, password: _password!.text)) {
+      final user = await context.authNotifier.create(
+          userId: 'unique()',
+          name: _name!.text,
+          email: _email!.text,
+          password: _password!.text);
+      if (user == null) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(context.authNotifier.error!),
         ));
       } else {
         await context.authNotifier
-            .createSession(email: _email!.text, password: _password!.text);
+            .createEmailSession(email: _email!.text, password: _password!.text);
         Navigator.pop(context);
       }
     }

@@ -4,15 +4,17 @@ import 'package:flutter_appwrite_starter/core/res/colors.dart';
 import 'package:flutter_appwrite_starter/core/res/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
+import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 
 class LoginForm extends StatefulWidget {
+  const LoginForm({Key? key}) : super(key: key);
+
   @override
   _LoginFormState createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<LoginForm> {
-  TextStyle style = TextStyle(fontSize: 20.0);
+  TextStyle style = const TextStyle(fontSize: 20.0);
   TextEditingController? _email;
   TextEditingController? _password;
   FocusNode? _passwordField;
@@ -39,13 +41,13 @@ class _LoginFormState extends State<LoginForm> {
           ),
           Text(
             "Login",
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
           const SizedBox(height: 20.0),
           Container(
             padding: const EdgeInsets.all(0),
             child: TextFormField(
-              key: Key("email-field"),
+              key: const Key("email-field"),
               controller: _email,
               validator: (value) => (value!.isEmpty)
                   ? AppLocalizations.of(context)!.emailValidationError
@@ -65,7 +67,7 @@ class _LoginFormState extends State<LoginForm> {
             padding: const EdgeInsets.all(0),
             child: TextFormField(
               focusNode: _passwordField,
-              key: Key("password-field"),
+              key: const Key("password-field"),
               controller: _password,
               obscureText: true,
               validator: (value) => (value!.isEmpty)
@@ -78,9 +80,9 @@ class _LoginFormState extends State<LoginForm> {
               onEditingComplete: _login,
             ),
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           if (context.authNotifier.status == AuthStatus.authenticating)
-            Center(child: CircularProgressIndicator()),
+            const Center(child: CircularProgressIndicator()),
           if (context.authNotifier.status != AuthStatus.authenticating)
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -98,10 +100,10 @@ class _LoginFormState extends State<LoginForm> {
               children: <Widget>[
                 Expanded(
                   child: OutlinedButton.icon(
-                    icon: Icon(Icons.arrow_forward),
+                    icon: const Icon(Icons.arrow_forward),
                     style: OutlinedButton.styleFrom(
-                      primary: AppColors.primaryColor,
-                      side: BorderSide(color: AppColors.primaryColor),
+                      foregroundColor: AppColors.primaryColor,
+                      side: const BorderSide(color: AppColors.primaryColor),
                     ),
                     label: Text(AppLocalizations.of(context)!.signupButtonText),
                     onPressed: () =>
@@ -119,7 +121,7 @@ class _LoginFormState extends State<LoginForm> {
   _login() async {
     if (_formKey.currentState!.validate()) {
       if (!await context.authNotifier
-          .createSession(email: _email!.text, password: _password!.text)) {
+          .createEmailSession(email: _email!.text, password: _password!.text)) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(context.authNotifier.error!),
         ));

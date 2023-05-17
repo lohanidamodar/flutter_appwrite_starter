@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 enum AppFlavor {
   dev,
   prod

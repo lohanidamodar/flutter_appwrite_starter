@@ -7,11 +7,10 @@ import 'sizes.dart';
 class AppThemes {
   static late BuildContext context;
   static final ThemeData defaultTheme = ThemeData(
-    primaryColor: AppColors.primaryColor,
-    accentColor: AppColors.accentColor,
+    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
+    secondaryHeaderColor: AppColors.accentColor,
     primarySwatch: Colors.red,
-    buttonColor: AppColors.primaryColor,
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       elevation: 0,
     ),
     buttonTheme: ButtonThemeData(
@@ -21,5 +20,6 @@ class AppThemes {
       ),
     ),
     textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+    useMaterial3: true,
   );
 }

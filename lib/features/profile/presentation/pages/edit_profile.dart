@@ -1,16 +1,18 @@
 import 'dart:typed_data';
-import 'package:appwrite/appwrite.dart';
+import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
+import 'package:flutter_appwrite_starter/core/res/constants.dart';
 import 'package:flutter_appwrite_starter/core/res/routes.dart';
-import 'package:flutter_appwrite_starter/features/profile/data/model/user_prefs.dart';
 import 'package:flutter_appwrite_starter/features/profile/presentation/widgets/avatar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flappwrite_account_kit/flappwrite_account_kit.dart';
+import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 
 class EditProfile extends StatefulWidget {
+  const EditProfile({Key? key}) : super(key: key);
+
   @override
   _EditProfileState createState() => _EditProfileState();
 }
@@ -25,7 +27,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController? _nameController;
   late bool _processing;
   AppState? state;
-  late PickedFile _image;
+  late XFile _image;
   Uint8List? _imageBytes;
   String? _uploadedFileId;
 
@@ -47,8 +49,7 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     final authNotifier = context.authNotifier;
     final User user = authNotifier.user!;
-    final prefs =
-        authNotifier.user!.prefsConverted((data) => UserPrefs.fromMap(data));
+    final prefs = authNotifier.user!.prefs.data;
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.editProfile),
@@ -59,8 +60,9 @@ class _EditProfileState extends State<EditProfile> {
           Consumer(
             builder: (_, watch, __) {
               return FutureBuilder(
-                  future: prefs.photoId != null
-                      ? ApiService.instance.getImageAvatar(prefs.photoId!)
+                  future: prefs['photoId'] != null
+                      ? ApiService.instance.getImageAvatar(
+                          AppConstants.profileBucketId, prefs['photoId']!)
                       : ApiService.instance.getAvatar(user.name),
                   builder: (context, AsyncSnapshot<Uint8List> snapshot) {
                     return Center(
@@ -70,8 +72,8 @@ class _EditProfileState extends State<EditProfile> {
                         radius: 50,
                         image: state == AppState.cropped && _imageBytes != null
                             ? MemoryImage(_imageBytes!)
-                            : (prefs.photoUrl != null
-                                ? NetworkImage(prefs.photoUrl!)
+                            : (prefs['photoUrl'] != null
+                                ? NetworkImage(prefs['photoUrl']!)
                                 : snapshot.hasData
                                     ? MemoryImage(snapshot.data!)
                                     : null) as ImageProvider<dynamic>?,
@@ -92,29 +94,29 @@ class _EditProfileState extends State<EditProfile> {
           Center(
             child: ElevatedButton(
               child: _processing
-                  ? CircularProgressIndicator()
+                  ? const CircularProgressIndicator()
                   : Text(AppLocalizations.of(context)!.saveButtonLabel),
               onPressed: _processing
                   ? null
                   : () async {
                       //save name
                       if (_nameController!.text.isEmpty &&
-                          (_imageBytes == null || state != AppState.cropped))
+                          (_imageBytes == null || state != AppState.cropped)) {
                         return;
+                      }
                       setState(() {
                         _processing = true;
                       });
                       if (_imageBytes != null && state == AppState.cropped) {
                         await uploadImage();
                       }
-                      if (_nameController!.text.isNotEmpty)
+                      if (_nameController!.text.isNotEmpty) {
                         await authNotifier.updateName(
                             name: _nameController!.text);
+                      }
                       if (_uploadedFileId != null) {
-                        await authNotifier.updatePrefs(
-                            prefs: prefs
-                                .copyWith(photoId: _uploadedFileId)
-                                .toMap());
+                        prefs['photoId'] = _uploadedFileId;
+                        await authNotifier.updatePrefs(prefs: prefs);
                       }
                       if (mounted) {
                         setState(() {
@@ -168,7 +170,7 @@ class _EditProfileState extends State<EditProfile> {
                   },
                   child: Text(
                     AppLocalizations.of(context)!.cancelButtonLabel,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -178,7 +180,7 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future getImage(ImageSource source) async {
-    var image = await ImagePicker().getImage(source: source);
+    var image = await ImagePicker().pickImage(source: source);
     if (image == null) return;
     _image = image;
     setState(() {
@@ -188,7 +190,7 @@ class _EditProfileState extends State<EditProfile> {
     _cropImage();
   }
 
-  Future<Null> _cropImage() async {
+  Future<void> _cropImage() async {
     final ib = await _image.readAsBytes();
     final image = await Navigator.pushNamed(
       context,
@@ -214,16 +216,18 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future uploadImage() async {
-    final file = MultipartFile.fromBytes('file', _imageBytes!,
-        filename: "${context.authNotifier.user!.id}.png");
-    final res = await ApiService.instance
-        .uploadFile(file, write: ['user:${context.authNotifier.user!.id}']);
+    final file = InputFile.fromBytes(
+        bytes: _imageBytes!,
+        filename: "${context.authNotifier.user!.$id}.png",
+        contentType: 'image/png');
+    final res = await ApiService.instance.uploadFile(
+      AppConstants.profileBucketId,
+      file,
+      permissions: [
+        Permission.write(Role.user(context.authNotifier.user!.$id)),
+        Permission.read(Role.any())
+      ],
+    );
     _uploadedFileId = res.data['\$id'];
-
-    //upload file
-
-    /* setState(() {
-      _uploadedFileURL = url;
-    }); */
   }
 }

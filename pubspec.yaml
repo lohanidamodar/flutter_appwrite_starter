@@ -11,22 +11,24 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flappwrite_account_kit:
-    git: https://github.com/lohanidamodar/flappwrite_account_kit
-  crop: ^0.5.1+1
-  crop_your_image: ^0.5.3
-  device_info_plus: ^2.1.0
-  flutter_riverpod: ^0.14.0+3
-  flutter_svg: ^0.22.0
-  google_fonts: ^2.1.0
-  image_picker: ^0.8.3+2
-  intl: ^0.17.0
-  package_info_plus: ^1.0.4
-  path_provider: ^2.0.2
+  appwrite_auth_kit: ^0.8.0
+  crop: ^0.5.5
+  crop_your_image: ^0.7.4
+  device_info_plus: ^8.1.0
+  flutter_riverpod: ^1.0.0
+  flutter_svg: ^1.0.0
+  google_fonts: ^4.0.4
+  image_picker: ^0.8.7+5
+  intl: ^0.18.0
+  package_info_plus: ^3.0.3
+  path_provider: ^2.0.15
+  appwrite: ^9.0.0
+  file: ^6.1.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^1.0.4
   change_app_package_name: ^1.0.0
 
 flutter:
