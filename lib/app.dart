@@ -1,7 +1,5 @@
-import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/core/presentation/router/router.dart';
-import 'package:go_router/go_router.dart';
 import 'core/presentation/providers/providers.dart';
 import 'core/res/themes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,22 +11,6 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppThemes.context = context;
-    GoRouter router;
-
-    switch (context.authNotifier.status) {
-      case AuthStatus.authenticated:
-        router =
-            (context.authNotifier.user?.prefs.data ?? {})['introSeen'] ?? false
-                ? AppRoutes.privateRouter
-                : AppRoutes.introRouter;
-        break;
-      case AuthStatus.authenticating:
-      case AuthStatus.unauthenticated:
-        router = AppRoutes.publicRouter;
-        break;
-      default:
-        router = AppRoutes.loadingRouter;
-    }
     return Consumer(builder: (context, ref, child) {
       return MaterialApp.router(
         debugShowCheckedModeBanner: false,
@@ -36,7 +18,7 @@ class App extends StatelessWidget {
         theme: AppThemes.defaultTheme,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        routerConfig: router,
+        routerConfig: AppRoutes.router,
       );
     });
   }
