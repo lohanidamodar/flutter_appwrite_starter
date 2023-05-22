@@ -22,12 +22,9 @@ If you don't already know what Appwrite is, it's an open source self-hosted Back
 How to start your project based on this.
 
 1. Clone this repository locally. The folder structure is somewhat based on clean code architecture
-2. Delete `.git` folder to clear git history
-3. Using `change_app_package_name` package change the package name to whatever you want your package name to be `flutter pub run change_app_package_name:main com.new.package.name`
-4. For changing iOS package name use the text editors Find and Replace in whole project folder where you need to find `com.popupbits.flutter_appwrite_starter` and with the package name you want
-5. Using the same Find and replace in whole project folder search for `flutter_appwrite_starter` (package name for dart/flutter project) and replace it with your own suitable name. (check the flutter package naming standards for acceptable format)
-6. Using the same Find and replace in whole project folder search for `Appwrite Starter` (display name, launcher name) and replace it with your own suitable name for your app
-7. in `lib/core/res/constants.dart` update endpoint and project id with your own endpoint and project id details;
+2. Delete `.git` folder to clear git history (or you can keep it if you want)
+3. Using `rename` package change the bundle ID and app name to whatever you want your `dart run rename --bundleId com.new.package.name` and `dart run rename --appname "New App Name"`. Check [rename](https://pub.dev/packages/rename) package for more details on how to use it.
+4. in `lib/core/res/constants.dart` update endpoint and project id with your own endpoint and project id details;
 
 ## Adding new Locale
 TODO Docs
