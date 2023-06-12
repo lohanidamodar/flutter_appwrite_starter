@@ -12,9 +12,10 @@ import '../l10n/profile_localizations.dart';
 import '../widgets/avatar.dart';
 
 class EditProfile extends StatefulWidget {
-  final VoidCallback? onPop;
+  final VoidCallback onPop;
   final GotoCropPageCallback onGotoCropPage;
-  const EditProfile({Key? key, this.onPop, required this.onGotoCropPage})
+  const EditProfile(
+      {Key? key, required this.onPop, required this.onGotoCropPage})
       : super(key: key);
 
   @override
@@ -124,7 +125,7 @@ class _EditProfileState extends State<EditProfile> {
                         setState(() {
                           _processing = false;
                         });
-                        widget.onPop?.call();
+                        widget.onPop.call();
                       }
                     },
               child: _processing
@@ -169,7 +170,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 TextButton(
                   onPressed: () {
-                    widget.onPop?.call();
+                    Navigator.pop(context);
                   },
                   child: Text(
                     l10n.cancelButtonLabel,

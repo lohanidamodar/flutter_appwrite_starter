@@ -11,7 +11,6 @@ dependencies:
     sdk: flutter
   api_service: { path: ../../api_service }
   appwrite_auth_kit: ^0.8.0
-  crop_your_image: ^0.7.5
   components: { path: ../../components }
   appwrite: ^9.0.0
   intl: ^0.18.0

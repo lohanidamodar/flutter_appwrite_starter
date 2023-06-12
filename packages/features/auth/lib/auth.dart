@@ -1,7 +1,6 @@
 library auth;
 
 export 'src/types.dart';
-export 'src/pages/crop_page.dart';
 export 'src/pages/login.dart';
 export 'src/pages/signup.dart';
 export 'src/pages/splash.dart';

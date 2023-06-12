@@ -1,6 +1,7 @@
 import 'package:auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/router/router.dart';
+import 'package:profile/profile.dart';
 import 'providers/providers.dart';
 import 'res/themes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,6 +22,7 @@ class App extends StatelessWidget {
         localizationsDelegates: const [
           AppLocalizations.delegate,
           AuthLocalizations.delegate,
+          ProfileLocalizations.delegate,
         ],
         supportedLocales: AppLocalizations.supportedLocales,
         routerConfig: AppRoutes.router,

@@ -55,6 +55,7 @@ abstract class AppRoutes {
                 path: 'edit',
                 name: AppRoutes.editProfile,
                 builder: (context, __) => EditProfile(
+                  onPop: context.pop,
                   onGotoCropPage: (image) {
                     return context.pushNamed<Uint8List?>(
                       cropPage,
