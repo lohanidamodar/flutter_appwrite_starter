@@ -1,11 +1,10 @@
 import 'dart:typed_data';
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
-import 'package:flutter_appwrite_starter/features/home/presentation/pages/home.dart';
-import 'package:flutter_appwrite_starter/features/onboarding/presentation/pages/intro.dart';
-import 'package:flutter_appwrite_starter/features/profile/presentation/pages/edit_profile.dart';
-import 'package:flutter_appwrite_starter/features/profile/presentation/pages/profile.dart';
+import 'package:flutter_appwrite_starter/pages/home.dart';
+import 'package:flutter_appwrite_starter/pages/intro.dart';
 import 'package:go_router/go_router.dart';
 import 'package:auth/auth.dart';
+import 'package:profile/profile.dart';
 
 abstract class AppRoutes {
   static const home = "/";
@@ -48,12 +47,21 @@ abstract class AppRoutes {
           GoRoute(
             path: 'profile',
             name: AppRoutes.profile,
-            builder: (_, __) => const UserProfile(),
+            builder: (context, __) => UserProfile(
+              onPressedEditProfile: () => context.goNamed(editProfile),
+            ),
             routes: [
               GoRoute(
                 path: 'edit',
                 name: AppRoutes.editProfile,
-                builder: (_, __) => const EditProfile(),
+                builder: (context, __) => EditProfile(
+                  onGotoCropPage: (image) {
+                    return context.pushNamed<Uint8List?>(
+                      cropPage,
+                      extra: image,
+                    );
+                  },
+                ),
                 routes: [
                   GoRoute(
                     path: 'crop',

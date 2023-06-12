@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/core/res/colors.dart';
 
 class Avatar extends StatelessWidget {
   final ImageProvider<dynamic>? image;
@@ -27,7 +26,7 @@ class Avatar extends StatelessWidget {
         CircleAvatar(
           radius: radius,
           backgroundColor:
-              borderColor ?? AppColors.primaryColorLight,
+              borderColor,
           child: CircleAvatar(
             radius: radius - borderWidth,
             backgroundImage: image as ImageProvider<Object>?,
@@ -41,9 +40,9 @@ class Avatar extends StatelessWidget {
             elevation: 1,
             color: Colors.white,
             shape: const CircleBorder(),
-            child: const Icon(Icons.camera_alt),
             padding: const EdgeInsets.all(4.0),
             onPressed: onButtonPressed as void Function()?,
+            child: const Icon(Icons.camera_alt),
           ),
         )
       ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../l10n/app_localizations.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({Key? key}) : super(key: key);

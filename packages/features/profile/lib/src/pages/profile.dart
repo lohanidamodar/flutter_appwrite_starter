@@ -2,24 +2,26 @@ import 'dart:typed_data';
 
 import 'package:api_service/api_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/core/presentation/router/router.dart';
-import 'package:flutter_appwrite_starter/core/res/constants.dart';
-import 'package:flutter_appwrite_starter/features/profile/presentation/widgets/avatar.dart';
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
-import 'package:go_router/go_router.dart';
+import 'package:profile/src/constants.dart';
+import 'package:profile/src/l10n/profile_localizations.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../widgets/avatar.dart';
 
 class UserProfile extends StatelessWidget {
-  const UserProfile({Key? key}) : super(key: key);
+  final VoidCallback onPressedEditProfile;
+  final VoidCallback? onPop;
+  const UserProfile({Key? key, required this.onPressedEditProfile, this.onPop,})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final user = context.authNotifier.user;
     final prefs = user?.prefs.data ?? {};
+    final l10n = ProfileLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).profilePageTitle),
+        title: Text(l10n.profilePageTitle),
       ),
       body: ListView(
         padding: const EdgeInsets.all(8.0),
@@ -28,7 +30,7 @@ class UserProfile extends StatelessWidget {
             FutureBuilder(
                 future: prefs['photoId'] != null
                     ? ApiService.instance.getImageAvatar(
-                        AppConstants.profileBucketId, prefs['photoId']!)
+                        ProfileConstants.profileBucketId, prefs['photoId']!)
                     : ApiService.instance.getAvatar(user.name),
                 builder: (context, AsyncSnapshot<Uint8List> snapshot) {
                   return Center(
@@ -55,15 +57,15 @@ class UserProfile extends StatelessWidget {
             tiles: [
               ListTile(
                 leading: const Icon(Icons.edit),
-                title: Text(AppLocalizations.of(context).editProfile),
-                onTap: () => context.goNamed(AppRoutes.editProfile),
+                title: Text(l10n.editProfile),
+                onTap: () => onPressedEditProfile(),
               ),
               ListTile(
                 leading: const Icon(Icons.exit_to_app),
-                title: Text(AppLocalizations.of(context).logoutButtonText),
+                title: Text(l10n.logoutButtonText),
                 onTap: () async {
                   await context.authNotifier.deleteSession();
-                  context.pop();
+                  onPop?.call();
                 },
               ),
             ],

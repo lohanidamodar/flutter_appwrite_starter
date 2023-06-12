@@ -2,20 +2,23 @@ import 'dart:typed_data';
 import 'package:api_service/api_service.dart';
 import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/core/presentation/router/router.dart';
-import 'package:flutter_appwrite_starter/core/res/constants.dart';
-import 'package:flutter_appwrite_starter/features/profile/presentation/widgets/avatar.dart';
-import 'package:flutter_appwrite_starter/l10n/app_localizations.dart';
-import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:profile/src/constants.dart';
+import 'package:profile/types.dart';
+
+import '../l10n/profile_localizations.dart';
+import '../widgets/avatar.dart';
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({Key? key}) : super(key: key);
+  final VoidCallback? onPop;
+  final GotoCropPageCallback onGotoCropPage;
+  const EditProfile({Key? key, this.onPop, required this.onGotoCropPage})
+      : super(key: key);
 
   @override
-  _EditProfileState createState() => _EditProfileState();
+  State<EditProfile> createState() => _EditProfileState();
 }
 
 enum AppState {
@@ -51,7 +54,7 @@ class _EditProfileState extends State<EditProfile> {
     final authNotifier = context.authNotifier;
     final User user = authNotifier.user!;
     final prefs = authNotifier.user!.prefs.data;
-    final l10n = AppLocalizations.of(context);
+    final l10n = ProfileLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.editProfile),
@@ -64,7 +67,7 @@ class _EditProfileState extends State<EditProfile> {
               return FutureBuilder(
                   future: prefs['photoId'] != null
                       ? ApiService.instance.getImageAvatar(
-                          AppConstants.profileBucketId, prefs['photoId']!)
+                          ProfileConstants.profileBucketId, prefs['photoId']!)
                       : ApiService.instance.getAvatar(user.name),
                   builder: (context, AsyncSnapshot<Uint8List> snapshot) {
                     return Center(
@@ -94,9 +97,6 @@ class _EditProfileState extends State<EditProfile> {
           const SizedBox(height: 10.0),
           Center(
             child: ElevatedButton(
-              child: _processing
-                  ? const CircularProgressIndicator()
-                  : Text(l10n.saveButtonLabel),
               onPressed: _processing
                   ? null
                   : () async {
@@ -124,9 +124,12 @@ class _EditProfileState extends State<EditProfile> {
                         setState(() {
                           _processing = false;
                         });
-                        context.pop();
+                        widget.onPop?.call();
                       }
                     },
+              child: _processing
+                  ? const CircularProgressIndicator()
+                  : Text(l10n.saveButtonLabel),
             ),
           )
         ],
@@ -134,7 +137,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  void _pickImageButtonPressed(AppLocalizations l10n) async {
+  void _pickImageButtonPressed(ProfileLocalizations l10n) async {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -166,7 +169,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 TextButton(
                   onPressed: () {
-                    context.pop();
+                    widget.onPop?.call();
                   },
                   child: Text(
                     l10n.cancelButtonLabel,
@@ -186,32 +189,18 @@ class _EditProfileState extends State<EditProfile> {
     setState(() {
       state = AppState.picked;
     });
-    context.pop();
+    widget.onPop?.call();
     _cropImage();
   }
 
   Future<void> _cropImage() async {
     final ib = await _image.readAsBytes();
-    final image = await context.pushNamed<Uint8List?>(
-      AppRoutes.cropPage,
-      extra: ib,
-    );
+    final image = await widget.onGotoCropPage(ib);
     if (image == null) return;
     _imageBytes = image;
     setState(() {
       state = AppState.cropped;
     });
-    /* File croppedFile = await ImageCropper.cropImage(
-      sourcePath: _image.path,
-      maxWidth: 800,
-      aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
-    );
-    if (croppedFile != null) {
-      _image = croppedFile;
-      setState(() {
-        state = AppState.cropped;
-      });
-    } */
   }
 
   Future uploadImage() async {
@@ -220,7 +209,7 @@ class _EditProfileState extends State<EditProfile> {
         filename: "${context.authNotifier.user!.$id}.png",
         contentType: 'image/png');
     final res = await ApiService.instance.uploadFile(
-      AppConstants.profileBucketId,
+      ProfileConstants.profileBucketId,
       file,
       permissions: [
         Permission.write(Role.user(context.authNotifier.user!.$id)),

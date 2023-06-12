@@ -1,8 +1,8 @@
 import 'package:auth/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/core/presentation/router/router.dart';
-import 'core/presentation/providers/providers.dart';
-import 'core/res/themes.dart';
+import 'package:flutter_appwrite_starter/router/router.dart';
+import 'providers/providers.dart';
+import 'res/themes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'l10n/app_localizations.dart';

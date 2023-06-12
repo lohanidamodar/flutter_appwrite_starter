@@ -15,7 +15,7 @@ dependencies:
   crop: ^0.5.5
   crop_your_image: ^0.7.4
   device_info_plus: ^8.1.0
-  flutter_riverpod: ^1.0.0
+  flutter_riverpod: ^2.3.6
   google_fonts: ^4.0.4
   image_picker: ^0.8.7+5
   intl: ^0.18.0
@@ -27,6 +27,7 @@ dependencies:
   api_service: { path: packages/api_service }
   auth: { path: packages/features/auth }
   components: { path: packages/components }
+  profile: { path: packages/features/profile }
 
 dev_dependencies:
   flutter_test:

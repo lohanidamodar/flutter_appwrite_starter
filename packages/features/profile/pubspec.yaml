@@ -1,0 +1,26 @@
+name: profile
+
+environment:
+  sdk: '>=3.0.2 <4.0.0'
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  api_service: { path: ../../api_service }
+  appwrite_auth_kit: ^0.8.0
+  crop_your_image: ^0.7.5
+  components: { path: ../../components }
+  appwrite: ^9.0.0
+  intl: ^0.18.0
+  image_picker: ^0.8.8
+  flutter_riverpod: ^2.3.6
+
+dev_dependencies:
+  flutter_lints: ^2.0.1
+
+flutter:
+  uses-material-design: true
+  generate: true
