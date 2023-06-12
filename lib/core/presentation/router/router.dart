@@ -41,7 +41,9 @@ abstract class AppRoutes {
           GoRoute(
             path: 'signup',
             name: AppRoutes.signup,
-            builder: (_, __) => const SignupPage(),
+            builder: (context, __) => SignupPage(
+              onPop: context.pop,
+            ),
           ),
           GoRoute(
             path: 'profile',

@@ -1,7 +1,6 @@
+import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/core/presentation/router/router.dart';
-import 'package:flutter_appwrite_starter/core/res/assets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
@@ -35,7 +34,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const SizedBox(height: 20.0),
-            SvgPicture.asset(AppAssets.logo),
+            const Logo(),
             const SizedBox(height: 20.0),
             Text(
               "Welcome to FlAppwrite Starter template, your base to build awesome applications.",

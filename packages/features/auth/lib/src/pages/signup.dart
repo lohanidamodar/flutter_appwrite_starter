@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../widgets/signup.dart';
 
 class SignupPage extends StatelessWidget {
-  const SignupPage({Key? key}) : super(key: key);
+  final VoidCallback onPop;
+  const SignupPage({Key? key, required this.onPop}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class SignupPage extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
         ),
       ),
-      body: const SignupForm(),
+      body: SignupForm(onPop: onPop,),
     );
   }
 }

@@ -16,7 +16,6 @@ dependencies:
   crop_your_image: ^0.7.4
   device_info_plus: ^8.1.0
   flutter_riverpod: ^1.0.0
-  flutter_svg: ^2.0.6
   google_fonts: ^4.0.4
   image_picker: ^0.8.7+5
   intl: ^0.18.0
@@ -27,6 +26,7 @@ dependencies:
   go_router: ^7.0.1
   api_service: { path: packages/api_service }
   auth: { path: packages/features/auth }
+  components: { path: packages/components }
 
 dev_dependencies:
   flutter_test:

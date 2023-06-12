@@ -104,7 +104,9 @@ class _LoginFormState extends State<LoginForm> {
                       side: BorderSide(color: primaryColor),
                     ),
                     label: Text(l10n.signupButtonText),
-                    onPressed: () => widget.onSignup,
+                    onPressed: () {
+                      widget.onSignup.call();
+                    },
                   ),
                 ),
               ],

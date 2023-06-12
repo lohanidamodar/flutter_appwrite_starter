@@ -104,7 +104,7 @@ packages:
     source: hosted
     version: "0.0.3"
   components:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "packages/components"
       relative: true
@@ -233,7 +233,7 @@ packages:
     source: hosted
     version: "1.0.4"
   flutter_svg:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_svg
       sha256: "6ff8c902c8056af9736de2689f63f81c42e2d642b9f4c79dbf8790ae48b63012"
