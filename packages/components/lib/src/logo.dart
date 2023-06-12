@@ -10,7 +10,7 @@ class Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SvgPicture.asset(
-      Assets.logo,
+      'packages/components/${Assets.logo}',
       height: height,
     );
   }
