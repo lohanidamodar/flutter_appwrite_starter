@@ -190,7 +190,7 @@ class _EditProfileState extends State<EditProfile> {
     setState(() {
       state = AppState.picked;
     });
-    widget.onPop?.call();
+    widget.onPop.call();
     _cropImage();
   }
 
