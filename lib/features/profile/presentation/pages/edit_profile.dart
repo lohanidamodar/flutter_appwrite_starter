@@ -1,13 +1,13 @@
 import 'dart:typed_data';
+import 'package:api_service/api_service.dart';
 import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
 import 'package:flutter_appwrite_starter/core/presentation/router/router.dart';
 import 'package:flutter_appwrite_starter/core/res/constants.dart';
 import 'package:flutter_appwrite_starter/features/profile/presentation/widgets/avatar.dart';
+import 'package:flutter_appwrite_starter/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 
@@ -51,9 +51,10 @@ class _EditProfileState extends State<EditProfile> {
     final authNotifier = context.authNotifier;
     final User user = authNotifier.user!;
     final prefs = authNotifier.user!.prefs.data;
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.editProfile),
+        title: Text(l10n.editProfile),
       ),
       body: ListView(
         padding: const EdgeInsets.all(8.0),
@@ -69,7 +70,7 @@ class _EditProfileState extends State<EditProfile> {
                     return Center(
                       child: Avatar(
                         showButton: true,
-                        onButtonPressed: _pickImageButtonPressed,
+                        onButtonPressed: () => _pickImageButtonPressed(l10n),
                         radius: 50,
                         image: state == AppState.cropped && _imageBytes != null
                             ? MemoryImage(_imageBytes!)
@@ -88,15 +89,14 @@ class _EditProfileState extends State<EditProfile> {
           const SizedBox(height: 10.0),
           TextField(
             controller: _nameController,
-            decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.nameFieldLabel),
+            decoration: InputDecoration(labelText: l10n.nameFieldLabel),
           ),
           const SizedBox(height: 10.0),
           Center(
             child: ElevatedButton(
               child: _processing
                   ? const CircularProgressIndicator()
-                  : Text(AppLocalizations.of(context)!.saveButtonLabel),
+                  : Text(l10n.saveButtonLabel),
               onPressed: _processing
                   ? null
                   : () async {
@@ -134,13 +134,13 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  void _pickImageButtonPressed() async {
+  void _pickImageButtonPressed(AppLocalizations l10n) async {
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
-              AppLocalizations.of(context)!.pickImageDialogTitle,
+              l10n.pickImageDialogTitle,
             ),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
@@ -154,15 +154,13 @@ class _EditProfileState extends State<EditProfile> {
                       onTap: () {
                         getImage(ImageSource.camera);
                       },
-                      title: Text(AppLocalizations.of(context)!
-                          .pickFromCameraButtonLabel),
+                      title: Text(l10n.pickFromCameraButtonLabel),
                     ),
                     ListTile(
                       onTap: () {
                         getImage(ImageSource.gallery);
                       },
-                      title: Text(AppLocalizations.of(context)!
-                          .pickFromGalleryButtonLabel),
+                      title: Text(l10n.pickFromGalleryButtonLabel),
                     ),
                   ],
                 ),
@@ -171,7 +169,7 @@ class _EditProfileState extends State<EditProfile> {
                     context.pop();
                   },
                   child: Text(
-                    AppLocalizations.of(context)!.cancelButtonLabel,
+                    l10n.cancelButtonLabel,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),

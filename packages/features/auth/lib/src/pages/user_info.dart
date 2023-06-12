@@ -1,6 +1,6 @@
 import 'package:appwrite/models.dart';
+import 'package:auth/src/l10n/auth_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 
 class UserInfoPage extends StatelessWidget {
@@ -9,9 +9,10 @@ class UserInfoPage extends StatelessWidget {
   const UserInfoPage({Key? key, this.user}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final l10n = AuthLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.profilePageTitle),
+        title: Text(l10n.profilePageTitle),
       ),
       body: Center(
         child: Column(
@@ -19,7 +20,7 @@ class UserInfoPage extends StatelessWidget {
           children: <Widget>[
             Text(user!.email),
             ElevatedButton(
-              child: Text(AppLocalizations.of(context)!.logoutButtonText),
+              child: Text(l10n.logoutButtonText),
               onPressed: () {
                 context.authNotifier.deleteSession();
               },

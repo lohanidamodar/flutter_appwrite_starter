@@ -1,17 +1,17 @@
+import 'package:components/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/core/presentation/router/router.dart';
-import 'package:flutter_appwrite_starter/core/res/assets.dart';
-import 'package:flutter_appwrite_starter/core/res/colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
-import 'package:go_router/go_router.dart';
+
+import '../l10n/auth_localizations.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key}) : super(key: key);
+  final VoidCallback onSignup;
+  final VoidCallback? onPop;
+  const LoginForm({Key? key, required this.onSignup, this.onPop})
+      : super(key: key);
 
   @override
-  _LoginFormState createState() => _LoginFormState();
+  State<LoginForm> createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<LoginForm> {
@@ -31,15 +31,14 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AuthLocalizations.of(context);
+    final primaryColor = Theme.of(context).colorScheme.primary;
     return Form(
       key: _formKey,
       child: ListView(
         padding: const EdgeInsets.all(16.0),
         children: <Widget>[
-          SvgPicture.asset(
-            AppAssets.logo,
-            height: 80.0,
-          ),
+          const Logo(height: 80),
           Text(
             "Login",
             style: Theme.of(context).textTheme.headlineMedium,
@@ -50,11 +49,10 @@ class _LoginFormState extends State<LoginForm> {
             child: TextFormField(
               key: const Key("email-field"),
               controller: _email,
-              validator: (value) => (value!.isEmpty)
-                  ? AppLocalizations.of(context)!.emailValidationError
-                  : null,
+              validator: (value) =>
+                  (value!.isEmpty) ? l10n.emailValidationError : null,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.emailFieldlabel,
+                labelText: l10n.emailFieldlabel,
               ),
               style: style,
               textInputAction: TextInputAction.next,
@@ -71,11 +69,10 @@ class _LoginFormState extends State<LoginForm> {
               key: const Key("password-field"),
               controller: _password,
               obscureText: true,
-              validator: (value) => (value!.isEmpty)
-                  ? AppLocalizations.of(context)!.passwordValidationError
-                  : null,
+              validator: (value) =>
+                  (value!.isEmpty) ? l10n.passwordValidationError : null,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.passwordFieldLabel,
+                labelText: l10n.passwordFieldLabel,
               ),
               style: style,
               onEditingComplete: _login,
@@ -92,7 +89,7 @@ class _LoginFormState extends State<LoginForm> {
                   elevation: 0,
                 ),
                 onPressed: _login,
-                child: Text(AppLocalizations.of(context)!.loginButtonText),
+                child: Text(l10n.loginButtonText),
               ),
             ),
           Padding(
@@ -103,11 +100,11 @@ class _LoginFormState extends State<LoginForm> {
                   child: OutlinedButton.icon(
                     icon: const Icon(Icons.arrow_forward),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.primaryColor,
-                      side: const BorderSide(color: AppColors.primaryColor),
+                      foregroundColor: primaryColor,
+                      side: BorderSide(color: primaryColor),
                     ),
-                    label: Text(AppLocalizations.of(context)!.signupButtonText),
-                    onPressed: () => context.goNamed(AppRoutes.signup),
+                    label: Text(l10n.signupButtonText),
+                    onPressed: () => widget.onSignup,
                   ),
                 ),
               ],
@@ -122,13 +119,14 @@ class _LoginFormState extends State<LoginForm> {
     if (_formKey.currentState!.validate()) {
       if (!await context.authNotifier
           .createEmailSession(email: _email!.text, password: _password!.text)) {
+        if (!mounted) {
+          return;
+        }
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(context.authNotifier.error!),
         ));
       } else {
-        if (context.canPop()) {
-          context.pop();
-        }
+        widget.onPop?.call();
       }
     }
   }

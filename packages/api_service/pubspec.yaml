@@ -1,0 +1,8 @@
+name: api_service
+
+environment:
+  sdk: '>=3.0.2 <4.0.0'
+  flutter: ">=3.0.0"
+
+dependencies:
+  appwrite: ^9.0.0

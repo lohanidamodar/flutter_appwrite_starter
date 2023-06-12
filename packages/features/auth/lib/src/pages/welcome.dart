@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/core/res/colors.dart';
-import 'package:flutter_appwrite_starter/features/auth/presentation/widgets/login.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../l10n/auth_localizations.dart';
+import '../widgets/login.dart';
 
 class WelcomePage extends StatefulWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+  final VoidCallback onSignup;
+  const WelcomePage({Key? key, required this.onSignup}) : super(key: key);
 
   @override
-  _WelcomePageState createState() => _WelcomePageState();
+  State<WelcomePage> createState() => _WelcomePageState();
 }
 
 class _WelcomePageState extends State<WelcomePage> {
@@ -18,24 +18,26 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AuthLocalizations.of(context);
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           const SizedBox(height: kToolbarHeight),
           Text(
-            AppLocalizations.of(context)!.welcomePageTitle,
+            l10n.welcomePageTitle,
             style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                color: AppColors.primaryColor,
+                color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.w900,
                 fontFamily: "Frank"),
           ),
           Text(
-            AppLocalizations.of(context)!.welcomePageSubtitle,
-            style: const TextStyle(color: AppColors.primaryColor, fontSize: 20.0),
+            l10n.welcomePageSubtitle,
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.primary, fontSize: 20.0),
           ),
           const SizedBox(height: 20.0),
-          const Expanded(child: LoginForm()),
+          Expanded(child: LoginForm(onSignup: widget.onSignup)),
         ],
       ),
     );

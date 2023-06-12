@@ -1,16 +1,14 @@
+import 'package:auth/src/l10n/auth_localizations.dart';
+import 'package:components/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/core/res/assets.dart';
-import 'package:flutter_appwrite_starter/core/res/colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
-import 'package:go_router/go_router.dart';
 
 class SignupForm extends StatefulWidget {
-  const SignupForm({Key? key}) : super(key: key);
+  final VoidCallback? onPop;
+  const SignupForm({Key? key, this.onPop}) : super(key: key);
 
   @override
-  _SignupFormState createState() => _SignupFormState();
+  State<SignupForm> createState() => _SignupFormState();
 }
 
 class _SignupFormState extends State<SignupForm> {
@@ -38,13 +36,14 @@ class _SignupFormState extends State<SignupForm> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AuthLocalizations.of(context);
+    final primaryColor = Theme.of(context).colorScheme.primary;
     return Form(
       key: _formKey,
       child: ListView(
         padding: const EdgeInsets.all(16.0),
         children: <Widget>[
-          SvgPicture.asset(
-            AppAssets.logo,
+          const Logo(
             height: 80.0,
           ),
           const SizedBox(height: 20.0),
@@ -59,10 +58,10 @@ class _SignupFormState extends State<SignupForm> {
               key: const Key("name-field"),
               controller: _name,
               validator: (value) => (value!.isEmpty)
-                  ? AppLocalizations.of(context)!.nameValidationError
+                  ? l10n.nameValidationError
                   : null,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.nameFieldLabel,
+                labelText: l10n.nameFieldLabel,
               ),
               style: style,
               textInputAction: TextInputAction.next,
@@ -78,10 +77,10 @@ class _SignupFormState extends State<SignupForm> {
               focusNode: _emailField,
               controller: _email,
               validator: (value) => (value!.isEmpty)
-                  ? AppLocalizations.of(context)!.emailValidationError
+                  ? l10n.emailValidationError
                   : null,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.emailFieldlabel,
+                labelText: l10n.emailFieldlabel,
               ),
               style: style,
               textInputAction: TextInputAction.next,
@@ -99,11 +98,11 @@ class _SignupFormState extends State<SignupForm> {
               controller: _password,
               obscureText: true,
               validator: (value) => (value!.isEmpty)
-                  ? AppLocalizations.of(context)!.passwordValidationError
+                  ? l10n.passwordValidationError
                   : null,
               decoration: InputDecoration(
                 labelText:
-                    AppLocalizations.of(context)!.passwordValidationError,
+                    l10n.passwordValidationError,
               ),
               style: style,
               textInputAction: TextInputAction.next,
@@ -120,16 +119,16 @@ class _SignupFormState extends State<SignupForm> {
               controller: _confirmPassword,
               obscureText: true,
               validator: (value) => (value!.isEmpty)
-                  ? AppLocalizations.of(context)!
+                  ? l10n
                       .confirmPasswordValidationEmptyError
                   : value.isNotEmpty &&
                           _password!.text != _confirmPassword!.text
-                      ? AppLocalizations.of(context)!
+                      ? l10n
                           .confirmPasswordValidationMatchError
                       : null,
               decoration: InputDecoration(
                 labelText:
-                    AppLocalizations.of(context)!.confirmPasswordFieldLabel,
+                    l10n.confirmPasswordFieldLabel,
               ),
               style: style,
               focusNode: _confirmPasswordField,
@@ -147,7 +146,7 @@ class _SignupFormState extends State<SignupForm> {
                   elevation: 0,
                 ),
                 onPressed: _signup,
-                child: Text(AppLocalizations.of(context)!.signupButtonText),
+                child: Text(l10n.signupButtonText),
               ),
             ),
           Padding(
@@ -158,11 +157,11 @@ class _SignupFormState extends State<SignupForm> {
                   child: OutlinedButton.icon(
                     icon: const Icon(Icons.arrow_back),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.primaryColor,
-                      side: const BorderSide(color: AppColors.primaryColor),
+                      foregroundColor: primaryColor,
+                      side: BorderSide(color: primaryColor),
                     ),
                     label: const Text("Back to Login"),
-                    onPressed: () => context.pop(),
+                    onPressed: () => widget.onPop?.call(),
                   ),
                 ),
               ],
@@ -181,6 +180,9 @@ class _SignupFormState extends State<SignupForm> {
           name: _name!.text,
           email: _email!.text,
           password: _password!.text);
+      if (!mounted) {
+        return;
+      }
       if (user == null) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(context.authNotifier.error!),
@@ -188,7 +190,7 @@ class _SignupFormState extends State<SignupForm> {
       } else {
         await context.authNotifier
             .createEmailSession(email: _email!.text, password: _password!.text);
-        context.pop();
+        widget.onPop?.call();
       }
     }
   }

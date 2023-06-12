@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
+
+import '../../../../l10n/app_localizations.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class IntroPage extends StatelessWidget {
                   _finishIntroScreen(context);
                 },
                 child:
-                    Text(AppLocalizations.of(context)!.introFinishButtonLabel),
+                    Text(AppLocalizations.of(context).introFinishButtonLabel),
               )
             ],
           );

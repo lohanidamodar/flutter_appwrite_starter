@@ -1,15 +1,11 @@
 import 'dart:typed_data';
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
-import 'package:flutter_appwrite_starter/features/auth/presentation/pages/crop_page.dart';
-import 'package:flutter_appwrite_starter/features/auth/presentation/pages/login.dart';
-import 'package:flutter_appwrite_starter/features/auth/presentation/pages/signup.dart';
-import 'package:flutter_appwrite_starter/features/auth/presentation/pages/splash.dart';
-import 'package:flutter_appwrite_starter/features/auth/presentation/pages/welcome.dart';
 import 'package:flutter_appwrite_starter/features/home/presentation/pages/home.dart';
 import 'package:flutter_appwrite_starter/features/onboarding/presentation/pages/intro.dart';
 import 'package:flutter_appwrite_starter/features/profile/presentation/pages/edit_profile.dart';
 import 'package:flutter_appwrite_starter/features/profile/presentation/pages/profile.dart';
 import 'package:go_router/go_router.dart';
+import 'package:auth/auth.dart';
 
 abstract class AppRoutes {
   static const home = "/";
@@ -29,13 +25,18 @@ abstract class AppRoutes {
         builder: (context, __) =>
             context.authNotifier.status == AuthStatus.authenticated
                 ? const HomePage()
-                : const WelcomePage(),
+                : WelcomePage(
+                    onSignup: () => context.goNamed(signup),
+                  ),
         routes: [
           GoRoute(path: 'loading', builder: (_, __) => const Splash()),
           GoRoute(
             path: 'login',
             name: AppRoutes.login,
-            builder: (_, __) => const LoginPage(),
+            builder: (context, __) => LoginPage(
+              onSignup: () => context.goNamed(signup),
+              onPop: context.pop,
+            ),
           ),
           GoRoute(
             path: 'signup',
@@ -55,8 +56,10 @@ abstract class AppRoutes {
                   GoRoute(
                     path: 'crop',
                     name: AppRoutes.cropPage,
-                    builder: (_, state) =>
-                        CropPage(image: state.extra as Uint8List?),
+                    builder: (context, state) => CropPage(
+                      image: state.extra as Uint8List?,
+                      onImageCropped: (image) => context.pop(image),
+                    ),
                   )
                 ],
               ),

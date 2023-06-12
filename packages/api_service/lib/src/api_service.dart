@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as models;
-import 'package:flutter_appwrite_starter/core/res/constants.dart';
 
 class ApiService {
   final Client client = Client();
@@ -13,9 +12,6 @@ class ApiService {
   static ApiService? _instance;
 
   ApiService._internal() {
-    client
-        .setEndpoint(AppConstants.endpoint)
-        .setProject(AppConstants.projectId);
     account = Account(client);
     db = Databases(client);
     avatars = Avatars(client);
@@ -27,6 +23,10 @@ class ApiService {
     return _instance!;
   }
 
+  void init({required String projectId, required String endpoint}) {
+    client.setEndpoint(endpoint).setProject(projectId);
+  }
+
   Future<Uint8List> getAvatar(String name) async {
     final res = await avatars.getInitials(
       name: name,
@@ -35,18 +35,18 @@ class ApiService {
   }
 
   Future<Uint8List> getImageAvatar(String bucketId, String fileId) async {
-    final res = await storage.getFilePreview(bucketId: bucketId, fileId: fileId, width: 100);
+    final res = await storage.getFilePreview(
+        bucketId: bucketId, fileId: fileId, width: 100);
     return res;
   }
 
-  Future<models.File> uploadFile(
-    String bucketId,
-    InputFile file, {
-    List<String> permissions = const []
-  }) {
+  Future<models.File> uploadFile(String bucketId, InputFile file,
+      {List<String> permissions = const []}) {
     return storage.createFile(
-      bucketId: bucketId,
-        fileId: 'unique()', file: file, permissions: [
+        bucketId: bucketId,
+        fileId: 'unique()',
+        file: file,
+        permissions: [
           Permission.read(Role.any()),
           Permission.write(Role.any()),
         ]);

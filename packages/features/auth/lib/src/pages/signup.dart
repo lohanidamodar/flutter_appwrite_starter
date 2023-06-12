@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/core/res/colors.dart';
-import 'package:flutter_appwrite_starter/features/auth/presentation/widgets/signup.dart';
+import '../widgets/signup.dart';
 
 class SignupPage extends StatelessWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -10,8 +9,8 @@ class SignupPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        iconTheme: const IconThemeData(
-          color: AppColors.primaryColor,
+        iconTheme: IconThemeData(
+          color: Theme.of(context).colorScheme.primary,
         ),
       ),
       body: const SignupForm(),
