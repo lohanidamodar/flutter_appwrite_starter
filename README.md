@@ -26,7 +26,7 @@ How to start your project based on this.
 1. Clone this repository locally. The folder structure is somewhat based on clean code architecture
 2. Delete `.git` folder to clear git history (or you can keep it if you want)
 3. Using `rename` package change the bundle ID and app name to whatever you want your `dart run rename --bundleId com.new.package.name` and `dart run rename --appname "New App Name"`. Check [rename](https://pub.dev/packages/rename) package for more details on how to use it.
-4. in `lib/core/res/constants.dart` update endpoint and project id with your own endpoint and project id details;
+4. in `lib/res/constants.dart` update endpoint and project id with your own endpoint and project id details;
 
 ## Adding new Locale
 TODO Docs
