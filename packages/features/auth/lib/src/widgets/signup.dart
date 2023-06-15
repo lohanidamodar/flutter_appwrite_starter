@@ -45,7 +45,7 @@ class _SignupFormState extends State<SignupForm> {
         children: <Widget>[
           const Logo(
             height: 80.0,
-            basePath: 'packages/components',
+            basePath: 'packages/components/',
           ),
           const SizedBox(height: 20.0),
           Text(
