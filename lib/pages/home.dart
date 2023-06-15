@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const SizedBox(height: 20.0),
-            const Logo(),
+            const Logo(basePath: 'packages/components/',),
             const SizedBox(height: 20.0),
             Text(
               "Welcome to FlAppwrite Starter template, your base to build awesome applications.",
