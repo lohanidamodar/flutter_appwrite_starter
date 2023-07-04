@@ -38,7 +38,7 @@ class _LoginFormState extends State<LoginForm> {
       child: ListView(
         padding: const EdgeInsets.all(16.0),
         children: <Widget>[
-          const Logo(height: 80, basePath: 'packages/components/',),
+          const Logo(height: 80, ),
           Text(
             "Login",
             style: Theme.of(context).textTheme.headlineMedium,

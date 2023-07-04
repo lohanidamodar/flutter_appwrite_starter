@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'colors.dart';
-import 'sizes.dart';
+import '../constants/sizes.dart';
 
 class AppThemes {
   static late BuildContext context;

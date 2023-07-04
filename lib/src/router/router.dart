@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
-import 'package:flutter_appwrite_starter/pages/home.dart';
-import 'package:flutter_appwrite_starter/pages/intro.dart';
 import 'package:go_router/go_router.dart';
 import 'package:auth/auth.dart';
+import 'package:home/home.dart';
+import 'package:intro/intro.dart';
 import 'package:profile/profile.dart';
 
 abstract class AppRoutes {
@@ -23,7 +23,9 @@ abstract class AppRoutes {
         name: AppRoutes.home,
         builder: (context, __) =>
             context.authNotifier.status == AuthStatus.authenticated
-                ? const HomePage()
+                ? HomePage(
+                    onPressedProfile: () => context.goNamed(AppRoutes.profile),
+                  )
                 : WelcomePage(
                     onSignup: () => context.goNamed(signup),
                   ),

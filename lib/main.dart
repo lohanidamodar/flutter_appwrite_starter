@@ -2,12 +2,12 @@ import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/app.dart';
 import 'package:api_service/api_service.dart';
-import 'package:flutter_appwrite_starter/res/app_config.dart';
+import 'package:flutter_appwrite_starter/src/app_config/app_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
-import 'providers/providers.dart';
-import 'res/constants.dart';
+import 'src/app_config/app_config_provider.dart';
+import 'src/constants/constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

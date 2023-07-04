@@ -1,13 +1,12 @@
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/router/router.dart';
-import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final VoidCallback onPressedProfile;
+  const HomePage({Key? key, required this.onPressedProfile}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -24,7 +23,7 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.person),
-            onPressed: () => context.goNamed(AppRoutes.profile),
+            onPressed: widget.onPressedProfile,
           )
         ],
       ),
@@ -34,7 +33,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const SizedBox(height: 20.0),
-            const Logo(basePath: 'packages/components/',),
+            const Logo(),
             const SizedBox(height: 20.0),
             Text(
               "Welcome to FlAppwrite Starter template, your base to build awesome applications.",

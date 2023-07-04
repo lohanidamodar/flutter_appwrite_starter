@@ -8,7 +8,7 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Material(
       child: Center(
-        child: Logo(basePath: 'packages/components/',),
+        child: Logo(),
       ),
     );
   }

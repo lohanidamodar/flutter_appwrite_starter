@@ -1,0 +1,16 @@
+name: home
+
+environment:
+  sdk: '>=3.0.2 <4.0.0'
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  components: { path: ../../components }
+
+dev_dependencies:
+  flutter_lints: ^2.0.1
+
+flutter:
+  uses-material-design: true

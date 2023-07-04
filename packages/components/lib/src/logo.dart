@@ -5,14 +5,17 @@ import 'assets.dart';
 
 class Logo extends StatelessWidget {
   final double? height;
-  final String basePath;
-  const Logo({Key? key, this.height, this.basePath = ''}) : super(key: key);
+  const Logo({
+    Key? key,
+    this.height,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SvgPicture.asset(
-      '$basePath${Assets.logo}',
+      Assets.logo,
       height: height,
+      package: 'components',
     );
   }
 }

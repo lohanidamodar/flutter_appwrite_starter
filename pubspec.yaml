@@ -1,5 +1,5 @@
 name: flutter_appwrite_starter
-description: A new Flutter project.
+description: Complete starter template for Flutter + Appwrite projects
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -28,6 +28,8 @@ dependencies:
   auth: { path: packages/features/auth }
   components: { path: packages/components }
   profile: { path: packages/features/profile }
+  home: { path: packages/features/home }
+  intro: { path: packages/features/intro }
 
 dev_dependencies:
   flutter_test:

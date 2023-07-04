@@ -45,7 +45,6 @@ class _SignupFormState extends State<SignupForm> {
         children: <Widget>[
           const Logo(
             height: 80.0,
-            basePath: 'packages/components/',
           ),
           const SizedBox(height: 20.0),
           Text(
@@ -58,9 +57,8 @@ class _SignupFormState extends State<SignupForm> {
             child: TextFormField(
               key: const Key("name-field"),
               controller: _name,
-              validator: (value) => (value!.isEmpty)
-                  ? l10n.nameValidationError
-                  : null,
+              validator: (value) =>
+                  (value!.isEmpty) ? l10n.nameValidationError : null,
               decoration: InputDecoration(
                 labelText: l10n.nameFieldLabel,
               ),
@@ -77,9 +75,8 @@ class _SignupFormState extends State<SignupForm> {
               key: const Key("email-field"),
               focusNode: _emailField,
               controller: _email,
-              validator: (value) => (value!.isEmpty)
-                  ? l10n.emailValidationError
-                  : null,
+              validator: (value) =>
+                  (value!.isEmpty) ? l10n.emailValidationError : null,
               decoration: InputDecoration(
                 labelText: l10n.emailFieldlabel,
               ),
@@ -98,12 +95,10 @@ class _SignupFormState extends State<SignupForm> {
               key: const Key("password-field"),
               controller: _password,
               obscureText: true,
-              validator: (value) => (value!.isEmpty)
-                  ? l10n.passwordValidationError
-                  : null,
+              validator: (value) =>
+                  (value!.isEmpty) ? l10n.passwordValidationError : null,
               decoration: InputDecoration(
-                labelText:
-                    l10n.passwordValidationError,
+                labelText: l10n.passwordValidationError,
               ),
               style: style,
               textInputAction: TextInputAction.next,
@@ -120,16 +115,13 @@ class _SignupFormState extends State<SignupForm> {
               controller: _confirmPassword,
               obscureText: true,
               validator: (value) => (value!.isEmpty)
-                  ? l10n
-                      .confirmPasswordValidationEmptyError
+                  ? l10n.confirmPasswordValidationEmptyError
                   : value.isNotEmpty &&
                           _password!.text != _confirmPassword!.text
-                      ? l10n
-                          .confirmPasswordValidationMatchError
+                      ? l10n.confirmPasswordValidationMatchError
                       : null,
               decoration: InputDecoration(
-                labelText:
-                    l10n.confirmPasswordFieldLabel,
+                labelText: l10n.confirmPasswordFieldLabel,
               ),
               style: style,
               focusNode: _confirmPasswordField,

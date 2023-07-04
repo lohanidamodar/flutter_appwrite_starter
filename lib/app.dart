@@ -1,9 +1,10 @@
 import 'package:auth/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/router/router.dart';
+import 'package:flutter_appwrite_starter/src/router/router.dart';
 import 'package:profile/profile.dart';
-import 'providers/providers.dart';
-import 'res/themes.dart';
+import 'package:intro/intro.dart';
+import 'src/app_config/app_config_provider.dart';
+import 'src/styles/themes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'l10n/app_localizations.dart';
@@ -23,6 +24,7 @@ class App extends StatelessWidget {
           AppLocalizations.delegate,
           AuthLocalizations.delegate,
           ProfileLocalizations.delegate,
+          IntroLocalizations.delegate,
         ],
         supportedLocales: AppLocalizations.supportedLocales,
         routerConfig: AppRoutes.router,
