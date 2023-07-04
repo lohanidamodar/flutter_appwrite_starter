@@ -11,15 +11,6 @@
     "confirmPasswordValidationEmptyError":"Please confirm password",
     "confirmPasswordValidationMatchError":"Passwords do not match",
     "confirmPasswordFieldLabel":"Confirm password",
-    "logoutButtonText":"Log out",
-    "profilePageTitle":"Profile",
     "nameFieldLabel":"Name",
-    "nameValidationError":"Please enter name",
-    "editProfile":"Edit Profile",
-    "saveButtonLabel":"Save",
-    "pickFromGalleryButtonLabel":"Gallery",
-    "pickFromCameraButtonLabel":"Take Photo",
-    "cancelButtonLabel":"Cancel",
-    "pickImageDialogTitle":"Pick Image",
-    "introFinishButtonLabel":"Get Started"
+    "nameValidationError":"Please enter name"
 }

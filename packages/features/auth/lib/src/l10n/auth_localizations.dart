@@ -163,18 +163,6 @@ abstract class AuthLocalizations {
   /// **'Confirm password'**
   String get confirmPasswordFieldLabel;
 
-  /// No description provided for @logoutButtonText.
-  ///
-  /// In en, this message translates to:
-  /// **'Log out'**
-  String get logoutButtonText;
-
-  /// No description provided for @profilePageTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Profile'**
-  String get profilePageTitle;
-
   /// No description provided for @nameFieldLabel.
   ///
   /// In en, this message translates to:
@@ -186,48 +174,6 @@ abstract class AuthLocalizations {
   /// In en, this message translates to:
   /// **'Please enter name'**
   String get nameValidationError;
-
-  /// No description provided for @editProfile.
-  ///
-  /// In en, this message translates to:
-  /// **'Edit Profile'**
-  String get editProfile;
-
-  /// No description provided for @saveButtonLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Save'**
-  String get saveButtonLabel;
-
-  /// No description provided for @pickFromGalleryButtonLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Gallery'**
-  String get pickFromGalleryButtonLabel;
-
-  /// No description provided for @pickFromCameraButtonLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Take Photo'**
-  String get pickFromCameraButtonLabel;
-
-  /// No description provided for @cancelButtonLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get cancelButtonLabel;
-
-  /// No description provided for @pickImageDialogTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Pick Image'**
-  String get pickImageDialogTitle;
-
-  /// No description provided for @introFinishButtonLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Get Started'**
-  String get introFinishButtonLabel;
 }
 
 class _AuthLocalizationsDelegate extends LocalizationsDelegate<AuthLocalizations> {

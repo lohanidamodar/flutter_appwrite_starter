@@ -41,35 +41,8 @@ class AuthLocalizationsEn extends AuthLocalizations {
   String get confirmPasswordFieldLabel => 'Confirm password';
 
   @override
-  String get logoutButtonText => 'Log out';
-
-  @override
-  String get profilePageTitle => 'Profile';
-
-  @override
   String get nameFieldLabel => 'Name';
 
   @override
   String get nameValidationError => 'Please enter name';
-
-  @override
-  String get editProfile => 'Edit Profile';
-
-  @override
-  String get saveButtonLabel => 'Save';
-
-  @override
-  String get pickFromGalleryButtonLabel => 'Gallery';
-
-  @override
-  String get pickFromCameraButtonLabel => 'Take Photo';
-
-  @override
-  String get cancelButtonLabel => 'Cancel';
-
-  @override
-  String get pickImageDialogTitle => 'Pick Image';
-
-  @override
-  String get introFinishButtonLabel => 'Get Started';
 }

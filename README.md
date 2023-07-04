@@ -12,12 +12,13 @@ If you don't already know what Appwrite is, it's an open source self-hosted Back
 1. Authentication
     - Email based sign up/in
 2. Riverpod State management
-3. Localization ready
-4. Google Fonts
-5. Image picker/Cropper
-6. Package info
-7. User's profile and preferences management
-8. Navigation with go_router (https://pub.dev/packages/go_router)
+3. Package based architecture - check [packages](/packages/) folder
+4. Localization ready
+5. Google Fonts
+6. Image picker/Cropper
+7. Package info
+8. User's profile and preferences management
+9. Navigation with go_router (https://pub.dev/packages/go_router)
 
 ## Getting Started
 
