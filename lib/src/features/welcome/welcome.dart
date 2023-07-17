@@ -1,7 +1,8 @@
 import 'package:flutter_appwrite_starter/src/features/auth/widgets/login_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/src/themes/colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../l10n/app_localizations.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -24,14 +25,14 @@ class _WelcomePageState extends State<WelcomePage> {
         children: <Widget>[
           const SizedBox(height: kToolbarHeight),
           Text(
-            AppLocalizations.of(context)!.welcomePageTitle,
+            AppLocalizations.of(context).welcomePageTitle,
             style: Theme.of(context).textTheme.displayMedium!.copyWith(
                 color: AppColors.primaryColor,
                 fontWeight: FontWeight.w900,
                 fontFamily: "Frank"),
           ),
           Text(
-            AppLocalizations.of(context)!.welcomePageSubtitle,
+            AppLocalizations.of(context).welcomePageSubtitle,
             style:
                 const TextStyle(color: AppColors.primaryColor, fontSize: 20.0),
           ),

@@ -1,20 +1,20 @@
 import 'app_localizations.dart';
 
-/// The translations for English (`en`).
-class AppLocalizationsEn extends AppLocalizations {
-  AppLocalizationsEn([String locale = 'en']) : super(locale);
+/// The translations for Nepali (`ne`).
+class AppLocalizationsNe extends AppLocalizations {
+  AppLocalizationsNe([String locale = 'ne']) : super(locale);
 
   @override
-  String get appName => 'FlAppwrite starter';
+  String get appName => 'FlAppwrite Starter';
 
   @override
-  String get loginButtonText => 'Login';
+  String get loginButtonText => 'लगिन';
 
   @override
-  String get signupButtonText => 'Sign up';
+  String get signupButtonText => 'बनाउनुहोस';
 
   @override
-  String get googleButtonText => 'Continue with Google';
+  String get googleButtonText => 'Google लगिन';
 
   @override
   String get welcomePageTitle => 'Welcome';

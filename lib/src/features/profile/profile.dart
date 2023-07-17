@@ -5,9 +5,10 @@ import 'package:flutter_appwrite_starter/src/api_service/api_service.dart';
 import 'package:flutter_appwrite_starter/src/router/router.dart';
 import 'package:flutter_appwrite_starter/src/api_service/constants.dart';
 import 'package:flutter_appwrite_starter/src/components/avatar.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../l10n/app_localizations.dart';
 
 class UserProfile extends StatelessWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class UserProfile extends StatelessWidget {
     final prefs = user?.prefs.data ?? {};
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.profilePageTitle),
+        title: Text(AppLocalizations.of(context).profilePageTitle),
       ),
       body: ListView(
         padding: const EdgeInsets.all(8.0),
@@ -54,12 +55,12 @@ class UserProfile extends StatelessWidget {
             tiles: [
               ListTile(
                 leading: const Icon(Icons.edit),
-                title: Text(AppLocalizations.of(context)!.editProfile),
+                title: Text(AppLocalizations.of(context).editProfile),
                 onTap: () => context.goNamed(AppRoutes.editProfile),
               ),
               ListTile(
                 leading: const Icon(Icons.exit_to_app),
-                title: Text(AppLocalizations.of(context)!.logoutButtonText),
+                title: Text(AppLocalizations.of(context).logoutButtonText),
                 onTap: () async {
                   await context.authNotifier.deleteSession();
                   context.pop();

@@ -2,8 +2,9 @@ import 'package:flutter_appwrite_starter/src/components/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/src/themes/assets.dart';
 import 'package:flutter_appwrite_starter/src/themes/colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../l10n/app_localizations.dart';
 
 class SignupForm extends StatefulWidget {
   final SignupCallback onPressedSignup;
@@ -31,7 +32,6 @@ class _SignupFormState extends State<SignupForm> {
   late final FocusNode _emailField;
   late final FocusNode _passwordField;
   late final FocusNode _confirmPasswordField;
-  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -48,7 +48,7 @@ class _SignupFormState extends State<SignupForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: widget.formKey,
       child: ListView(
         padding: const EdgeInsets.all(16.0),
         children: <Widget>[
@@ -68,10 +68,10 @@ class _SignupFormState extends State<SignupForm> {
               key: const Key("name-field"),
               controller: _name,
               validator: (value) => (value!.isEmpty)
-                  ? AppLocalizations.of(context)!.nameValidationError
+                  ? AppLocalizations.of(context).nameValidationError
                   : null,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.nameFieldLabel,
+                labelText: AppLocalizations.of(context).nameFieldLabel,
               ),
               style: style,
               textInputAction: TextInputAction.next,
@@ -87,10 +87,10 @@ class _SignupFormState extends State<SignupForm> {
               focusNode: _emailField,
               controller: _email,
               validator: (value) => (value!.isEmpty)
-                  ? AppLocalizations.of(context)!.emailValidationError
+                  ? AppLocalizations.of(context).emailValidationError
                   : null,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.emailFieldlabel,
+                labelText: AppLocalizations.of(context).emailFieldlabel,
               ),
               style: style,
               textInputAction: TextInputAction.next,
@@ -108,11 +108,11 @@ class _SignupFormState extends State<SignupForm> {
               controller: _password,
               obscureText: true,
               validator: (value) => (value!.isEmpty)
-                  ? AppLocalizations.of(context)!.passwordValidationError
+                  ? AppLocalizations.of(context).passwordValidationError
                   : null,
               decoration: InputDecoration(
                 labelText:
-                    AppLocalizations.of(context)!.passwordValidationError,
+                    AppLocalizations.of(context).passwordValidationError,
               ),
               style: style,
               textInputAction: TextInputAction.next,
@@ -129,15 +129,13 @@ class _SignupFormState extends State<SignupForm> {
               controller: _confirmPassword,
               obscureText: true,
               validator: (value) => (value!.isEmpty)
-                  ? AppLocalizations.of(context)!
-                      .confirmPasswordValidationEmptyError
+                  ? AppLocalizations.of(context).confirmPasswordValidationEmptyError
                   : value.isNotEmpty && _password.text != _confirmPassword.text
-                      ? AppLocalizations.of(context)!
-                          .confirmPasswordValidationMatchError
+                      ? AppLocalizations.of(context).confirmPasswordValidationMatchError
                       : null,
               decoration: InputDecoration(
                 labelText:
-                    AppLocalizations.of(context)!.confirmPasswordFieldLabel,
+                    AppLocalizations.of(context).confirmPasswordFieldLabel,
               ),
               style: style,
               focusNode: _confirmPasswordField,
@@ -155,7 +153,7 @@ class _SignupFormState extends State<SignupForm> {
                   elevation: 0,
                 ),
                 onPressed: _signup,
-                child: Text(AppLocalizations.of(context)!.signupButtonText),
+                child: Text(AppLocalizations.of(context).signupButtonText),
               ),
             ),
           Padding(

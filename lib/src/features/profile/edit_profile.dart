@@ -7,9 +7,10 @@ import 'package:flutter_appwrite_starter/src/api_service/constants.dart';
 import 'package:flutter_appwrite_starter/src/components/avatar.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
+
+import '../../l10n/app_localizations.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -53,7 +54,7 @@ class _EditProfileState extends State<EditProfile> {
     final prefs = authNotifier.user!.prefs.data;
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.editProfile),
+        title: Text(AppLocalizations.of(context).editProfile),
       ),
       body: ListView(
         padding: const EdgeInsets.all(8.0),
@@ -89,14 +90,14 @@ class _EditProfileState extends State<EditProfile> {
           TextField(
             controller: _nameController,
             decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.nameFieldLabel),
+                labelText: AppLocalizations.of(context).nameFieldLabel),
           ),
           const SizedBox(height: 10.0),
           Center(
             child: ElevatedButton(
               child: _processing
                   ? const CircularProgressIndicator()
-                  : Text(AppLocalizations.of(context)!.saveButtonLabel),
+                  : Text(AppLocalizations.of(context).saveButtonLabel),
               onPressed: _processing
                   ? null
                   : () async {
@@ -140,7 +141,7 @@ class _EditProfileState extends State<EditProfile> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
-              AppLocalizations.of(context)!.pickImageDialogTitle,
+              AppLocalizations.of(context).pickImageDialogTitle,
             ),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
@@ -154,15 +155,13 @@ class _EditProfileState extends State<EditProfile> {
                       onTap: () {
                         getImage(ImageSource.camera);
                       },
-                      title: Text(AppLocalizations.of(context)!
-                          .pickFromCameraButtonLabel),
+                      title: Text(AppLocalizations.of(context).pickFromCameraButtonLabel),
                     ),
                     ListTile(
                       onTap: () {
                         getImage(ImageSource.gallery);
                       },
-                      title: Text(AppLocalizations.of(context)!
-                          .pickFromGalleryButtonLabel),
+                      title: Text(AppLocalizations.of(context).pickFromGalleryButtonLabel),
                     ),
                   ],
                 ),
@@ -171,7 +170,7 @@ class _EditProfileState extends State<EditProfile> {
                     context.pop();
                   },
                   child: Text(
-                    AppLocalizations.of(context)!.cancelButtonLabel,
+                    AppLocalizations.of(context).cancelButtonLabel,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),

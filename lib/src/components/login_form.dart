@@ -2,8 +2,9 @@ import 'package:flutter_appwrite_starter/src/components/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/src/themes/assets.dart';
 import 'package:flutter_appwrite_starter/src/themes/colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../l10n/app_localizations.dart';
 
 class LoginForm extends StatefulWidget {
   final LoginCallback onPressedLogin;
@@ -50,10 +51,10 @@ class _LoginFormState extends State<LoginForm> {
               key: const Key("email-field"),
               controller: _email,
               validator: (value) => (value!.isEmpty)
-                  ? AppLocalizations.of(context)!.emailValidationError
+                  ? AppLocalizations.of(context).emailValidationError
                   : null,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.emailFieldlabel,
+                labelText: AppLocalizations.of(context).emailFieldlabel,
               ),
               style: style,
               textInputAction: TextInputAction.next,
@@ -71,10 +72,10 @@ class _LoginFormState extends State<LoginForm> {
               controller: _password,
               obscureText: true,
               validator: (value) => (value!.isEmpty)
-                  ? AppLocalizations.of(context)!.passwordValidationError
+                  ? AppLocalizations.of(context).passwordValidationError
                   : null,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.passwordFieldLabel,
+                labelText: AppLocalizations.of(context).passwordFieldLabel,
               ),
               style: style,
               onEditingComplete: _login,
@@ -91,7 +92,7 @@ class _LoginFormState extends State<LoginForm> {
                   elevation: 0,
                 ),
                 onPressed: _login,
-                child: Text(AppLocalizations.of(context)!.loginButtonText),
+                child: Text(AppLocalizations.of(context).loginButtonText),
               ),
             ),
           Padding(
@@ -105,7 +106,7 @@ class _LoginFormState extends State<LoginForm> {
                       foregroundColor: AppColors.primaryColor,
                       side: const BorderSide(color: AppColors.primaryColor),
                     ),
-                    label: Text(AppLocalizations.of(context)!.signupButtonText),
+                    label: Text(AppLocalizations.of(context).signupButtonText),
                     onPressed: widget.onPressedSignup,
                   ),
                 ),

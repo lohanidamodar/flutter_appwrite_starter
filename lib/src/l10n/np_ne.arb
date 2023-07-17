@@ -1,8 +1,8 @@
 {
-    "appName":"FlAppwrite starter",
-    "loginButtonText":"Login",
-    "signupButtonText":"Sign up",
-    "googleButtonText":"Continue with Google",
+    "appName":"FlAppwrite Starter",
+    "loginButtonText":"लगिन",
+    "signupButtonText":"बनाउनुहोस",
+    "googleButtonText":"Google लगिन",
     "welcomePageTitle": "Welcome",
     "welcomePageSubtitle":"FlAppwrite Starter App",
     "emailFieldlabel":"Email",
