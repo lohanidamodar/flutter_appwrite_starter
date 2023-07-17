@@ -1,10 +1,15 @@
 import 'dart:typed_data';
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
+import 'package:flutter_appwrite_starter/src/features/profile/crop_page.dart';
+import 'package:flutter_appwrite_starter/src/features/auth/login.dart';
+import 'package:flutter_appwrite_starter/src/features/auth/signup.dart';
+import 'package:flutter_appwrite_starter/src/features/welcome/splash.dart';
+import 'package:flutter_appwrite_starter/src/features/welcome/welcome.dart';
+import 'package:flutter_appwrite_starter/src/features/home/home.dart';
+import 'package:flutter_appwrite_starter/src/features/onboarding/intro.dart';
+import 'package:flutter_appwrite_starter/src/features/profile/edit_profile.dart';
+import 'package:flutter_appwrite_starter/src/features/profile/profile.dart';
 import 'package:go_router/go_router.dart';
-import 'package:auth/auth.dart';
-import 'package:home/home.dart';
-import 'package:intro/intro.dart';
-import 'package:profile/profile.dart';
 
 abstract class AppRoutes {
   static const home = "/";
@@ -23,56 +28,35 @@ abstract class AppRoutes {
         name: AppRoutes.home,
         builder: (context, __) =>
             context.authNotifier.status == AuthStatus.authenticated
-                ? HomePage(
-                    onPressedProfile: () => context.goNamed(AppRoutes.profile),
-                  )
-                : WelcomePage(
-                    onSignup: () => context.goNamed(signup),
-                  ),
+                ? const HomePage()
+                : const WelcomePage(),
         routes: [
           GoRoute(path: 'loading', builder: (_, __) => const Splash()),
           GoRoute(
             path: 'login',
             name: AppRoutes.login,
-            builder: (context, __) => LoginPage(
-              onSignup: () => context.goNamed(signup),
-              onPop: context.pop,
-            ),
+            builder: (_, __) => const LoginPage(),
           ),
           GoRoute(
             path: 'signup',
             name: AppRoutes.signup,
-            builder: (context, __) => SignupPage(
-              onPop: context.pop,
-            ),
+            builder: (_, __) => const SignupPage(),
           ),
           GoRoute(
             path: 'profile',
             name: AppRoutes.profile,
-            builder: (context, __) => UserProfile(
-              onPressedEditProfile: () => context.goNamed(editProfile),
-            ),
+            builder: (_, __) => const UserProfile(),
             routes: [
               GoRoute(
                 path: 'edit',
                 name: AppRoutes.editProfile,
-                builder: (context, __) => EditProfile(
-                  onPop: context.pop,
-                  onGotoCropPage: (image) {
-                    return context.pushNamed<Uint8List?>(
-                      cropPage,
-                      extra: image,
-                    );
-                  },
-                ),
+                builder: (_, __) => const EditProfile(),
                 routes: [
                   GoRoute(
                     path: 'crop',
                     name: AppRoutes.cropPage,
-                    builder: (context, state) => CropPage(
-                      image: state.extra as Uint8List?,
-                      onImageCropped: (image) => context.pop(image),
-                    ),
+                    builder: (_, state) =>
+                        CropPage(image: state.extra as Uint8List?),
                   )
                 ],
               ),

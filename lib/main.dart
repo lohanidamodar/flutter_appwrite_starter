@@ -1,21 +1,17 @@
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/app.dart';
-import 'package:api_service/api_service.dart';
-import 'package:flutter_appwrite_starter/src/app_config/app_config.dart';
+import 'package:flutter_appwrite_starter/src/api_service/api_service.dart';
+import 'package:flutter_appwrite_starter/src/app/app_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
-import 'src/app_config/app_config_provider.dart';
-import 'src/constants/constants.dart';
+import 'src/app/app.dart';
+import 'src/app/app_constants.dart';
+import 'src/app/config_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
-  ApiService.instance.init(
-    endpoint: AppConstants.endpoint,
-    projectId: AppConstants.projectId,
-  );
   runApp(
     Directionality(
       textDirection: TextDirection.ltr,
