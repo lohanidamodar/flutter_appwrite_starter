@@ -12,11 +12,11 @@ on:
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    container:
-      image: dart:latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Install dependencies
-        run: dart pub get
-      - name: analyze
-        run: dart analyze
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+      - run: flutter pub get
+      - name: Analyze Dart
+        uses: zgosalvez/github-actions-analyze-dart@v2
