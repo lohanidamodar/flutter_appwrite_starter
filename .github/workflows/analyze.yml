@@ -19,4 +19,4 @@ jobs:
         uses: subosito/flutter-action@v1
       - run: flutter pub get
       - name: Analyze
-      - run: flutter analyze
+        run: flutter analyze
