@@ -1,13 +1,13 @@
 import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/app.dart';
-import 'package:flutter_appwrite_starter/core/data/service/api_service.dart';
-import 'package:flutter_appwrite_starter/core/res/app_config.dart';
+import 'package:flutter_appwrite_starter/src/api_service/api_service.dart';
+import 'package:flutter_appwrite_starter/src/app/app_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
-import 'core/presentation/providers/providers.dart';
-import 'core/res/constants.dart';
+import 'src/app/app.dart';
+import 'src/app/app_constants.dart';
+import 'src/app/config_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,12 +24,12 @@ void main() async {
           child: ProviderScope(
             child: const App(),
             overrides: [
-              configProvider.overrideWithProvider(Provider(
+              configProvider.overrideWith(
                 (ref) => AppConfig(
                   appTitle: AppConstants.appNameDev,
                   buildFlavor: AppFlavor.dev,
                 ),
-              ))
+              )
             ],
           ),
         ),

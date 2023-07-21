@@ -1,6 +1,8 @@
 PODS:
   - device_info_plus (0.0.1):
     - FlutterMacOS
+  - file_selector_macos (0.0.1):
+    - FlutterMacOS
   - flutter_web_auth_2 (1.1.1):
     - FlutterMacOS
   - FlutterMacOS (1.0.0)
@@ -16,6 +18,7 @@ PODS:
 
 DEPENDENCIES:
   - device_info_plus (from `Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos`)
+  - file_selector_macos (from `Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos`)
   - flutter_web_auth_2 (from `Flutter/ephemeral/.symlinks/plugins/flutter_web_auth_2/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
@@ -26,6 +29,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   device_info_plus:
     :path: Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos
+  file_selector_macos:
+    :path: Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos
   flutter_web_auth_2:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_web_auth_2/macos
   FlutterMacOS:
@@ -41,6 +46,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   device_info_plus: 5401765fde0b8d062a2f8eb65510fb17e77cf07f
+  file_selector_macos: 0f85c1108e2fd597b58246bc0b0c1cb483d7593b
   flutter_web_auth_2: 6695649132b6c71ea17700703761c0d18fdb8cf6
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   package_info_plus: 02d7a575e80f194102bef286361c6c326e4c29ce

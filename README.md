@@ -2,7 +2,9 @@
 
 **Made with :heartbeat: from Nepal**
 
-A project you can clone to build your next project with [Flutter](https://flutter.dev) + [Appwrite](https://appwrite.io). 
+A project you can clone to build your next project with [Flutter](https://flutter.dev) + [Appwrite](https://appwrite.io).
+
+[**UPDATE**] We have refactored this project to using package based architecture. Check out the [packages](/packages) folder.
 
 If you don't already know what Appwrite is, it's an open source self-hosted Back-End as a Service for Web, Mobile and Flutter applications. Learn more on [Appwrite.io home page](https://appwrite.io).
 
@@ -24,7 +26,7 @@ How to start your project based on this.
 1. Clone this repository locally. The folder structure is somewhat based on clean code architecture
 2. Delete `.git` folder to clear git history (or you can keep it if you want)
 3. Using `rename` package change the bundle ID and app name to whatever you want your `dart run rename --bundleId com.new.package.name` and `dart run rename --appname "New App Name"`. Check [rename](https://pub.dev/packages/rename) package for more details on how to use it.
-4. in `lib/core/res/constants.dart` update endpoint and project id with your own endpoint and project id details;
+4. in `lib/res/constants.dart` update endpoint and project id with your own endpoint and project id details;
 
 ## Adding new Locale
 TODO Docs
