@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_appwrite_starter/src/l10n/locale_config_provider.dart';
 import 'package:flutter_appwrite_starter/src/router/router.dart';
 import 'package:flutter_appwrite_starter/src/themes/assets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -26,7 +28,16 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: const Icon(Icons.person),
             onPressed: () => context.goNamed(AppRoutes.profile),
-          )
+          ),
+          Consumer(builder: (context, ref, child) {
+            return IconButton(
+              onPressed: () {
+                ref.read(localeConfigProvider.notifier).state =
+                    const Locale('ne');
+              },
+              icon: const Icon(Icons.language),
+            );
+          }),
         ],
       ),
       body: SingleChildScrollView(
