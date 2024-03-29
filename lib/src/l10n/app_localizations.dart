@@ -242,6 +242,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'new user? register'**
   String get newUserRegisterButtonLabel;
+
+  /// No description provided for @loginFormTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'login'**
+  String get loginFormTitle;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

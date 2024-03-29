@@ -78,4 +78,7 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String get newUserRegisterButtonLabel => 'new user? register';
+
+  @override
+  String get loginFormTitle => 'login';
 }

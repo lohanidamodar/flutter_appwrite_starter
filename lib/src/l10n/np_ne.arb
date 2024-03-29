@@ -23,5 +23,6 @@
     "cancelButtonLabel":"Cancel",
     "pickImageDialogTitle":"Pick Image",
     "introFinishButtonLabel":"Get Started",
-    "newUserRegisterButtonLabel": "new user? register"
+    "newUserRegisterButtonLabel": "new user? register",
+    "loginFormTitle": "login"
 }
