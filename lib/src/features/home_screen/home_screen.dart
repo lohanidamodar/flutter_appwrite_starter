@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/src/features/profile/profile.dart';
+import 'package:flutter_appwrite_starter/src/l10n/app_localizations.dart';
 import 'package:flutter_appwrite_starter/src/l10n/locale_config_provider.dart';
 import 'package:flutter_appwrite_starter/src/themes/assets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-class HomePage extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   static String name = 'home';
-  const HomePage({super.key});
+  const HomeScreen({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -22,9 +23,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('FlAppwrite Starter'),
+        title: Text(l10n.appName),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.person),

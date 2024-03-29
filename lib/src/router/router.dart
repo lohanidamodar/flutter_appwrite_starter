@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter_appwrite_starter/src/features/profile/crop_page.dart';
 import 'package:flutter_appwrite_starter/src/features/welcome/splash.dart';
 import 'package:flutter_appwrite_starter/src/features/welcome/welcome.dart';
-import 'package:flutter_appwrite_starter/src/features/home/home.dart';
+import 'package:flutter_appwrite_starter/src/features/home_screen/home_screen.dart';
 import 'package:flutter_appwrite_starter/src/features/onboarding/intro.dart';
 import 'package:flutter_appwrite_starter/src/features/profile/edit_profile.dart';
 import 'package:flutter_appwrite_starter/src/features/profile/profile.dart';
@@ -22,9 +22,9 @@ final routerProvider = Provider<GoRouter>(
       routes: [
         GoRoute(
           path: '/',
-          name: HomePage.name,
+          name: HomeScreen.name,
           builder: (context, __) => authState.status == AuthStatus.authenticated
-              ? const HomePage()
+              ? const HomeScreen()
               : const WelcomePage(),
           routes: [
             GoRoute(path: 'loading', builder: (_, __) => const Splash()),
@@ -86,8 +86,7 @@ final routerProvider = Provider<GoRouter>(
         final authStatus = authState.status;
 
         if (lMatch == '/' && authStatus == AuthStatus.authenticated) {
-          return (authState.user?.prefs.data ?? {})['introSeen'] ??
-                  false
+          return (authState.user?.prefs.data ?? {})['introSeen'] ?? false
               ? null
               : '/intro';
         }
@@ -99,8 +98,7 @@ final routerProvider = Provider<GoRouter>(
               .toString();
         }
         if (lMatch == '/intro' && authStatus == AuthStatus.authenticated) {
-          return (authState.user?.prefs.data ?? {})['introSeen'] ??
-                  false
+          return (authState.user?.prefs.data ?? {})['introSeen'] ?? false
               ? '/'
               : null;
         }
