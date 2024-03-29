@@ -7,7 +7,8 @@ import '../../../themes/colors.dart';
 import 'types.dart';
 
 class SignupForm extends StatelessWidget {
-  final SignupCallback onPressedLogin;
+  final SignupCallback onPressedSignup;
+  final VoidCallback? onPressedBackToLogin;
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final TextEditingController nameController;
@@ -15,10 +16,11 @@ class SignupForm extends StatelessWidget {
   final FocusNode _passwordField = FocusNode();
   SignupForm({
     super.key,
-    required this.onPressedLogin,
+    required this.onPressedSignup,
     required this.nameController,
     required this.emailController,
     required this.passwordController,
+    this.onPressedBackToLogin,
   });
 
   @override
@@ -68,30 +70,33 @@ class SignupForm extends StatelessWidget {
             onPressed: _signup,
             child: const Text('Create'),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: OutlinedButton.icon(
-                    icon: const Icon(Icons.arrow_back),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.primaryColor,
-                      side: const BorderSide(color: AppColors.primaryColor),
+          if (onPressedBackToLogin != null) ...[
+            const SizedBox(height: 10.0),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      icon: const Icon(Icons.arrow_back),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.primaryColor,
+                        side: const BorderSide(color: AppColors.primaryColor),
+                      ),
+                      label: const Text("Back to Login"),
+                      onPressed: onPressedBackToLogin,
                     ),
-                    label: const Text("Back to Login"),
-                    onPressed: () => onPressedLogin,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );
   }
 
-  void _signup() => onPressedLogin(
+  void _signup() => onPressedSignup(
         nameController.text,
         emailController.text,
         passwordController.text,

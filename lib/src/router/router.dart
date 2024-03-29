@@ -54,14 +54,19 @@ final routerProvider = Provider<GoRouter>(
         GoRoute(
           path: '/${SignupScreen.name}',
           name: SignupScreen.name,
-          builder: (_, __) {
-            return SignupScreen(onSignup: (name, email, password) async {
-              await authNotifier.create(
-                email: email,
-                password: password,
-                name: name,
-              );
-            });
+          builder: (context, __) {
+            return SignupScreen(
+              onSignup: (name, email, password) async {
+                await authNotifier.create(
+                  email: email,
+                  password: password,
+                  name: name,
+                );
+              },
+              onPressedBackToLogin: () {
+                context.goNamed(LoginScreen.name);
+              },
+            );
           },
         ),
         GoRoute(

@@ -56,35 +56,32 @@ class LoginForm extends StatelessWidget {
             onEditingComplete: _login,
           ),
           const SizedBox(height: 20.0),
-          if (onNavigateToSignup != null) ...[
-            TextButton(
-              onPressed: () => onNavigateToSignup?.call(),
-              child: Text(l10n.newUserRegisterButtonLabel),
-            ),
-            const SizedBox(height: 10.0),
-          ],
           ElevatedButton(
             onPressed: _login,
             child: Text(l10n.loginButtonText),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: OutlinedButton.icon(
-                    icon: const Icon(Icons.arrow_forward),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.primaryColor,
-                      side: const BorderSide(color: AppColors.primaryColor),
+          if (onNavigateToSignup != null) ...[
+            const SizedBox(height: 10.0),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      icon: const Icon(Icons.arrow_forward),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.primaryColor,
+                        side: const BorderSide(color: AppColors.primaryColor),
+                      ),
+                      label: Text(AppLocalizations.of(context)
+                          .newUserRegisterButtonLabel),
+                      onPressed: onNavigateToSignup,
                     ),
-                    label: Text(AppLocalizations.of(context).signupButtonText),
-                    onPressed: onNavigateToSignup,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );

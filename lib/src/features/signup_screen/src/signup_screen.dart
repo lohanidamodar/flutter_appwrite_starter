@@ -5,7 +5,8 @@ import 'types.dart';
 class SignupScreen extends StatefulWidget {
   static const String name = 'signup';
   final SignupCallback onSignup;
-  const SignupScreen({super.key, required this.onSignup});
+  final VoidCallback? onPressedBackToLogin;
+  const SignupScreen({super.key, required this.onSignup, this.onPressedBackToLogin});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -23,10 +24,11 @@ class _SignupScreenState extends State<SignupScreen> {
         padding: const EdgeInsets.all(16.0),
         children: <Widget>[
           SignupForm(
-            onPressedLogin: widget.onSignup,
+            onPressedSignup: widget.onSignup,
             emailController: _emailController,
             passwordController: _passwordController,
             nameController: _nameController,
+            onPressedBackToLogin: widget.onPressedBackToLogin,
           ),
         ],
       ),
