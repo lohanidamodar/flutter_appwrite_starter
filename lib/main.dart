@@ -22,15 +22,15 @@ void main() async {
         child: AppwriteAuthKit(
           client: ApiService.instance.client,
           child: ProviderScope(
-            child: const App(),
             overrides: [
-              configProvider.overrideWithProvider(Provider(
-                (ref) => AppConfig(
+              configProvider.overrideWith(
+                (_) => AppConfig(
                   appTitle: AppConstants.appNameDev,
                   buildFlavor: AppFlavor.dev,
                 ),
-              ))
+              ),
             ],
+            child: const App(),
           ),
         ),
       ),
