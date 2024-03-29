@@ -16,7 +16,7 @@ class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
 
   @override
-  _EditProfileState createState() => _EditProfileState();
+  State<EditProfile> createState() => _EditProfileState();
 }
 
 enum AppState {
@@ -95,9 +95,6 @@ class _EditProfileState extends State<EditProfile> {
           const SizedBox(height: 10.0),
           Center(
             child: ElevatedButton(
-              child: _processing
-                  ? const CircularProgressIndicator()
-                  : Text(AppLocalizations.of(context).saveButtonLabel),
               onPressed: _processing
                   ? null
                   : () async {
@@ -121,13 +118,16 @@ class _EditProfileState extends State<EditProfile> {
                         prefs['photoId'] = _uploadedFileId;
                         await authNotifier.updatePrefs(prefs: prefs);
                       }
-                      if (mounted) {
-                        setState(() {
-                          _processing = false;
-                        });
+                      setState(() {
+                        _processing = false;
+                      });
+                      if (context.mounted) {
                         context.pop();
                       }
                     },
+              child: _processing
+                  ? const CircularProgressIndicator()
+                  : Text(AppLocalizations.of(context)!.saveButtonLabel),
             ),
           )
         ],
@@ -187,12 +187,18 @@ class _EditProfileState extends State<EditProfile> {
     setState(() {
       state = AppState.picked;
     });
+    if (!mounted) {
+      return;
+    }
     context.pop();
     _cropImage();
   }
 
   Future<void> _cropImage() async {
     final ib = await _image.readAsBytes();
+    if (!mounted) {
+      return;
+    }
     final image = await context.pushNamed<Uint8List?>(
       AppRoutes.cropPage,
       extra: ib,

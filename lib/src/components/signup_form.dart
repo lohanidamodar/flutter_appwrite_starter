@@ -20,7 +20,7 @@ class SignupForm extends StatefulWidget {
       : super(key: key);
 
   @override
-  _SignupFormState createState() => _SignupFormState();
+  State<SignupForm> createState() => _SignupFormState();
 }
 
 class _SignupFormState extends State<SignupForm> {
@@ -179,8 +179,33 @@ class _SignupFormState extends State<SignupForm> {
     );
   }
 
-  void _signup() {
-    widget.onPressedSignup(_name.text, _email.text, _password.text);
+  _signup() async {
+    if (_formKey.currentState!.validate()) {
+      //signup user
+      final user = await context.authNotifier.create(
+          userId: 'unique()',
+          name: _name!.text,
+          email: _email!.text,
+          password: _password!.text);
+      if (user == null) {
+        if (!mounted) {
+          return;
+        }
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(context.authNotifier.error!),
+        ));
+      } else {
+        if (!mounted) {
+          return;
+        }
+        await context.authNotifier
+            .createEmailSession(email: _email!.text, password: _password!.text);
+        if (!mounted) {
+          return;
+        }
+        context.pop();
+      }
+    }
   }
 
   @override

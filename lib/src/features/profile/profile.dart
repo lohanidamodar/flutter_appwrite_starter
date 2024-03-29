@@ -63,6 +63,9 @@ class UserProfile extends StatelessWidget {
                 title: Text(AppLocalizations.of(context).logoutButtonText),
                 onTap: () async {
                   await context.authNotifier.deleteSession();
+                  if (!context.mounted) {
+                    return;
+                  }
                   context.pop();
                 },
               ),

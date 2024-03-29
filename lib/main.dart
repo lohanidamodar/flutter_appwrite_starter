@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/src/api_service/api_service.dart';
 import 'package:flutter_appwrite_starter/src/app/app_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'src/app/app.dart';
@@ -22,15 +23,15 @@ void main() async {
         child: AppwriteAuthKit(
           client: ApiService.instance.client,
           child: ProviderScope(
-            child: const App(),
             overrides: [
               configProvider.overrideWith(
-                (ref) => AppConfig(
+                (_) => AppConfig(
                   appTitle: AppConstants.appNameDev,
                   buildFlavor: AppFlavor.dev,
                 ),
-              )
+              ),
             ],
+            child: const App(),
           ),
         ),
       ),

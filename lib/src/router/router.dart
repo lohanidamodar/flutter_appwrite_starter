@@ -68,7 +68,7 @@ abstract class AppRoutes {
     ],
     redirect: (context, state) {
       final lMatch = state.matchedLocation;
-      final qParams = state.queryParameters;
+      final qParams = state.uri.queryParameters;
       final authStatus = context.authNotifier.status;
 
       if (lMatch == '/' && authStatus == AuthStatus.authenticated) {

@@ -32,19 +32,19 @@ class Avatar extends StatelessWidget {
             backgroundImage: image as ImageProvider<Object>?,
           ),
         ),
-        if (showButton)
-          Positioned(
-            bottom: 0,
-            right: -30,
-            child: MaterialButton(
-              elevation: 1,
-              color: Colors.white,
-              shape: const CircleBorder(),
-              child: const Icon(Icons.camera_alt),
-              padding: const EdgeInsets.all(4.0),
-              onPressed: onButtonPressed as void Function()?,
-            ),
-          )
+        if(showButton)
+        Positioned(
+          bottom: 0,
+          right: -30,
+          child: MaterialButton(
+            elevation: 1,
+            color: Colors.white,
+            shape: const CircleBorder(),
+            padding: const EdgeInsets.all(4.0),
+            onPressed: onButtonPressed as void Function()?,
+            child: const Icon(Icons.camera_alt),
+          ),
+        )
       ],
     );
   }
