@@ -26,13 +26,21 @@ class SignupContainer extends StatelessWidget {
       final user = await context.authNotifier.create(
           userId: 'unique()', name: name, email: email, password: password);
       if (user == null) {
+        if (!context.mounted) {
+          return;
+        }
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(context.authNotifier.error!),
         ));
       } else {
+        if (!context.mounted) {
+          return;
+        }
         await context.authNotifier
             .createEmailSession(email: email, password: password);
-        context.pop();
+        if (context.mounted && context.canPop()) {
+          context.pop();
+        }
       }
     }
   }

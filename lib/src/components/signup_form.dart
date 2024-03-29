@@ -111,8 +111,7 @@ class _SignupFormState extends State<SignupForm> {
                   ? AppLocalizations.of(context).passwordValidationError
                   : null,
               decoration: InputDecoration(
-                labelText:
-                    AppLocalizations.of(context).passwordValidationError,
+                labelText: AppLocalizations.of(context).passwordValidationError,
               ),
               style: style,
               textInputAction: TextInputAction.next,
@@ -129,9 +128,11 @@ class _SignupFormState extends State<SignupForm> {
               controller: _confirmPassword,
               obscureText: true,
               validator: (value) => (value!.isEmpty)
-                  ? AppLocalizations.of(context).confirmPasswordValidationEmptyError
+                  ? AppLocalizations.of(context)
+                      .confirmPasswordValidationEmptyError
                   : value.isNotEmpty && _password.text != _confirmPassword.text
-                      ? AppLocalizations.of(context).confirmPasswordValidationMatchError
+                      ? AppLocalizations.of(context)
+                          .confirmPasswordValidationMatchError
                       : null,
               decoration: InputDecoration(
                 labelText:
@@ -179,33 +180,8 @@ class _SignupFormState extends State<SignupForm> {
     );
   }
 
-  _signup() async {
-    if (_formKey.currentState!.validate()) {
-      //signup user
-      final user = await context.authNotifier.create(
-          userId: 'unique()',
-          name: _name!.text,
-          email: _email!.text,
-          password: _password!.text);
-      if (user == null) {
-        if (!mounted) {
-          return;
-        }
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(context.authNotifier.error!),
-        ));
-      } else {
-        if (!mounted) {
-          return;
-        }
-        await context.authNotifier
-            .createEmailSession(email: _email!.text, password: _password!.text);
-        if (!mounted) {
-          return;
-        }
-        context.pop();
-      }
-    }
+  void _signup() {
+    widget.onPressedSignup(_name.text, _email.text, _password.text);
   }
 
   @override

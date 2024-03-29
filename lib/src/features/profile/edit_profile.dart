@@ -127,7 +127,7 @@ class _EditProfileState extends State<EditProfile> {
                     },
               child: _processing
                   ? const CircularProgressIndicator()
-                  : Text(AppLocalizations.of(context)!.saveButtonLabel),
+                  : Text(AppLocalizations.of(context).saveButtonLabel),
             ),
           )
         ],

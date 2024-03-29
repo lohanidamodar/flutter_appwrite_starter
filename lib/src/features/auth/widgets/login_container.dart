@@ -24,11 +24,14 @@ class LoginContainer extends StatelessWidget {
     if (_formKey.currentState!.validate()) {
       if (!await context.authNotifier
           .createEmailSession(email: email, password: password)) {
+        if (!context.mounted) {
+          return;
+        }
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(context.authNotifier.error!),
         ));
       } else {
-        if (context.canPop()) {
+        if (context.mounted && context.canPop()) {
           context.pop();
         }
       }

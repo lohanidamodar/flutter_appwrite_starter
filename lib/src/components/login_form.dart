@@ -119,24 +119,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   _login() async {
-    if (_formKey.currentState!.validate()) {
-      if (!await context.authNotifier
-          .createEmailSession(email: _email!.text, password: _password!.text)) {
-        if (!mounted) {
-          return;
-        }
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(context.authNotifier.error!),
-        ));
-      } else {
-        if (!mounted) {
-          return;
-        }
-        if (context.canPop()) {
-          context.pop();
-        }
-      }
-    }
+    widget.onPressedLogin(_email.text, _password.text);
   }
 
   @override
