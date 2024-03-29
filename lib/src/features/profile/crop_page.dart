@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class CropPage extends StatelessWidget {
+  static String name = 'crop_image';
   final Uint8List? image;
   final CropController _controller = CropController();
 
-  CropPage({Key? key, this.image}) : super(key: key);
+  CropPage({super.key, this.image});
 
   @override
   Widget build(BuildContext context) {

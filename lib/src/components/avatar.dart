@@ -10,14 +10,13 @@ class Avatar extends StatelessWidget {
   final bool showButton;
 
   const Avatar(
-      {Key? key,
+      {super.key,
       required this.image,
       this.borderColor,
       this.radius = 30,
       this.onButtonPressed,
       this.showButton = false,
-      this.borderWidth = 5})
-      : super(key: key);
+      this.borderWidth = 5});
 
   @override
   Widget build(BuildContext context) {

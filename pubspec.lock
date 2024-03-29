@@ -9,14 +9,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "11.0.1"
-  appwrite_auth_kit:
-    dependency: "direct main"
-    description:
-      name: appwrite_auth_kit
-      sha256: dfd23e58f486388cad5bb93adebd0de64ecd220af7f68b2356dff817b0636fc2
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.9.0"
   archive:
     dependency: transitive
     description:
@@ -277,6 +269,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  get_it:
+    dependency: "direct main"
+    description:
+      name: get_it
+      sha256: e6017ce7fdeaf218dc51a100344d8cb70134b80e28b760f8bb23c242437bafd7
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.6.7"
   go_router:
     dependency: "direct main"
     description:

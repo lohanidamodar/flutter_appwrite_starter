@@ -75,4 +75,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get introFinishButtonLabel => 'Get Started';
+
+  @override
+  String get newUserRegisterButtonLabel => 'new user? register';
 }

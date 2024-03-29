@@ -19,9 +19,9 @@ include: package:flutter_lints/flutter.yaml
 #   rules:
 #     - camel_case_types
 
-# analyzer:
-#   exclude:
-#     - path/to/excluded/files/**
+analyzer:
+  exclude:
+    - lib/src/l10n
 
 # For more information about the core and recommended set of lints, see
 # https://dart.dev/go/core-lints

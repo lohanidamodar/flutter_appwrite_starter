@@ -4,7 +4,7 @@ import 'package:flutter_appwrite_starter/src/themes/assets.dart';
 import 'package:flutter_appwrite_starter/src/themes/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations.dart';
 
 class LoginForm extends StatefulWidget {
   final LoginCallback onPressedLogin;

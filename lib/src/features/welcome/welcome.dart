@@ -1,11 +1,10 @@
-import 'package:flutter_appwrite_starter/src/features/auth/widgets/login_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/src/themes/colors.dart';
 
 import '../../l10n/app_localizations.dart';
 
 class WelcomePage extends StatefulWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+  const WelcomePage({super.key});
 
   @override
   State<WelcomePage> createState() => _WelcomePageState();
@@ -37,7 +36,6 @@ class _WelcomePageState extends State<WelcomePage> {
                 const TextStyle(color: AppColors.primaryColor, fontSize: 20.0),
           ),
           const SizedBox(height: 20.0),
-          Expanded(child: LoginContainer()),
         ],
       ),
     );

@@ -236,6 +236,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get Started'**
   String get introFinishButtonLabel;
+
+  /// No description provided for @newUserRegisterButtonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'new user? register'**
+  String get newUserRegisterButtonLabel;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

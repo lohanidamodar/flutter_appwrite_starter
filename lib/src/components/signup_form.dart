@@ -12,12 +12,11 @@ class SignupForm extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final bool isAuthenticating;
   const SignupForm(
-      {Key? key,
+      {super.key,
       required this.onPressedSignup,
       required this.onPressedLogin,
       required this.formKey,
-      required this.isAuthenticating})
-      : super(key: key);
+      required this.isAuthenticating});
 
   @override
   State<SignupForm> createState() => _SignupFormState();
