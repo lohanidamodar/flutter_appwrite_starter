@@ -11,7 +11,7 @@ class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
 
   @override
-  _LoginFormState createState() => _LoginFormState();
+  State<LoginForm> createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<LoginForm> {
@@ -122,10 +122,16 @@ class _LoginFormState extends State<LoginForm> {
     if (_formKey.currentState!.validate()) {
       if (!await context.authNotifier
           .createEmailSession(email: _email!.text, password: _password!.text)) {
+        if (!mounted) {
+          return;
+        }
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(context.authNotifier.error!),
         ));
       } else {
+        if (!mounted) {
+          return;
+        }
         if (context.canPop()) {
           context.pop();
         }

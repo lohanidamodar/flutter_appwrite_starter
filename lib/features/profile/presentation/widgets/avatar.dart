@@ -41,9 +41,9 @@ class Avatar extends StatelessWidget {
             elevation: 1,
             color: Colors.white,
             shape: const CircleBorder(),
-            child: const Icon(Icons.camera_alt),
             padding: const EdgeInsets.all(4.0),
             onPressed: onButtonPressed as void Function()?,
+            child: const Icon(Icons.camera_alt),
           ),
         )
       ],
