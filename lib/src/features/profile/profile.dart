@@ -1,11 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/src/api_service/api_service.dart';
-import 'package:flutter_appwrite_starter/src/api_service/constants.dart';
+import 'package:flutter_appwrite_starter/src/app/app_constants.dart';
+import 'package:flutter_appwrite_starter/src/appwrite/appwrite.dart';
 import 'package:flutter_appwrite_starter/src/components/avatar.dart';
 import 'package:flutter_appwrite_starter/src/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../l10n/app_localizations.dart';
@@ -17,6 +18,7 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final apiService = GetIt.I.get<Appwrite>();
     return Consumer(builder: (context, ref, child) {
       final authState = ref.watch(authProvider);
       final authNotifier = ref.read(authProvider.notifier);
@@ -32,9 +34,9 @@ class UserProfile extends StatelessWidget {
             if (user != null) ...[
               FutureBuilder(
                   future: prefs['photoId'] != null
-                      ? ApiService.instance.getImageAvatar(
-                          ApiConstants.profileBucketId, prefs['photoId']!)
-                      : ApiService.instance.getAvatar(user.name),
+                      ? apiService.getImageAvatar(
+                          AppConstants.profileBucketId, prefs['photoId']!)
+                      : apiService.getAvatar(user.name),
                   builder: (context, AsyncSnapshot<Uint8List> snapshot) {
                     return Center(
                       child: Avatar(

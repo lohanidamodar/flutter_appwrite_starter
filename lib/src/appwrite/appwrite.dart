@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_appwrite_starter/src/app/app_constants.dart';
 
 class Appwrite {
   Client client = Client();
@@ -10,8 +11,9 @@ class Appwrite {
   late final Avatars avatars;
   late final Storage storage;
   Appwrite() {
-    client.setEndpoint('https://cloud.appwrite.io/v1').setProject(
-        'flappwrite-tracker'); // For self signed certificates, only use for development
+    client.setEndpoint(AppConstants.endpoint).setProject(
+          AppConstants.projectId,
+        ); // For self signed certificates, only use for development
     account = Account(client);
     avatars = Avatars(client);
     storage = Storage(client);

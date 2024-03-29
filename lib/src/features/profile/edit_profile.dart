@@ -2,11 +2,12 @@ import 'dart:typed_data';
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/src/api_service/api_service.dart';
-import 'package:flutter_appwrite_starter/src/api_service/constants.dart';
+import 'package:flutter_appwrite_starter/src/app/app_constants.dart';
+import 'package:flutter_appwrite_starter/src/appwrite/appwrite.dart';
 import 'package:flutter_appwrite_starter/src/components/avatar.dart';
 import 'package:flutter_appwrite_starter/src/features/profile/crop_page.dart';
 import 'package:flutter_appwrite_starter/src/providers.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,6 +35,8 @@ class _EditProfileState extends State<EditProfile> {
   late XFile _image;
   Uint8List? _imageBytes;
   String? _uploadedFileId;
+
+  final apiService = GetIt.I.get<Appwrite>();
 
   @override
   void initState() {
@@ -66,9 +69,9 @@ class _EditProfileState extends State<EditProfile> {
               builder: (_, watch, __) {
                 return FutureBuilder(
                     future: prefs['photoId'] != null
-                        ? ApiService.instance.getImageAvatar(
-                            ApiConstants.profileBucketId, prefs['photoId']!)
-                        : ApiService.instance.getAvatar(user.name),
+                        ? apiService.getImageAvatar(
+                            AppConstants.profileBucketId, prefs['photoId']!)
+                        : apiService.getAvatar(user.name),
                     builder: (context, AsyncSnapshot<Uint8List> snapshot) {
                       return Center(
                         child: Avatar(
@@ -234,8 +237,8 @@ class _EditProfileState extends State<EditProfile> {
         bytes: _imageBytes!,
         filename: "${user.$id}.png",
         contentType: 'image/png');
-    final res = await ApiService.instance.uploadFile(
-      ApiConstants.profileBucketId,
+    final res = await apiService.uploadFile(
+      AppConstants.profileBucketId,
       file,
       permissions: [
         Permission.write(Role.user(user.$id)),

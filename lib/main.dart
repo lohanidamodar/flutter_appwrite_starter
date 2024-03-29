@@ -7,7 +7,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'src/app/app.dart';
 import 'src/app/app_constants.dart';
-import 'src/app/config_provider.dart';
+import 'src/providers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
