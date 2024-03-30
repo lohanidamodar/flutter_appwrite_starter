@@ -1,5 +1,5 @@
 {
-    "appName":"FlAppwrite Starter",
+    "appName":"FlAppwrite starter",
     "loginButtonText":"लगिन",
     "signupButtonText":"बनाउनुहोस",
     "googleButtonText":"Google लगिन",
@@ -13,7 +13,7 @@
     "confirmPasswordValidationMatchError":"Passwords do not match",
     "confirmPasswordFieldLabel":"Confirm password",
     "logoutButtonText":"Log out",
-    "profilePageTitle":"Profile",
+    "profilePageTitle":"प्रोफाईल",
     "nameFieldLabel":"Name",
     "nameValidationError":"Please enter name",
     "editProfile":"Edit Profile",
@@ -23,6 +23,6 @@
     "cancelButtonLabel":"Cancel",
     "pickImageDialogTitle":"Pick Image",
     "introFinishButtonLabel":"Get Started",
-    "newUserRegisterButtonLabel": "new user? register",
+    "newUserRegisterButtonLabel": "नयाँ खाता खोल्नुहोस्",
     "loginFormTitle": "login"
 }

@@ -19,15 +19,14 @@ final routerProvider = Provider<GoRouter>(
     final authState = ref.watch(authProvider);
     final authNotifier = ref.read(authProvider.notifier);
     return GoRouter(
+      initialLocation: '/${LoginScreen.name}',
       routes: [
         GoRoute(
           path: '/',
           name: HomeScreen.name,
-          builder: (context, __) => authState.status == AuthStatus.authenticated
-              ? const HomeScreen()
-              : const WelcomePage(),
+          builder: (_, __) => const HomeScreen(),
           routes: [
-            GoRoute(path: 'loading', builder: (_, __) => const Splash()),
+            GoRoute(path: 'loading', builder: (_, __) => const WelcomePage()),
             GoRoute(
               path: UserProfile.name,
               name: UserProfile.name,
@@ -89,6 +88,13 @@ final routerProvider = Provider<GoRouter>(
         final lMatch = state.matchedLocation;
         final qParams = state.uri.queryParameters;
         final authStatus = authState.status;
+        if (authStatus == AuthStatus.uninitialized) {
+          return '/loading';
+        }
+
+        if (lMatch == '/' && authStatus == AuthStatus.unauthenticated) {
+          return '/${LoginScreen.name}';
+        }
 
         if (lMatch == '/' && authStatus == AuthStatus.authenticated) {
           return (authState.user?.prefs.data ?? {})['introSeen'] ?? false

@@ -33,12 +33,16 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () => context.goNamed(UserProfile.name),
           ),
           Consumer(builder: (context, ref, child) {
+            final locale = ref.watch(localeConfigProvider);
             return IconButton(
               onPressed: () {
-                ref.read(localeConfigProvider.notifier).state =
-                    const Locale('ne');
+                ref.read(localeConfigProvider.notifier).setLocale(
+                    locale?.languageCode == 'ne'
+                        ? null
+                        : const Locale('ne', 'np'));
               },
-              icon: const Icon(Icons.language),
+              icon: Icon(
+                  locale?.languageCode == 'ne' ? Icons.sunny : Icons.check),
             );
           }),
         ],

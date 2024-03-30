@@ -17,7 +17,7 @@ void main() async {
     Directionality(
       textDirection: TextDirection.ltr,
       child: Banner(
-        location: BannerLocation.topEnd,
+        location: BannerLocation.topStart,
         message: "dev",
         textDirection: TextDirection.ltr,
         child: ProviderScope(

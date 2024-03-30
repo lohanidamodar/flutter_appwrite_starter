@@ -40,13 +40,6 @@ class _WelcomePageState extends State<WelcomePage> {
               style: const TextStyle(
                   color: AppColors.primaryColor, fontSize: 20.0),
             ),
-            const SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () {
-                context.pushNamed(LoginScreen.name);
-              },
-              child: Text(l10n.loginButtonText),
-            ),
           ],
         ),
       ),

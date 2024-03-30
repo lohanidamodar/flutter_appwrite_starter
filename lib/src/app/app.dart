@@ -14,11 +14,13 @@ class App extends StatelessWidget {
     AppThemes.context = context;
     return Consumer(builder: (context, ref, child) {
       final router = ref.watch(routerProvider);
+      final locale = ref.watch(localeConfigProvider);
       return MaterialApp.router(
-        locale: ref.watch<Locale?>(localeConfigProvider),
+        locale: locale,
         debugShowCheckedModeBanner: false,
         title: ref.watch(configProvider).appTitle,
         theme: AppThemes.defaultTheme,
+        darkTheme: AppThemes.defaultTheme,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         routerConfig: router,

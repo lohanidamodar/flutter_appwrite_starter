@@ -5,7 +5,7 @@ class AppLocalizationsNe extends AppLocalizations {
   AppLocalizationsNe([String locale = 'ne']) : super(locale);
 
   @override
-  String get appName => 'FlAppwrite Starter';
+  String get appName => 'FlAppwrite starter';
 
   @override
   String get loginButtonText => 'लगिन';
@@ -47,7 +47,7 @@ class AppLocalizationsNe extends AppLocalizations {
   String get logoutButtonText => 'Log out';
 
   @override
-  String get profilePageTitle => 'Profile';
+  String get profilePageTitle => 'प्रोफाईल';
 
   @override
   String get nameFieldLabel => 'Name';
@@ -77,7 +77,7 @@ class AppLocalizationsNe extends AppLocalizations {
   String get introFinishButtonLabel => 'Get Started';
 
   @override
-  String get newUserRegisterButtonLabel => 'new user? register';
+  String get newUserRegisterButtonLabel => 'नयाँ खाता खोल्नुहोस्';
 
   @override
   String get loginFormTitle => 'login';
