@@ -19,6 +19,7 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final apiService = GetIt.I.get<Appwrite>();
+    final l10n = AppLocalizations.of(context);
     return Consumer(builder: (context, ref, child) {
       final authState = ref.watch(authProvider);
       final authNotifier = ref.read(authProvider.notifier);
@@ -26,7 +27,7 @@ class UserProfile extends StatelessWidget {
       final prefs = user?.prefs.data ?? {};
       return Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context).profilePageTitle),
+          title: Text(l10n.profilePageTitle),
         ),
         body: ListView(
           padding: const EdgeInsets.all(8.0),
@@ -62,18 +63,18 @@ class UserProfile extends StatelessWidget {
               tiles: [
                 ListTile(
                   leading: const Icon(Icons.edit),
-                  title: Text(AppLocalizations.of(context).editProfile),
+                  title: Text(l10n.editProfile),
                   onTap: () => context.goNamed(EditProfile.name),
                 ),
                 ListTile(
                   leading: const Icon(Icons.exit_to_app),
-                  title: Text(AppLocalizations.of(context).logoutButtonText),
+                  title: Text(l10n.logoutButtonText),
                   onTap: () async {
                     await authNotifier.deleteSession();
                     if (!context.mounted) {
                       return;
                     }
-                    context.pop();
+                    // context.pop();
                   },
                 ),
               ],

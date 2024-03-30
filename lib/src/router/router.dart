@@ -1,6 +1,6 @@
 import 'dart:typed_data';
+import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/src/features/profile/crop_page.dart';
-import 'package:flutter_appwrite_starter/src/features/welcome/splash.dart';
 import 'package:flutter_appwrite_starter/src/features/welcome/welcome.dart';
 import 'package:flutter_appwrite_starter/src/features/home_screen/home_screen.dart';
 import 'package:flutter_appwrite_starter/src/features/onboarding/intro.dart';
@@ -10,16 +10,27 @@ import 'package:flutter_appwrite_starter/src/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../auth_notifier/auth_state.dart';
 import '../auth_notifier/auth_status.dart';
 import '../features/login_screen/login_screen.dart';
 import '../features/signup_screen/signup_screen.dart';
 
 final routerProvider = Provider<GoRouter>(
   (ref) {
-    final authState = ref.watch(authProvider);
+    final routerKey = GlobalKey<NavigatorState>(debugLabel: 'routerKey');
     final authNotifier = ref.read(authProvider.notifier);
-    return GoRouter(
+    final authStateListenable = ValueNotifier<AuthState>(AuthState());
+
+    ref
+      ..onDispose(authStateListenable.dispose)
+      ..listen(authProvider, (_, next) {
+        authStateListenable.value = next;
+      });
+
+    final router = GoRouter(
+      navigatorKey: routerKey,
       initialLocation: '/${LoginScreen.name}',
+      refreshListenable: authStateListenable,
       routes: [
         GoRoute(
           path: '/',
@@ -44,10 +55,10 @@ final routerProvider = Provider<GoRouter>(
                           CropPage(image: state.extra as Uint8List?),
                     )
                   ],
-                ),
+                )
               ],
             ),
-            GoRoute(path: 'intro', builder: (_, __) => const IntroPage()),
+            GoRoute(path: 'intro', builder: (_, __) => const IntroPage())
           ],
         ),
         GoRoute(
@@ -79,14 +90,15 @@ final routerProvider = Provider<GoRouter>(
             onNavigateToSignup: () {
               context.goNamed(SignupScreen.name);
             },
-            error: authState.error,
-            loading: authState.loading,
+            error: authStateListenable.value.error,
+            loading: authStateListenable.value.loading,
           ),
-        ),
+        )
       ],
       redirect: (context, state) {
         final lMatch = state.matchedLocation;
         final qParams = state.uri.queryParameters;
+        final authState = authStateListenable.value;
         final authStatus = authState.status;
         if (authStatus == AuthStatus.uninitialized) {
           return '/loading';
@@ -129,5 +141,6 @@ final routerProvider = Provider<GoRouter>(
         return null;
       },
     );
+    return router;
   },
 );
