@@ -1,7 +1,4 @@
-enum AppFlavor {
-  dev,
-  prod
-}
+enum AppFlavor { dev, prod }
 
 class AppConfig {
   final String appTitle;

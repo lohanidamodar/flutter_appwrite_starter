@@ -6,7 +6,8 @@ class SignupScreen extends StatefulWidget {
   static const String name = 'signup';
   final SignupCallback onSignup;
   final VoidCallback? onPressedBackToLogin;
-  const SignupScreen({super.key, required this.onSignup, this.onPressedBackToLogin});
+  const SignupScreen(
+      {super.key, required this.onSignup, this.onPressedBackToLogin});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();

@@ -10,11 +10,11 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../l10n/app_localizations.dart';
-import 'edit_profile.dart';
+import 'edit_profile_screen.dart';
 
-class UserProfile extends StatelessWidget {
+class ProfileScreen extends StatelessWidget {
   static String name = 'profile';
-  const UserProfile({super.key});
+  const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class UserProfile extends StatelessWidget {
                 ListTile(
                   leading: const Icon(Icons.edit),
                   title: Text(l10n.editProfile),
-                  onTap: () => context.goNamed(EditProfile.name),
+                  onTap: () => context.goNamed(EditProfileScren.name),
                 ),
                 ListTile(
                   leading: const Icon(Icons.exit_to_app),

@@ -33,20 +33,17 @@ class AuthState {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is AuthState &&
-      other.user == user &&
-      other.status == status &&
-      other.loading == loading &&
-      other.error == error;
+        other.user == user &&
+        other.status == status &&
+        other.loading == loading &&
+        other.error == error;
   }
 
   @override
   int get hashCode {
-    return user.hashCode ^
-      status.hashCode ^
-      loading.hashCode ^
-      error.hashCode;
+    return user.hashCode ^ status.hashCode ^ loading.hashCode ^ error.hashCode;
   }
 
   @override
@@ -74,5 +71,6 @@ class AuthState {
 
   String toJson() => json.encode(toMap());
 
-  factory AuthState.fromJson(String source) => AuthState.fromMap(json.decode(source));
+  factory AuthState.fromJson(String source) =>
+      AuthState.fromMap(json.decode(source));
 }

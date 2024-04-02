@@ -6,8 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../l10n/app_localizations.dart';
 
-class IntroPage extends StatelessWidget {
-  const IntroPage({super.key});
+class IntroScreen extends StatelessWidget {
+  static String name = 'intro';
+  const IntroScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

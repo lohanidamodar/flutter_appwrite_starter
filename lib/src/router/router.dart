@@ -1,11 +1,11 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/src/features/profile/crop_page.dart';
-import 'package:flutter_appwrite_starter/src/features/welcome/welcome.dart';
+import 'package:flutter_appwrite_starter/src/features/profile/crop_screen.dart';
+import 'package:flutter_appwrite_starter/src/features/welcome/welcome_screen.dart';
 import 'package:flutter_appwrite_starter/src/features/home_screen/home_screen.dart';
-import 'package:flutter_appwrite_starter/src/features/onboarding/intro.dart';
-import 'package:flutter_appwrite_starter/src/features/profile/edit_profile.dart';
-import 'package:flutter_appwrite_starter/src/features/profile/profile.dart';
+import 'package:flutter_appwrite_starter/src/features/onboarding/intro_screen.dart';
+import 'package:flutter_appwrite_starter/src/features/profile/edit_profile_screen.dart';
+import 'package:flutter_appwrite_starter/src/features/profile/profile_screen.dart';
 import 'package:flutter_appwrite_starter/src/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -19,7 +19,8 @@ final routerProvider = Provider<GoRouter>(
   (ref) {
     final routerKey = GlobalKey<NavigatorState>(debugLabel: 'routerKey');
     final authNotifier = ref.read(authProvider.notifier);
-    final authStateListenable = ValueNotifier<AuthState>(AuthState());
+    final authStateListenable =
+        ValueNotifier<AuthState>(ref.read(authProvider));
 
     ref
       ..onDispose(authStateListenable.dispose)
@@ -37,28 +38,35 @@ final routerProvider = Provider<GoRouter>(
           name: HomeScreen.name,
           builder: (_, __) => const HomeScreen(),
           routes: [
-            GoRoute(path: 'loading', builder: (_, __) => const WelcomePage()),
             GoRoute(
-              path: UserProfile.name,
-              name: UserProfile.name,
-              builder: (_, __) => const UserProfile(),
+              path: 'loading',
+              builder: (_, __) => const WelcomeScreen(),
+            ),
+            GoRoute(
+              path: ProfileScreen.name,
+              name: ProfileScreen.name,
+              builder: (_, __) => const ProfileScreen(),
               routes: [
                 GoRoute(
-                  path: EditProfile.name,
-                  name: EditProfile.name,
-                  builder: (_, __) => const EditProfile(),
+                  path: EditProfileScren.name,
+                  name: EditProfileScren.name,
+                  builder: (_, __) => const EditProfileScren(),
                   routes: [
                     GoRoute(
-                      path: CropPage.name,
-                      name: CropPage.name,
+                      path: CropScreen.name,
+                      name: CropScreen.name,
                       builder: (_, state) =>
-                          CropPage(image: state.extra as Uint8List?),
+                          CropScreen(image: state.extra as Uint8List?),
                     )
                   ],
                 )
               ],
             ),
-            GoRoute(path: 'intro', builder: (_, __) => const IntroPage())
+            GoRoute(
+              path: IntroScreen.name,
+              name: IntroScreen.name,
+              builder: (_, __) => const IntroScreen(),
+            ),
           ],
         ),
         GoRoute(
@@ -93,49 +101,52 @@ final routerProvider = Provider<GoRouter>(
             error: authStateListenable.value.error,
             loading: authStateListenable.value.loading,
           ),
-        )
+        ),
       ],
       redirect: (context, state) {
         final lMatch = state.matchedLocation;
         final qParams = state.uri.queryParameters;
         final authState = authStateListenable.value;
         final authStatus = authState.status;
+        final prefs = (authState.user?.prefs.data ?? {});
+        final introSeen = prefs['introSeen'] ?? false;
+
         if (authStatus == AuthStatus.uninitialized) {
-          return '/loading';
+          return Uri(
+            path: '/loading',
+            queryParameters: {
+              'redirect': lMatch,
+            },
+          ).toString();
         }
 
-        if (lMatch == '/' && authStatus == AuthStatus.unauthenticated) {
-          return '/${LoginScreen.name}';
+        final isProtectedRoute = lMatch == '/' ||
+            lMatch.startsWith('/profile') ||
+            lMatch == '/intro';
+
+        final isAuthenticated = authStatus == AuthStatus.authenticated;
+
+        if (isProtectedRoute && isAuthenticated) {
+          return Uri(
+            path: '/${LoginScreen.name}',
+            queryParameters: {
+              'redirect': lMatch,
+            },
+          ).toString();
         }
 
-        if (lMatch == '/' && authStatus == AuthStatus.authenticated) {
-          return (authState.user?.prefs.data ?? {})['introSeen'] ?? false
-              ? null
-              : '/intro';
+        if (isProtectedRoute && isAuthenticated && !introSeen) {
+          return '/${IntroScreen.name}';
         }
 
-        if (lMatch.startsWith('/profile') &&
-            (authStatus == AuthStatus.authenticating ||
-                authStatus == AuthStatus.uninitialized)) {
-          return Uri(path: '/loading', queryParameters: {'redirect': lMatch})
-              .toString();
-        }
-        if (lMatch == '/intro' && authStatus == AuthStatus.authenticated) {
-          return (authState.user?.prefs.data ?? {})['introSeen'] ?? false
-              ? '/'
-              : null;
+        if (lMatch == '/${IntroScreen.name}' && isAuthenticated && introSeen) {
+          return '/';
         }
 
-        if (lMatch.startsWith('/profile') &&
-            authStatus == AuthStatus.unauthenticated) {
-          return '/login';
-        }
-
-        if ((lMatch == '/login' || lMatch == '/loading') &&
-            authStatus == AuthStatus.authenticated) {
+        if ((lMatch == '/login' || lMatch == '/loading') && isAuthenticated) {
           return qParams['redirect'] ?? '/';
         }
-        if (lMatch == '/loading' && authStatus == AuthStatus.unauthenticated) {
+        if (lMatch == '/loading' && !isAuthenticated) {
           return qParams['redirect'] ?? '/login';
         }
         return null;

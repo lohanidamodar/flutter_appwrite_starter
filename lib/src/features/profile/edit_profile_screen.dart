@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/src/app/app_constants.dart';
 import 'package:flutter_appwrite_starter/src/appwrite/appwrite.dart';
 import 'package:flutter_appwrite_starter/src/components/avatar.dart';
-import 'package:flutter_appwrite_starter/src/features/profile/crop_page.dart';
+import 'package:flutter_appwrite_starter/src/features/profile/crop_screen.dart';
 import 'package:flutter_appwrite_starter/src/providers.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -14,12 +14,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../l10n/app_localizations.dart';
 
-class EditProfile extends StatefulWidget {
+class EditProfileScren extends StatefulWidget {
   static String name = 'edit_profile';
-  const EditProfile({super.key});
+  const EditProfileScren({super.key});
 
   @override
-  State<EditProfile> createState() => _EditProfileState();
+  State<EditProfileScren> createState() => _EditProfileScrenState();
 }
 
 enum AppState {
@@ -28,7 +28,7 @@ enum AppState {
   cropped,
 }
 
-class _EditProfileState extends State<EditProfile> {
+class _EditProfileScrenState extends State<EditProfileScren> {
   TextEditingController? _nameController;
   late bool _processing;
   AppState? state;
@@ -211,7 +211,7 @@ class _EditProfileState extends State<EditProfile> {
       return;
     }
     final image = await context.pushNamed<Uint8List?>(
-      CropPage.name,
+      CropScreen.name,
       extra: ib,
     );
     if (image == null) return;

@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/src/features/login_screen/login_screen.dart';
 import 'package:flutter_appwrite_starter/src/themes/colors.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../l10n/app_localizations.dart';
 
-class WelcomePage extends StatefulWidget {
-  const WelcomePage({super.key});
+class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({super.key});
 
   @override
-  State<WelcomePage> createState() => _WelcomePageState();
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
-class _WelcomePageState extends State<WelcomePage> {
+class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void initState() {
     super.initState();
@@ -29,14 +27,14 @@ class _WelcomePageState extends State<WelcomePage> {
           children: <Widget>[
             const SizedBox(height: kToolbarHeight),
             Text(
-              AppLocalizations.of(context).welcomePageTitle,
+              l10n.welcomePageTitle,
               style: Theme.of(context).textTheme.displayMedium!.copyWith(
                   color: AppColors.primaryColor,
                   fontWeight: FontWeight.w900,
                   fontFamily: "Frank"),
             ),
             Text(
-              AppLocalizations.of(context).welcomePageSubtitle,
+              l10n.welcomePageSubtitle,
               style: const TextStyle(
                   color: AppColors.primaryColor, fontSize: 20.0),
             ),

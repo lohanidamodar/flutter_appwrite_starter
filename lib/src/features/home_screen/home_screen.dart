@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_appwrite_starter/src/features/profile/profile.dart';
+import 'package:flutter_appwrite_starter/src/features/profile/profile_screen.dart';
 import 'package:flutter_appwrite_starter/src/l10n/app_localizations.dart';
-import 'package:flutter_appwrite_starter/src/l10n/locale_config_provider.dart';
 import 'package:flutter_appwrite_starter/src/themes/assets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../providers.dart';
 
 class HomeScreen extends StatefulWidget {
   static String name = 'home';
@@ -30,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.person),
-            onPressed: () => context.goNamed(UserProfile.name),
+            onPressed: () => context.goNamed(ProfileScreen.name),
           ),
           Consumer(builder: (context, ref, child) {
             final locale = ref.watch(localeConfigProvider);
