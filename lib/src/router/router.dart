@@ -105,19 +105,21 @@ final routerProvider = Provider<GoRouter>(
       ],
       redirect: (context, state) {
         final lMatch = state.matchedLocation;
-        final qParams = state.uri.queryParameters;
         final authState = authStateListenable.value;
+        final qParams = Map<String, String>.from(state.uri.queryParameters);
         final authStatus = authState.status;
         final prefs = (authState.user?.prefs.data ?? {});
         final introSeen = prefs['introSeen'] ?? false;
 
+        if (qParams['redirect'] == lMatch) {
+          qParams.remove('redirect');
+        }
+
         if (authStatus == AuthStatus.uninitialized) {
-          return Uri(
-            path: '/loading',
-            queryParameters: {
-              'redirect': lMatch,
-            },
-          ).toString();
+          if (lMatch != '/loading') {
+            qParams['redirect'] = qParams['redirect'] ?? lMatch;
+          }
+          return Uri(path: '/loading', queryParameters: qParams).toString();
         }
 
         final isProtectedRoute = lMatch == '/' ||
@@ -126,21 +128,20 @@ final routerProvider = Provider<GoRouter>(
 
         final isAuthenticated = authStatus == AuthStatus.authenticated;
 
-        if (isProtectedRoute && isAuthenticated) {
-          return Uri(
-            path: '/${LoginScreen.name}',
-            queryParameters: {
-              'redirect': lMatch,
-            },
-          ).toString();
+        if (isProtectedRoute && !isAuthenticated) {
+          qParams['redirect'] = qParams['redirect'] ?? lMatch;
+          return Uri(path: '/${LoginScreen.name}', queryParameters: qParams)
+              .toString();
         }
 
         if (isProtectedRoute && isAuthenticated && !introSeen) {
-          return '/${IntroScreen.name}';
+          qParams['redirect'] = qParams['redirect'] ?? lMatch;
+          return Uri(path: '/${LoginScreen.name}', queryParameters: qParams)
+              .toString();
         }
 
         if (lMatch == '/${IntroScreen.name}' && isAuthenticated && introSeen) {
-          return '/';
+          return qParams['redirect'] ?? '/';
         }
 
         if ((lMatch == '/login' || lMatch == '/loading') && isAuthenticated) {
