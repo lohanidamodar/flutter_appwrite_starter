@@ -11,7 +11,6 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  crop: ^0.5.5
   crop_your_image: ^1.0.2
   device_info_plus: ^9.1.2
   flutter_riverpod: ^2.5.1

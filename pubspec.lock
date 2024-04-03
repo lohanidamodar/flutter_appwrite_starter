@@ -73,14 +73,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-  collision:
-    dependency: transitive
-    description:
-      name: collision
-      sha256: "2bd2eb6a9dfc69bc9d92cb3401dcfadb3b8429a261102ec0e59a91c0f5fcab25"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.3"
   cookie_jar:
     dependency: transitive
     description:
@@ -89,14 +81,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.8"
-  crop:
-    dependency: "direct main"
-    description:
-      name: crop
-      sha256: "9d94ec70fb2a5b1f4c30a686db561ed2395a900e5b17f44a0111f2c70ecf6889"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.5"
   crop_your_image:
     dependency: "direct main"
     description:
