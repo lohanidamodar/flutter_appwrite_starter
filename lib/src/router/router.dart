@@ -105,8 +105,8 @@ final routerProvider = Provider<GoRouter>(
       ],
       redirect: (context, state) {
         final lMatch = state.matchedLocation;
-        final authState = authStateListenable.value;
         final qParams = Map<String, String>.from(state.uri.queryParameters);
+        final authState = authStateListenable.value;
         final authStatus = authState.status;
         final prefs = (authState.user?.prefs.data ?? {});
         final introSeen = prefs['introSeen'] ?? false;
