@@ -37,15 +37,15 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Consumer(builder: (context, ref, child) {
             var locale = ref.watch(localeConfigProvider);
-            return DropdownButton<int>(
+            return DropdownButton<String>(
                 underline: const SizedBox(
                   height: 0,
                 ),
                 elevation: 0,
-                value: locale.languageCode == 'ne' ? 1 : 2,
+                value: locale.languageCode,
                 items: [
                   DropdownMenuItem(
-                    value: 1,
+                    value: 'ne',
                     child: Flag.fromCode(
                       FlagsCode.NP,
                       height: 24,
@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   DropdownMenuItem(
-                    value: 2,
+                    value: 'us',
                     child: Flag.fromCode(
                       FlagsCode.US,
                       width: 24,
@@ -62,15 +62,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
                 onChanged: (value) {
-                  switch (value) {
-                    case 1:
-                      locale = const Locale('ne', 'np');
-                      break;
-                    case 2:
-                    default:
-                      locale = Locale(Intl.systemLocale);
-                      break;
-                  }
+                  if (value == null) return;
+                  locale = Locale(value, value == 'ne' ? 'np' : 'us');
                   ref.read(localeConfigProvider.notifier).setLocale(locale);
                 });
           }),
