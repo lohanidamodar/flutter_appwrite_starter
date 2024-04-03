@@ -4,7 +4,7 @@
 
 A project you can clone to build your next project with [Flutter](https://flutter.dev) + [Appwrite](https://appwrite.io).
 
-[**UPDATE**] We have refactored this project to using package based architecture. Check out the [packages](/packages) folder.
+This template works with Appwrite 1.4.x and Appwrite [cloud](https://cloud.appwrite.io).
 
 If you don't already know what Appwrite is, it's an open source self-hosted Back-End as a Service for Web, Mobile and Flutter applications. Learn more on [Appwrite.io home page](https://appwrite.io).
 
