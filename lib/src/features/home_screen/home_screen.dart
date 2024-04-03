@@ -38,6 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
           Consumer(builder: (context, ref, child) {
             var locale = ref.watch(localeConfigProvider);
             return DropdownButton<int>(
+                underline: const SizedBox(
+                  height: 0,
+                ),
                 elevation: 0,
                 value: locale.languageCode == 'ne' ? 1 : 2,
                 items: [
