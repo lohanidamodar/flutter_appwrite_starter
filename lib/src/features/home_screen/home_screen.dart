@@ -6,7 +6,6 @@ import 'package:flutter_appwrite_starter/src/themes/assets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 import '../../providers.dart';
 
