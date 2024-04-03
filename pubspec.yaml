@@ -20,7 +20,7 @@ dependencies:
   intl: ^0.18.1
   package_info_plus: ^4.2.0
   path_provider: ^2.1.2
-  appwrite: ^11.0.1
+  appwrite: ^12.0.1
   file: ^7.0.0
   go_router: ^13.2.2
   get_it: ^7.6.7

@@ -1,5 +1,6 @@
 import 'dart:developer' as developer;
 import 'package:appwrite/appwrite.dart';
+import 'package:appwrite/enums.dart';
 import 'package:appwrite/models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -98,7 +99,8 @@ class AuthNotifier extends Notifier<AuthState> {
       loading: true,
     );
     try {
-      await _account.createEmailSession(email: email, password: password);
+      await _account.createEmailPasswordSession(
+          email: email, password: password);
       await _getUser();
       return true;
     } on AppwriteException catch (e) {
@@ -111,7 +113,7 @@ class AuthNotifier extends Notifier<AuthState> {
     }
   }
 
-  Future<bool> createPhoneSession({
+  Future<Token?> createPhoneSession({
     required String userId,
     required String number,
   }) async {
@@ -120,16 +122,17 @@ class AuthNotifier extends Notifier<AuthState> {
       loading: true,
     );
     try {
-      await _account.createPhoneSession(userId: userId, phone: number);
+      final token =
+          await _account.createPhoneToken(userId: userId, phone: number);
       state = state.copyWith(loading: false);
-      return true;
+      return token;
     } on AppwriteException catch (e) {
       state = state.copyWith(
         status: AuthStatus.unauthenticated,
         loading: false,
         error: e.message,
       );
-      return false;
+      return null;
     }
   }
 
@@ -174,7 +177,7 @@ class AuthNotifier extends Notifier<AuthState> {
     }
   }
 
-  Future<bool> createMagicURLSession({
+  Future<bool> createMagicURLToken({
     required String email,
     String userId = 'unique()',
     String? url,
@@ -184,7 +187,7 @@ class AuthNotifier extends Notifier<AuthState> {
       loading: true,
     );
     try {
-      await _account.createMagicURLSession(
+      await _account.createMagicURLToken(
           userId: userId, email: email, url: url);
       state = state.copyWith(loading: false);
       return true;
@@ -296,7 +299,7 @@ class AuthNotifier extends Notifier<AuthState> {
   }
 
   Future<bool> createOAuth2Session({
-    required String provider,
+    required OAuthProvider provider,
     String? success,
     String? failure,
     List<String>? scopes,
@@ -413,14 +416,12 @@ class AuthNotifier extends Notifier<AuthState> {
   Future<Token?> updateRecovery({
     required String userId,
     required String password,
-    required String passwordAgain,
     required String secret,
   }) async {
     try {
       return await _account.updateRecovery(
         userId: userId,
         password: password,
-        passwordAgain: passwordAgain,
         secret: secret,
       );
     } on AppwriteException catch (e) {
