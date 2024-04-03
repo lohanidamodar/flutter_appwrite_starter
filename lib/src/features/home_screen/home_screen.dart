@@ -37,6 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Consumer(builder: (context, ref, child) {
             var locale = ref.watch(localeConfigProvider);
             return DropdownButton<int>(
+                elevation: 0,
+                value: locale.languageCode == 'ne' ? 1 : 2,
                 items: const [
                   DropdownMenuItem(
                     value: 1,
@@ -59,16 +61,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                   ref.read(localeConfigProvider.notifier).setLocale(locale);
                 });
-            return IconButton(
-              onPressed: () {
-                ref.read(localeConfigProvider.notifier).setLocale(
-                    locale?.languageCode == 'ne'
-                        ? Locale('en')
-                        : const Locale('ne', 'np'));
-              },
-              icon: Icon(
-                  locale?.languageCode == 'ne' ? Icons.sunny : Icons.check),
-            );
           }),
         ],
       ),
