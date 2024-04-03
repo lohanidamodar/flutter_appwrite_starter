@@ -19,4 +19,4 @@ final configProvider = Provider<AppConfig>((ref) => AppConfig(
     ));
 
 final localeConfigProvider =
-    NotifierProvider<LocaleNotifier, Locale?>(LocaleNotifier.new);
+    NotifierProvider<LocaleNotifier, Locale>(LocaleNotifier.new);

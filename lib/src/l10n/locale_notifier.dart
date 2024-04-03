@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
-class LocaleNotifier extends Notifier<Locale?> {
+class LocaleNotifier extends Notifier<Locale> {
   @override
-  Locale? build() => null;
+  Locale build() => Locale(Intl.systemLocale);
 
-  void setLocale(Locale? locale) {
+  void setLocale(Locale locale) {
     state = locale;
   }
 }

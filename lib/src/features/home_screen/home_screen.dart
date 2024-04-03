@@ -5,6 +5,7 @@ import 'package:flutter_appwrite_starter/src/themes/assets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 import '../../providers.dart';
 
@@ -34,12 +35,35 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () => context.goNamed(ProfileScreen.name),
           ),
           Consumer(builder: (context, ref, child) {
-            final locale = ref.watch(localeConfigProvider);
+            var locale = ref.watch(localeConfigProvider);
+            return DropdownButton<int>(
+                items: const [
+                  DropdownMenuItem(
+                    value: 1,
+                    child: Icon(Icons.sunny),
+                  ),
+                  DropdownMenuItem(
+                    value: 2,
+                    child: Icon(Icons.check),
+                  ),
+                ],
+                onChanged: (value) {
+                  switch (value) {
+                    case 1:
+                      locale = const Locale('ne', 'np');
+                      break;
+                    case 2:
+                    default:
+                      locale = Locale(Intl.systemLocale);
+                      break;
+                  }
+                  ref.read(localeConfigProvider.notifier).setLocale(locale);
+                });
             return IconButton(
               onPressed: () {
                 ref.read(localeConfigProvider.notifier).setLocale(
                     locale?.languageCode == 'ne'
-                        ? null
+                        ? Locale('en')
                         : const Locale('ne', 'np'));
               },
               icon: Icon(
