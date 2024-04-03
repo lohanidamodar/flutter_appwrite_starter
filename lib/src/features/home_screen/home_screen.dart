@@ -1,3 +1,4 @@
+import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite_starter/src/features/profile/profile_screen.dart';
 import 'package:flutter_appwrite_starter/src/l10n/app_localizations.dart';
@@ -39,14 +40,22 @@ class _HomeScreenState extends State<HomeScreen> {
             return DropdownButton<int>(
                 elevation: 0,
                 value: locale.languageCode == 'ne' ? 1 : 2,
-                items: const [
+                items: [
                   DropdownMenuItem(
                     value: 1,
-                    child: Icon(Icons.sunny),
+                    child: Flag.fromCode(
+                      FlagsCode.NP,
+                      height: 24,
+                      width: 24,
+                    ),
                   ),
                   DropdownMenuItem(
                     value: 2,
-                    child: Icon(Icons.check),
+                    child: Flag.fromCode(
+                      FlagsCode.US,
+                      width: 24,
+                      height: 24,
+                    ),
                   ),
                 ],
                 onChanged: (value) {
