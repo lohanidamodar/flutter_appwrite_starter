@@ -17,7 +17,7 @@ If you don't already know what Appwrite is, it's an open source self-hosted Back
 5. Image picker/Cropper
 6. Package info
 7. User's profile and preferences management
-8. Navigation with go_router (https://pub.dev/packages/go_router)
+8. Navigation with [go_router](https://pub.dev/packages/go_router)
 
 ## Getting Started
 
