@@ -35,7 +35,7 @@ class AppThemes {
 
   ThemeData get lightTheme {
     _lightTheme = _lightTheme.copyWith(
-        textTheme: GoogleFonts.poppinsTextTheme(_darkTheme.textTheme));
+        textTheme: GoogleFonts.poppinsTextTheme(_lightTheme.textTheme));
     return _lightTheme;
   }
 

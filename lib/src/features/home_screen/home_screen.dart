@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   DropdownMenuItem(
-                    value: 'us',
+                    value: 'en',
                     child: Flag.fromCode(
                       FlagsCode.US,
                       width: 24,
