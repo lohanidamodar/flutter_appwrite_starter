@@ -32,24 +32,26 @@ class _LoginScreenState extends State<LoginScreen> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : ListView(
-              padding: const EdgeInsets.all(16.0),
-              children: <Widget>[
-                if (widget.error != null) ...[
-                  Text(
-                    widget.error!,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.red,
-                        ),
+          : SafeArea(
+              child: ListView(
+                padding: const EdgeInsets.all(16.0),
+                children: <Widget>[
+                  if (widget.error != null) ...[
+                    Text(
+                      widget.error!,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Colors.red,
+                          ),
+                    ),
+                  ],
+                  LoginForm(
+                    onPressedLogin: widget.onLogin,
+                    onNavigateToSignup: widget.onNavigateToSignup,
+                    emailController: _emailController,
+                    passwordController: _passwordController,
                   ),
                 ],
-                LoginForm(
-                  onPressedLogin: widget.onLogin,
-                  onNavigateToSignup: widget.onNavigateToSignup,
-                  emailController: _emailController,
-                  passwordController: _passwordController,
-                ),
-              ],
+              ),
             ),
     );
   }
