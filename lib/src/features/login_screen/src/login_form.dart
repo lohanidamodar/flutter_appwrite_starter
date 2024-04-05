@@ -31,6 +31,7 @@ class LoginForm extends StatelessWidget {
             AppAssets.logo,
             height: 80.0,
           ),
+          const SizedBox(height: 20),
           Text(
             l10n.loginFormTitle,
             style: Theme.of(context).textTheme.headlineMedium,

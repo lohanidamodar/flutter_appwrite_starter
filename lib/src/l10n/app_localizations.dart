@@ -246,7 +246,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginFormTitle.
   ///
   /// In en, this message translates to:
-  /// **'login'**
+  /// **'Login'**
   String get loginFormTitle;
 }
 
