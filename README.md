@@ -4,8 +4,6 @@
 
 A project you can clone to build your next project with [Flutter](https://flutter.dev) + [Appwrite](https://appwrite.io).
 
-This template works with Appwrite 1.4.x and Appwrite [cloud](https://cloud.appwrite.io). If you are looking to use Appwrite 1.5.x, please check the [appwrite-1.5.x](https://github.com/lohanidamodar/flutter_appwrite_starter/tree/appwrite-1.5.x) branch.
-
 If you don't already know what Appwrite is, it's an open source self-hosted Back-End as a Service for Web, Mobile and Flutter applications. Learn more on [Appwrite.io home page](https://appwrite.io).
 
 ## Features
