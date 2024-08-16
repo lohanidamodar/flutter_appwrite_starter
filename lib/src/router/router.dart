@@ -136,7 +136,7 @@ final routerProvider = Provider<GoRouter>(
 
         if (isProtectedRoute && isAuthenticated && !introSeen) {
           qParams['redirect'] = qParams['redirect'] ?? lMatch;
-          return Uri(path: '/${LoginScreen.name}', queryParameters: qParams)
+          return Uri(path: '/${IntroScreen.name}', queryParameters: qParams)
               .toString();
         }
 
